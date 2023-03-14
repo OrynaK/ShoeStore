@@ -1,13 +1,13 @@
-package com.example.shoestrore;
+package ua.nure.shoestore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShoeStroreApplication {
+public class ShoeStoreApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ShoeStroreApplication.class, args);
+        SpringApplication.run(ShoeStoreApplication.class, args);
     }
 
 }
