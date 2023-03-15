@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class User {
     private long user_id;
-
     private String name;
     private String surname;
     private String email;
