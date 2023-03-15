@@ -1,10 +1,10 @@
-package com.example.shoestrore;
+package ua.nure.shoestore;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ShoeStroreApplicationTests {
+class ShoeStoreApplicationTests {
 
     @Test
     void contextLoads() {
