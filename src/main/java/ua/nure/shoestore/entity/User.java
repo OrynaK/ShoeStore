@@ -3,12 +3,21 @@ package ua.nure.shoestore.entity;
 import java.util.Objects;
 
 public class User {
+    private long user_id;
     private String name;
     private String surname;
     private String email;
     private String password;
     private Roles role;
     private boolean blocked;
+
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
 
     public String getName() {
         return name;
@@ -63,7 +72,8 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return blocked == user.blocked
+        return user_id == user.user_id
+                && blocked == user.blocked
                 && name.equals(user.name)
                 && surname.equals(user.surname)
                 && email.equals(user.email)
@@ -73,6 +83,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, email, password, role, blocked);
+        return Objects.hash(user_id, name, surname, email, password, role, blocked);
     }
 }
