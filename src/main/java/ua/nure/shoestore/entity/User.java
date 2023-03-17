@@ -2,23 +2,33 @@ package ua.nure.shoestore.entity;
 
 import ua.nure.shoestore.entity.enums.Role;
 
+import java.util.List;
 import java.util.Objects;
 
 public class User {
-    private long user_id;
+    private long userId;
     private String name;
     private String surname;
     private String email;
     private String password;
     private Role role;
     private boolean blocked;
+    private List<Long> addressesId;
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public List<Long> getAddressesId() {
+        return addressesId;
+    }
+
+    public void setAddressesId(List<Long> addressesId) {
+        this.addressesId = addressesId;
     }
 
     public String getName() {
@@ -74,17 +84,32 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return user_id == user.user_id
+        return userId == user.userId
                 && blocked == user.blocked
                 && name.equals(user.name)
                 && surname.equals(user.surname)
                 && email.equals(user.email)
                 && password.equals(user.password)
-                && role == user.role;
+                && role == user.role
+                && addressesId.equals(user.addressesId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, name, surname, email, password, role, blocked);
+        return Objects.hash(userId, name, surname, email, password, role, blocked, addressesId);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", blocked=" + blocked +
+                ", addressesId=" + addressesId +
+                '}';
     }
 }
