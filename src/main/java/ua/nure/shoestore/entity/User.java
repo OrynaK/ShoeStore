@@ -1,5 +1,7 @@
 package ua.nure.shoestore.entity;
 
+import ua.nure.shoestore.entity.enums.Roles;
+
 import java.util.Objects;
 
 public class User {
