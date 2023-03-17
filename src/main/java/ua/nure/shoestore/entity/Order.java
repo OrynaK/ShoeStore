@@ -1,49 +1,51 @@
 package ua.nure.shoestore.entity;
 
-import ua.nure.shoestore.entity.statuses.*;
+import ua.nure.shoestore.entity.enums.statuses.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 public class Order {
-    private long order_id;
+    private long orderId;
 
-    private long client_id;
+    private long clientId;
     private ClientStatus clientStatus;
 
-    private long admin_id;
+    private long adminId;
     private AdminStatus adminStatus;
 
-    private long packer_id;
+    private long packerId;
     private PackerStatus packerStatus;
 
-    private long warehouse_id;
+    private long warehouseId;
     private WarehouseStatus warehouseStatus;
 
-    private long courier_id;
+    private long courierId;
     private CourierStatus courierStatus;
 
     private LocalDate date;
     private LocalTime time;
     private BigDecimal cost;
-    private List<Long> shoes_id;
+    private List<Long> shoesId;
+    private OrderStatus status;
 
-    public long getOrder_id() {
-        return order_id;
+    public long getOrderId() {
+        return orderId;
     }
 
-    public void setOrder_id(long order_id) {
-        this.order_id = order_id;
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 
-    public long getClient_id() {
-        return client_id;
+    public long getClientId() {
+        return clientId;
     }
 
-    public void setClient_id(long client_id) {
-        this.client_id = client_id;
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public ClientStatus getClientStatus() {
@@ -54,12 +56,12 @@ public class Order {
         this.clientStatus = clientStatus;
     }
 
-    public long getAdmin_id() {
-        return admin_id;
+    public long getAdminId() {
+        return adminId;
     }
 
-    public void setAdmin_id(long admin_id) {
-        this.admin_id = admin_id;
+    public void setAdminId(long adminId) {
+        this.adminId = adminId;
     }
 
     public AdminStatus getAdminStatus() {
@@ -70,12 +72,12 @@ public class Order {
         this.adminStatus = adminStatus;
     }
 
-    public long getPacker_id() {
-        return packer_id;
+    public long getPackerId() {
+        return packerId;
     }
 
-    public void setPacker_id(long packer_id) {
-        this.packer_id = packer_id;
+    public void setPackerId(long packerId) {
+        this.packerId = packerId;
     }
 
     public PackerStatus getPackerStatus() {
@@ -86,12 +88,12 @@ public class Order {
         this.packerStatus = packerStatus;
     }
 
-    public long getWarehouse_id() {
-        return warehouse_id;
+    public long getWarehouseId() {
+        return warehouseId;
     }
 
-    public void setWarehouse_id(long warehouse_id) {
-        this.warehouse_id = warehouse_id;
+    public void setWarehouseId(long warehouseId) {
+        this.warehouseId = warehouseId;
     }
 
     public WarehouseStatus getWarehouseStatus() {
@@ -102,12 +104,12 @@ public class Order {
         this.warehouseStatus = warehouseStatus;
     }
 
-    public long getCourier_id() {
-        return courier_id;
+    public long getCourierId() {
+        return courierId;
     }
 
-    public void setCourier_id(long courier_id) {
-        this.courier_id = courier_id;
+    public void setCourierId(long courierId) {
+        this.courierId = courierId;
     }
 
     public CourierStatus getCourierStatus() {
@@ -142,11 +144,54 @@ public class Order {
         this.cost = cost;
     }
 
-    public List<Long> getShoes_id() {
-        return shoes_id;
+    public List<Long> getShoesId() {
+        return shoesId;
     }
 
-    public void setShoes_id(List<Long> shoes_id) {
-        this.shoes_id = shoes_id;
+    public void setShoesId(List<Long> shoesId) {
+        this.shoesId = shoesId;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return orderId == order.orderId && clientId == order.clientId && adminId == order.adminId && packerId == order.packerId && warehouseId == order.warehouseId && courierId == order.courierId && clientStatus == order.clientStatus && adminStatus == order.adminStatus && Objects.equals(packerStatus, order.packerStatus) && warehouseStatus == order.warehouseStatus && courierStatus == order.courierStatus && Objects.equals(date, order.date) && Objects.equals(time, order.time) && Objects.equals(cost, order.cost) && Objects.equals(shoesId, order.shoesId) && status == order.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, clientId, clientStatus, adminId, adminStatus, packerId, packerStatus, warehouseId, warehouseStatus, courierId, courierStatus, date, time, cost, shoesId, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", clientId=" + clientId +
+                ", clientStatus=" + clientStatus +
+                ", adminId=" + adminId +
+                ", adminStatus=" + adminStatus +
+                ", packerId=" + packerId +
+                ", packerStatus=" + packerStatus +
+                ", warehouseId=" + warehouseId +
+                ", warehouseStatus=" + warehouseStatus +
+                ", courierId=" + courierId +
+                ", courierStatus=" + courierStatus +
+                ", date=" + date +
+                ", time=" + time +
+                ", cost=" + cost +
+                ", shoesId=" + shoesId +
+                ", status=" + status +
+                '}';
     }
 }
