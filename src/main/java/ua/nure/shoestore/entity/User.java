@@ -1,6 +1,6 @@
 package ua.nure.shoestore.entity;
 
-import ua.nure.shoestore.entity.enums.Roles;
+import ua.nure.shoestore.entity.enums.Role;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ public class User {
     private String surname;
     private String email;
     private String password;
-    private Roles role;
+    private Role role;
     private boolean blocked;
 
     public long getUser_id() {
@@ -53,11 +53,11 @@ public class User {
         this.password = password;
     }
 
-    public Roles getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Roles role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

@@ -5,6 +5,7 @@ import ua.nure.shoestore.entity.enums.Country;
 import java.util.Objects;
 
 public class Address {
+    private long userId;
     private long addressId;
     private Country country;
     private String city;
@@ -12,6 +13,14 @@ public class Address {
     private String houseNumber;
     private int entrance;
     private int apartmentNumber;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public long getAddressId() {
         return addressId;
@@ -74,18 +83,19 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return addressId == address.addressId && entrance == address.entrance && apartmentNumber == address.apartmentNumber && country == address.country && Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(houseNumber, address.houseNumber);
+        return userId == address.userId && addressId == address.addressId && entrance == address.entrance && apartmentNumber == address.apartmentNumber && country == address.country && Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(houseNumber, address.houseNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(addressId, country, city, street, houseNumber, entrance, apartmentNumber);
+        return Objects.hash(userId, addressId, country, city, street, houseNumber, entrance, apartmentNumber);
     }
 
     @Override
     public String toString() {
         return "Address{" +
-                "addressId=" + addressId +
+                "userId=" + userId +
+                ", addressId=" + addressId +
                 ", country=" + country +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
