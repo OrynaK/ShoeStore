@@ -2,6 +2,7 @@ package ua.nure.shoestore.entity;
 
 import ua.nure.shoestore.entity.enums.Role;
 
+import java.util.List;
 import java.util.Objects;
 
 public class User {
@@ -11,6 +12,7 @@ public class User {
     private String email;
     private String password;
     private Role role;
+    private List<Long> address;
     private boolean blocked;
 
     public long getUser_id() {
@@ -61,6 +63,14 @@ public class User {
         this.role = role;
     }
 
+    public List<Long> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<Long> address) {
+        this.address = address;
+    }
+
     public boolean isBlocked() {
         return blocked;
     }
@@ -74,17 +84,25 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return user_id == user.user_id
-                && blocked == user.blocked
-                && name.equals(user.name)
-                && surname.equals(user.surname)
-                && email.equals(user.email)
-                && password.equals(user.password)
-                && role == user.role;
+        return user_id == user.user_id && blocked == user.blocked && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && role == user.role && Objects.equals(address, user.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, name, surname, email, password, role, blocked);
+        return Objects.hash(user_id, name, surname, email, password, role, address, blocked);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", address=" + address +
+                ", blocked=" + blocked +
+                '}';
     }
 }
