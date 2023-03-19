@@ -15,6 +15,7 @@ public class Shoe {
     private Sex sex;
     private BigDecimal price;
     private String name;
+    private int amount;
 
     public long getShoeId() {
         return shoeId;
@@ -72,29 +73,38 @@ public class Shoe {
         this.name = name;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Shoe shoe = (Shoe) o;
-        return shoeId == shoe.shoeId && Objects.equals(size, shoe.size) && Objects.equals(color, shoe.color) && season == shoe.season && sex == shoe.sex && Objects.equals(price, shoe.price) && Objects.equals(name, shoe.name);
+        return shoeId == shoe.shoeId && amount == shoe.amount && size.equals(shoe.size) && color.equals(shoe.color) && season == shoe.season && sex == shoe.sex && price.equals(shoe.price) && name.equals(shoe.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shoeId, size, color, season, sex, price, name);
+        return Objects.hash(shoeId, size, color, season, sex, price, name, amount);
     }
 
     @Override
     public String toString() {
         return "Shoe{" +
-                "shoe_id=" + shoeId +
+                "shoeId=" + shoeId +
                 ", size=" + size +
                 ", color=" + color +
                 ", season=" + season +
                 ", sex=" + sex +
                 ", price=" + price +
                 ", name='" + name + '\'' +
+                ", amount=" + amount +
                 '}';
     }
 }
