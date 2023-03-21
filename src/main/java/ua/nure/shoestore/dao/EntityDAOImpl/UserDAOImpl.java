@@ -2,15 +2,35 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
+import ua.nure.shoestore.entity.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class UserDAOImpl implements UserDAO {
+    //ROLE AUTOMATICALLY IS "CLIENT"
+    private static final String ADD_USER="INSERT INTO user (name, surname, password, email) VALUES (?, ?, ?, ?)";
     private final String url;
     private final Properties dbProps = new Properties();
+
+    public void addUser(User user){
+        try(Connection con=getConnection()) {
+            try(PreparedStatement ps=con.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)){
+                ps.setString(1, user.getName());
+                ps.setString(2, user.getSurname());
+                ps.setString(3, user.getPassword());
+                ps.setString(4, user.getEmail());
+                ps.executeUpdate();
+                try(ResultSet keys = ps.getGeneratedKeys()){
+                    if(keys.next()){
+                        user.setUser_id(keys.getLong(1));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public UserDAOImpl(DAOConfig config){
         url = config.getUrl();
