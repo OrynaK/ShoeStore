@@ -1,100 +1,106 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import "./RegistrationForm.css"
 
 function RegistrationForm() {
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        city: '',
-        address: ''
-    });
-    const handleChange = event => {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-        });
-    };
+    const[name, setName]=useState('')
+    const[surname, setSurname]=useState('')
+    const[email, setEmail]=useState('')
+    const[phoneNumber, setPhoneNumber]=useState('')
+    const[password, setPassword]=useState('')
+    const[city, setCity]=useState('')
+    const[address, setAddress]=useState('');
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        const student = {name, surname, email, phoneNumber, password, city, address}
+        console.log(student)
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(formData);
+        const student = {name, surname, email, phoneNumber, password, city, address}
+        fetch("http://localhost:8080/authentication", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(student)
+        }).then(() => {
+                console.log("New student added")
+            }
+        )
     };
     return (
         <div className="registration">
             <h1>Registration</h1>
-        <div className="registration-form">
+            <div className="registration-form">
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    First Name:</label>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        First Name:</label>
                     <input
                         type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
+                        name="name"
+                        value={name}
+                        onChange={event => setName(event.target.value)}
                     />
 
-                <label>
-                    Last Name:</label>
+                    <label>
+                        Last Name:</label>
                     <input
                         type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
+                        name="surname"
+                        value={surname}
+                        onChange={event => setSurname(event.target.value)}
                     />
 
-                <label>
-                    Email:</label>
+                    <label>
+                        Email:</label>
                     <input
                         type="email"
                         name="email"
-                        value={formData.email}
-                        onChange={handleChange}
+                        value={email}
+                        onChange={event => setEmail(event.target.value)}
                     />
 
-                <label>
-                    Phone Number:</label>
+                    <label>
+                        Phone Number:</label>
                     <input
                         type="tel"
                         name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
+                        value={phoneNumber}
+                        onChange={event => setPhoneNumber(event.target.value)}
                     />
 
-                <label>
-                    Password:</label>
+                    <label>
+                        Password:</label>
                     <input
                         type="password"
                         name="password"
-                        value={formData.password}
-                        onChange={handleChange}
+                        value={password}
+                        onChange={event => setPassword(event.target.value)}
                     />
 
-                <label>
-                    City:</label>
-                    <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                    />
+                    {/*<label>*/}
+                    {/*    City:</label>*/}
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    name="city"*/}
+                    {/*    value={city}*/}
+                    {/*    onChange={event => setCity(event.target.value)}*/}
+                    {/*/>*/}
 
-                <label>
-                    Address:</label>
-                    <input
-                        type="text"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                    />
+                    {/*<label>*/}
+                    {/*    Address:</label>*/}
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    name="address"*/}
+                    {/*    value={address}*/}
+                    {/*    onChange={event => setAddress(event.target.value)}*/}
+                    {/*/>*/}
 
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+                    <button onClick={handleSubmit} type="submit">Submit</button>
+                </form>
+            </div>
         </div>
     );
 
