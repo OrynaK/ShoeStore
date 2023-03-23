@@ -21,9 +21,8 @@ public class AuthenticationController {
     }
 
     @PostMapping(value={"/authentication"})
-    public String addUser(@RequestBody String name){
-        System.out.println(name);
-        //service.addUser(user);
+    public String addUser(@RequestBody User user){
+        service.addUser(user);
         return "New student added";
     }
 
