@@ -12,7 +12,7 @@ public class User {
     private String email;
     private String password;
     private Role role;
-    private List<Long> address;
+    private Long address_id;
     private boolean blocked;
 
     public long getUser_id() {
@@ -63,12 +63,12 @@ public class User {
         this.role = role;
     }
 
-    public List<Long> getAddress() {
-        return address;
+    public Long getAddress_id() {
+        return address_id;
     }
 
-    public void setAddress(List<Long> address) {
-        this.address = address;
+    public void setAddress_id(Long address_id) {
+        this.address_id = address_id;
     }
 
     public boolean isBlocked() {
@@ -84,12 +84,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return user_id == user.user_id && blocked == user.blocked && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && role == user.role && Objects.equals(address, user.address);
+        return user_id == user.user_id && blocked == user.blocked && name.equals(user.name) && surname.equals(user.surname) && email.equals(user.email) && password.equals(user.password) && role == user.role && Objects.equals(address_id, user.address_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, name, surname, email, password, role, address, blocked);
+        return Objects.hash(user_id, name, surname, email, password, role, address_id, blocked);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
-                ", address=" + address +
+                ", address_id=" + address_id +
                 ", blocked=" + blocked +
                 '}';
     }
