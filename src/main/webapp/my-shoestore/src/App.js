@@ -2,6 +2,7 @@
 import "./index.css";
 import Navbar from "./components/Navbar/Navbar";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
+import LoginForm from "./components/LoginForm/LoginForm";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
         <div className="__navbar">
             <Navbar/>
         </div>
-            <RegistrationForm/>
+            <LoginForm/>
     </div>
   );
 }
