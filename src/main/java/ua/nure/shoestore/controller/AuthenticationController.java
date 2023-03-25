@@ -2,9 +2,9 @@ package ua.nure.shoestore.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.entity.User;
+import ua.nure.shoestore.forms.LoginForm;
 import ua.nure.shoestore.service.AuthenticationService;
 
 import java.util.ArrayList;
@@ -20,11 +20,24 @@ public class AuthenticationController {
         this.service = service;
     }
 
-    @PostMapping(value={"/authentication"})
+    @PostMapping(value={"/registration"})
     public String addUser(@RequestBody User user){
-        service.addUser(user);
-        return "New student added";
+        if(user != null){
+            service.addUser(user);
+            return "New student added";
+        } else return "";
     }
+
+    @PostMapping(value = "/login")
+    public User loginUser(@RequestBody LoginForm loginForm){
+        User user = service.logIn(loginForm.getEmail(), loginForm.getPassword());
+        if(user == null){
+            return new User();
+        } else {
+            return user;
+        }
+    }
+
 
     @GetMapping(value = "/getAll")
     public List<User> getAll(){

@@ -10,20 +10,19 @@ function RegistrationForm() {
     const[password, setPassword]=useState('')
     const[city, setCity]=useState('')
     const[address, setAddress]=useState('');
-
     const handleClick = (e) => {
         e.preventDefault()
-        const student = {name, surname, email, phoneNumber, password, city, address}
-        console.log(student)
+        const user = {name, surname, email, phoneNumber, password, city, address}
+        console.log(user)
     }
 
     const handleSubmit = event => {
         event.preventDefault();
-        const student = {name, surname, email, phoneNumber, password, city, address}
-        fetch("http://localhost:8080/authentication", {
+        const user = {name, surname, email, phoneNumber, password, city, address}
+        fetch("http://localhost:8080/registration", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(student)
+            body: JSON.stringify(user)
         }).then(() => {
                 console.log("New student added")
             }

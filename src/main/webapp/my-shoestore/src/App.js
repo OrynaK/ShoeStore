@@ -10,7 +10,8 @@ function App() {
         <div className="__navbar">
             <Navbar/>
         </div>
-            <LoginForm/>
+            {/*<RegistrationForm/>*/}
+        <LoginForm/>
     </div>
   );
 }

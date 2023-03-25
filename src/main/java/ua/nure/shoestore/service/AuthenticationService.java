@@ -15,4 +15,8 @@ public class AuthenticationService {
     public void addUser(User user){
         userDAO.addUser(user);
     }
+
+    public User logIn(String email, String password){
+       return userDAO.getUser(email, password);
+    }
 }

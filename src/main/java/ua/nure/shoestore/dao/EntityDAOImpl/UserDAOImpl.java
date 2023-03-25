@@ -3,13 +3,16 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
 import ua.nure.shoestore.entity.User;
+import ua.nure.shoestore.entity.enums.Role;
 
+import javax.security.auth.login.LoginException;
 import java.sql.*;
 import java.util.Properties;
 
 public class UserDAOImpl implements UserDAO {
     //ROLE AUTOMATICALLY IS "CLIENT"
     private static final String ADD_USER="INSERT INTO user (name, surname, password, email) VALUES (?, ?, ?, ?)";
+    private static final String LOGIN_ATTEMPT="SELECT user_id, name, surname, role, blocked, address_id FROM user WHERE email=? AND password=?";
     private final String url;
     private final Properties dbProps = new Properties();
 
@@ -30,6 +33,35 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public User getUser(String email, String password){
+        User user = new User();
+        try(Connection con = getConnection()) {
+            try (PreparedStatement pstmt = con.prepareStatement(LOGIN_ATTEMPT,
+                    ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+                pstmt.setString(1, email);
+                pstmt.setString(2, password);
+                try (ResultSet resultSet = pstmt.executeQuery()) {
+                    boolean completed = resultSet.first();
+                    if (completed) {
+                        user.setEmail(email);
+                        user.setPassword(password);
+                        user.setUser_id(resultSet.getInt("user_id"));
+                        user.setName(resultSet.getString("name"));
+                        user.setSurname(resultSet.getString("surname"));
+                        user.setRole(Role.valueOf(resultSet.getString("role").toUpperCase()));
+                        user.setAddress_id(resultSet.getLong("address_id"));
+                        user.setBlocked(false);
+                    } else {
+                        return null;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 
     public UserDAOImpl(DAOConfig config){
