@@ -1,0 +1,63 @@
+.cabinet-form {
+    box-sizing: border-box;
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    left: 100px;
+    top: 328px;
+    background: #F3F3F3;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    margin: auto;
+}
+h1 {
+    width: 300px;
+    margin-bottom: 33px;
+    text-align: center;
+}
+
+.cabinet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    justify-content: center;
+}
+button {
+    width: 130px;
+    height: 30px;
+    border: none;
+    background: #4ff069;
+    border-radius: 20px;
+    margin-top: 30px;
+    margin-left: 45px;
+}
+
+span {
+    margin-left:45px ;
+    margin-top: 10px;
+}
+.cabinet-data {
+    position: absolute;
+    width: 206px;
+    height: 28px;
+    left: 163px;
+    top: 270px;
+
+}
+
+.cabinet-basket {
+    position: absolute;
+    width: 89px;
+    height: 26px;
+    left: 818px;
+    top: 260px;
+}
+
+
+
+

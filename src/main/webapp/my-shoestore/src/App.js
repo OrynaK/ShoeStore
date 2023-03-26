@@ -1,17 +1,20 @@
 
 import "./index.css";
-import Navbar from "./components/Navbar/Navbar";
+import NavbarClient from "./components/NavbarClient/NavbarClient";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import LoginForm from "./components/LoginForm/LoginForm";
+import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
+import NavbarPacker from "./components/NavbarPacker/NavbarPacker";
+import ClientCabinet from "./components/ClientCabinet/ClientCabinet";
 
 function App() {
   return (
     <div className="ShoeStore">
         <div className="__navbar">
-            <Navbar/>
+            <NavbarClient/>
         </div>
             {/*<RegistrationForm/>*/}
-        <LoginForm/>
+        <ClientCabinet/>
     </div>
   );
 }
