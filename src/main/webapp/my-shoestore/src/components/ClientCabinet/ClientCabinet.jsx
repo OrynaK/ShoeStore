@@ -22,6 +22,7 @@ function ClientCabinet() {
 
         </div>
             </div>
+        /*top: 270px;*/
     )
 }
 

@@ -16,7 +16,7 @@ function NavbarWarehouse () {
                 </div>
             </div>
         </nav>
-
+        /*top: 270px;*/
     );
 
 

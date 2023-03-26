@@ -16,7 +16,7 @@ function NavbarCouirer () {
                 </div>
             </div>
         </nav>
-
+        /*top: 270px;*/
     );
 
 }

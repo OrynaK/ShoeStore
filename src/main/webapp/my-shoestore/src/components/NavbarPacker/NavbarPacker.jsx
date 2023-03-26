@@ -16,7 +16,7 @@ function NavbarPacker () {
                 </div>
             </div>
         </nav>
-
+        /*top: 270px;*/
 );
 
 }

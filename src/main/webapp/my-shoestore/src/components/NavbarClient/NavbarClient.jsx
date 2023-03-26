@@ -21,7 +21,7 @@ function NavbarClient () {
                 </div>
             </div>
         </nav>
-
+        /*top: 270px;*/
     );
 
 }
