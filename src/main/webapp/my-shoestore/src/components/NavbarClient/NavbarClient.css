@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1240px;
+    width: 1300px;
 
 }
 
@@ -26,5 +26,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: row;
+    gap: 70px;
+
 }
 
