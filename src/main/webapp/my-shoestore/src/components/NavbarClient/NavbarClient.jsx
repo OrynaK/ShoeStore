@@ -1,6 +1,7 @@
 
 import "./NavbarClient.css"
 import logo from "./../../assets/logo.png"
+import {NavLink} from "react-router-dom";
 
 function NavbarClient () {
 
@@ -9,14 +10,20 @@ function NavbarClient () {
         <nav className="nav">
             <div className="container">
                 <div className="nav-row">
-                    <img className="logo" src={logo} alt="logo"/>
+                    <NavLink to="/">
+                        <img className="logo" src={logo} alt="logo"/>
+                    </NavLink>
+
                     <ul className="nav-list">
-                        <li className="nav-list__item">Головна</li>
-                        <li className="nav-list__item">Взуття</li>
-                        <li className="nav-list__item">Оплата та доставка</li>
-                        <li className="nav-list__item">Контакти</li>
-                        <li className="nav-list__item">Вхід/Реєстрація</li>
-                        <li className="nav-list__item">Особистий кабінет</li>
+                        <NavLink to="/" className="nav-list__item">
+                            Головна
+                        </NavLink>
+
+                        <NavLink to="/" className="nav-list__item">Оплата та доставка</NavLink>
+                        <NavLink to="/" className="nav-list__item">Контакти</NavLink>
+                        <NavLink to="/loginform" className="nav-list__item">Вхід</NavLink>
+                        <NavLink to="registrationform" className="nav-list__item">Реєстрація</NavLink>
+                        <NavLink to="/clientcabinet" className="nav-list__item">Особистий кабінет</NavLink>
                     </ul>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+import React from "react";
 import "./NavbarWarehouse.css"
 import logo from "./../../assets/logo.png"
 
