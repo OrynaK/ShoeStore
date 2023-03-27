@@ -1,8 +1,7 @@
-import React from "react";
-import "./NavbarWarehouse.css"
-import logo from "./../../assets/logo.png"
+import "./NavbarPacker.css"
+import logo from "../../../assets/logo.png"
 
-function NavbarWarehouse () {
+function NavbarPacker () {
 
 
     return (
@@ -18,8 +17,7 @@ function NavbarWarehouse () {
             </div>
         </nav>
         /*top: 270px;*/
-    );
-
+);
 
 }
-export default NavbarWarehouse;
+export default NavbarPacker;

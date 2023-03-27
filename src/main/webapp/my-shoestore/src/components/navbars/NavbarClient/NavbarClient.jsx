@@ -1,6 +1,6 @@
 
 import "./NavbarClient.css"
-import logo from "./../../assets/logo.png"
+import logo from "../../../assets/logo.png"
 import {NavLink} from "react-router-dom";
 
 function NavbarClient () {
@@ -23,7 +23,7 @@ function NavbarClient () {
                         <NavLink to="/" className="nav-list__item">Контакти</NavLink>
                         <NavLink to="/loginform" className="nav-list__item">Вхід</NavLink>
                         <NavLink to="registrationform" className="nav-list__item">Реєстрація</NavLink>
-                        <NavLink to="/clientcabinet" className="nav-list__item">Особистий кабінет</NavLink>
+                        {/*<NavLink to="/clientcabinet" className="nav-list__item">Особистий кабінет</NavLink>*/}
                     </ul>
                 </div>
             </div>

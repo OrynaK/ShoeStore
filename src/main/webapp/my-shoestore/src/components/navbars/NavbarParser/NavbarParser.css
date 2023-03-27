@@ -1,0 +1,31 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1240px;
+
+}
+
+.logo {
+    margin-right: 20px;
+    width: 120px;
+    height: 120px;
+    margin-left: 70px;
+}
+
+.nav-list {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 70px;
+    margin-left: 200px;/*top: 270px;*/
+}
+
+
+.nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
