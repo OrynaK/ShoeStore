@@ -1,7 +1,7 @@
-import "./NavbarCouirer.css"
-import logo from "./../../assets/logo.png"
+import "./NavbarCourier.css"
+import logo from "../../../assets/logo.png"
 
-function NavbarCouirer () {
+function NavbarCourier () {
 
 
     return (
@@ -20,4 +20,4 @@ function NavbarCouirer () {
     );
 
 }
-export default NavbarCouirer;
+export default NavbarCourier;

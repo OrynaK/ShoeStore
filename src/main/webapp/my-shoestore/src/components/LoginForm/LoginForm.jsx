@@ -1,14 +1,15 @@
 
-import {useState} from "react";
+import React, {useState} from 'react';
 import "./LoginForm.css";
-import React from "react";
+import {useNavigate} from 'react-router';
 
 function LoginForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [user, setUser] = useState('');
+    const[email, setEmail]=useState('')
+    const[password, setPassword]=useState('')
     const [error, setError] = useState('');
 
+
+    const navigate = useNavigate();
     function handleSubmit(event) {
         event.preventDefault();
         const param = {email, password};
@@ -20,15 +21,15 @@ function LoginForm() {
             if (response.ok) {
                 return response.json();
             }
-            throw new Error("Network response was not ok.");
+            setError("Network response was not ok.");
         }).then((data) => {
             const emailValue = data.email ? data.email.trim() : '';
             const passwordValue = data.password ? data.password.trim() : '';
             if (!emailValue || !passwordValue) {
                 setError('Wrong password or login. Try again');
             } else {
-                setError('All ok. REDIRECTING');
-               //ось тут треба додати в сесію користувача який прийшов в респонсі
+                localStorage.setItem('user', JSON.stringify(data));
+               navigate('/clientcabinet');
             }
         }).catch((error) => {
             console.error("There was a problem with the fetch operation:", error);
@@ -58,7 +59,7 @@ function LoginForm() {
                         value={password}
                         onChange={event => setPassword(event.target.value)}
                     />
-                    <input value={error} />
+                    {error && <div>{error}</div>}
 
                     <button onClick={handleSubmit} type="submit">Log in</button>
                 </form>

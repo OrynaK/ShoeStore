@@ -1,5 +1,5 @@
 import "./NavbarAdmin.css"
-import logo from "../../assets/logo.png";
+import logo from "../../../assets/logo.png";
 
 function NavbarAdmin() {
 
@@ -10,7 +10,7 @@ function NavbarAdmin() {
                     <img className="logo" src={logo} alt="logo"/>
                     <ul className="nav-list">
                         <li className="nav-list__item">Додати товар</li>
-                        <li className="nav-list__item">Видалити товарt</li>
+                        <li className="nav-list__item">Видалити товар</li>
                         <li className="nav-list__item">Список користувачів</li>
                         <li className="nav-list__item">Замовлення</li>/*top: 270px;*/
                     </ul>

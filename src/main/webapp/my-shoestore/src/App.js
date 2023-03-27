@@ -2,20 +2,19 @@ import React from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import "./index.css";
-import NavbarClient from "./components/NavbarClient/NavbarClient";
+
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import LoginForm from "./components/LoginForm/LoginForm";
-import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
-
-import NavbarPacker from "./components/NavbarPacker/NavbarPacker";
 import ClientCabinet from "./components/ClientCabinet/ClientCabinet";
+import NavbarParser from "./components/navbars/NavbarParser/NavbarParser";
 
 function App() {
+    localStorage.clear();
   return (
       <Router>
           <div className="ShoeStore">
               <div className="__navbar">
-                  <NavbarClient/>
+                  <NavbarParser/>
               </div>
               <Routes>
                   <Route path="/loginform" element={<LoginForm/>}></Route>
