@@ -14,7 +14,7 @@ function ClientCabinet() {
         <div className="cabinet">
             <h1>Особистий кабінет</h1>
             <h2 className="cabinet-data">Особисті данні</h2>
-            <h2 className="cabinet-basket">Кошик</h2>
+            <h2 className="cabinet-basket-header">Кошик</h2>
         <div className="cabinet-form">
 
             <span>{user && user.name}</span>
@@ -29,8 +29,14 @@ function ClientCabinet() {
             <button>Змiнити даннi</button>
 
         </div>
+            <div className="cabinet-basket">
+                <div className="basket-form">
+                        <h3>Кошик пустий!</h3>
+                </div>
+
             </div>
-        /*top: 270px;*/
+            </div>
+
     )
 }
 
