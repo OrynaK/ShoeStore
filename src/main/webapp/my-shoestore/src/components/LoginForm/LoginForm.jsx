@@ -61,7 +61,7 @@ function LoginForm() {
                     />
                     {error && <div>{error}</div>}
 
-                    <button onClick={handleSubmit} type="submit">Log in</button>
+                    <button className="btn-login" onClick={handleSubmit} type="submit">Log in</button>
                 </form>
             </div>
         </div>

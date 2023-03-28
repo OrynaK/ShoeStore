@@ -1,6 +1,7 @@
 import "./NavbarParser.css"
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import NavbarClient from "../NavbarClient/NavbarClient";
+import NavbarDefault from "../NavbarDefault/NavbarDefault";
 import {useEffect, useState} from "react";
 function NavbarParser() {
     const [user, setUser] = useState(() => {
@@ -31,7 +32,7 @@ function NavbarParser() {
     }, []);
     return (
         <nav className="nav">
-            {(user && user.role) === null && <NavbarClient />}
+            {(user && user.role) === null && <NavbarDefault />}
             {(user && user.role) === 'CLIENT' && <NavbarClient />}
             {(user && user.role) === 'ADMIN' && <NavbarAdmin/>}
             {(user && user.role) === 'COURIER' && <NavbarAdmin/>}
