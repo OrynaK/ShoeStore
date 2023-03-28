@@ -97,7 +97,7 @@ function RegistrationForm() {
                     {/*    onChange={event => setAddress(event.target.value)}*/}
                     {/*/>*/}
 
-                    <button onClick={handleSubmit} type="submit">Submit</button>
+                    <button className="btn-registratiob" onClick={handleSubmit} type="submit">Submit</button>
                 </form>
             </div>
         </div>

@@ -30,14 +30,18 @@ label {
     margin: auto;
 
 }
-button {
+
+.btn-registration {
     width: 130px;
     height: 30px;
     border-color: transparent;
     background: #4FF069;
     border-radius: 20px;
     margin-top: 30px;
-
+    cursor: pointer;
+}
+.btn-registration:hover {
+    background: #42cc55;
 }
 input {
     margin-bottom: 10px;
