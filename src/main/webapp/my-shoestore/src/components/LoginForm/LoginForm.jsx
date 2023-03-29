@@ -38,13 +38,13 @@ function LoginForm() {
 
     return (
         <div className="login">
-            <h1>Log in</h1>
+            <h1 className="login-header">Вхід</h1>
             <div className="login-form">
 
                 <form onSubmit={handleSubmit}>
                     <label>
                         Email:</label>
-                    <input
+                    <input className="login-form-input"
                         type="email"
                         name="email"
                         value={email}
@@ -53,7 +53,7 @@ function LoginForm() {
 
                     <label>
                         Password:</label>
-                    <input
+                    <input className="login-form-input"
                         type="password"
                         name="password"
                         value={password}

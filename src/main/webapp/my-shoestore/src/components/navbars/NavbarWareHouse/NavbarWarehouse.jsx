@@ -12,7 +12,7 @@ function NavbarWarehouse () {
                     <img className="logo" src={logo} alt="logo"/>
                     <ul className="nav-list">
                         <li className="nav-list__item">Замовлення</li>
-
+                        <li className="nav-list__item">Особистий кабінет</li>
                     </ul>
                 </div>
             </div>

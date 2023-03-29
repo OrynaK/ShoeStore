@@ -14,7 +14,7 @@
     padding-top: 30px;
     margin: auto;
 }
-h1 {
+.cabinet-header {
     width: 300px;
     margin-bottom: 33px;
     text-align: center;
@@ -27,7 +27,7 @@ h1 {
     height: 70vh;
     justify-content: center;
 }
-button {
+.cabinet-form-btn {
     width: 130px;
     height: 30px;
     border: none;
@@ -37,7 +37,7 @@ button {
     margin-left: 45px;
 }
 
-span {
+.cabinet-form-span {
     margin-left:45px ;
     margin-top: 10px;
 }
@@ -76,7 +76,7 @@ span {
 
 }
 
-h3 {
+.basket-form-header {
     text-align: center;
 }
 
