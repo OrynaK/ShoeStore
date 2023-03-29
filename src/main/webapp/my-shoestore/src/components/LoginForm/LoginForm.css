@@ -19,9 +19,9 @@ label {
     text-align: center;
 }
 
-.login h1 {
+.login-header {
     margin-bottom: 33px;
-    margin-left: -15px;
+
 }
 
 .login-form {
@@ -55,7 +55,7 @@ label {
     background: #42cc55;
 }
 
-input {
+.login-form-input {
     margin-bottom: 10px;
     border-radius: 20px;
     border: none;

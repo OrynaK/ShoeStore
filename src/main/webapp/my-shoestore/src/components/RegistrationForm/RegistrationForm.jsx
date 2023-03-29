@@ -30,13 +30,13 @@ function RegistrationForm() {
     };
     return (
         <div className="registration">
-            <h1>Registration</h1>
+            <h1 className="registration-header">Реєстрація</h1>
             <div className="registration-form">
 
                 <form onSubmit={handleSubmit}>
                     <label>
                         First Name:</label>
-                    <input
+                    <input className="registration-form-input"
                         type="text"
                         name="name"
                         value={name}
@@ -45,7 +45,7 @@ function RegistrationForm() {
 
                     <label>
                         Last Name:</label>
-                    <input
+                    <input className="registration-form-input"
                         type="text"
                         name="surname"
                         value={surname}
@@ -54,7 +54,7 @@ function RegistrationForm() {
 
                     <label>
                         Email:</label>
-                    <input
+                    <input className="registration-form-input"
                         type="email"
                         name="email"
                         value={email}
@@ -63,7 +63,7 @@ function RegistrationForm() {
 
                     <label>
                         Phone Number:</label>
-                    <input
+                    <input className="registration-form-input"
                         type="tel"
                         name="phoneNumber"
                         value={phoneNumber}
@@ -72,32 +72,14 @@ function RegistrationForm() {
 
                     <label>
                         Password:</label>
-                    <input
+                    <input className="registration-form-input"
                         type="password"
                         name="password"
                         value={password}
                         onChange={event => setPassword(event.target.value)}
                     />
 
-                    {/*<label>*/}
-                    {/*    City:</label>*/}
-                    {/*<input*/}
-                    {/*    type="text"*/}
-                    {/*    name="city"*/}
-                    {/*    value={city}*/}
-                    {/*    onChange={event => setCity(event.target.value)}*/}
-                    {/*/>*/}
-
-                    {/*<label>*/}
-                    {/*    Address:</label>*/}
-                    {/*<input*/}
-                    {/*    type="text"*/}
-                    {/*    name="address"*/}
-                    {/*    value={address}*/}
-                    {/*    onChange={event => setAddress(event.target.value)}*/}
-                    {/*/>*/}
-
-                    <button className="btn-registratiob" onClick={handleSubmit} type="submit">Submit</button>
+                    <button className="registration-form-btn" onClick={handleSubmit} type="submit">Submit</button>
                 </form>
             </div>
         </div>

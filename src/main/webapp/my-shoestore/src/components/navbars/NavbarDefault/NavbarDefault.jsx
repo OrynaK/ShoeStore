@@ -18,11 +18,10 @@ function NavbarClient () {
                             Головна
                         </NavLink>
 
-                        <NavLink to="/" className="nav-list__item">Оплата та доставка</NavLink>
-                        <NavLink to="/" className="nav-list__item">Контакти</NavLink>
+                        <NavLink to="/paymentanddelivery" className="nav-list__item">Оплата та доставка</NavLink>
+                        <NavLink to="/contacts" className="nav-list__item">Контакти</NavLink>
                         <NavLink to="/loginform" className="nav-list__item">Вхід</NavLink>
-                        <NavLink to="registrationform" className="nav-list__item">Реєстрація</NavLink>
-
+                        <NavLink to="/registrationform" className="nav-list__item">Реєстрація</NavLink>
                     </ul>
                 </div>
             </div>

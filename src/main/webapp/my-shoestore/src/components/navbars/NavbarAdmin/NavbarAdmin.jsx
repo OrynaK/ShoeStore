@@ -12,7 +12,8 @@ function NavbarAdmin() {
                         <li className="nav-list__item">Додати товар</li>
                         <li className="nav-list__item">Видалити товар</li>
                         <li className="nav-list__item">Список користувачів</li>
-                        <li className="nav-list__item">Замовлення</li>/*top: 270px;*/
+                        <li className="nav-list__item">Замовлення</li>
+                        <li className="nav-list__item">Особистий кабінет</li>
                     </ul>
                 </div>
             </div>
