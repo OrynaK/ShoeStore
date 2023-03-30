@@ -110,12 +110,14 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`user` (
     `role` ENUM('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
     `blocked` TINYINT NOT NULL DEFAULT '0',
     `address_id` INT NULL DEFAULT NULL,
+    `phone_number` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`user_id`),
     INDEX `user_address_fk_idx` (`address_id` ASC) VISIBLE,
     CONSTRAINT `user_address_fk`
     FOREIGN KEY (`address_id`)
     REFERENCES `shoe_store`.`address` (`address_id`))
     ENGINE = InnoDB
+    AUTO_INCREMENT = 3
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 

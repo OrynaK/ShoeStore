@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 import "./RegistrationForm.css"
+import {useNavigate} from "react-router";
 
 function RegistrationForm() {
     const[name, setName]=useState('')
@@ -10,11 +11,8 @@ function RegistrationForm() {
     const[password, setPassword]=useState('')
     const[city, setCity]=useState('')
     const[address, setAddress]=useState('');
-    const handleClick = (e) => {
-        e.preventDefault()
-        const user = {name, surname, email, phoneNumber, password, city, address}
-        console.log(user)
-    }
+    const navigate = useNavigate();
+
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -24,7 +22,9 @@ function RegistrationForm() {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(user)
         }).then(() => {
-                console.log("New student added")
+            localStorage.setItem('user', JSON.stringify(user));
+            window.dispatchEvent(new Event('storage'));
+            navigate('/clientcabinet');
             }
         )
     };
