@@ -1,0 +1,21 @@
+
+
+.main-shoe-cards {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-left: 150px;
+
+}
+
+.main-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1140px;
+    position: absolute;
+    top: 20%;
+    left: 48%;
+    transform: translateX(-50%);
+
+}

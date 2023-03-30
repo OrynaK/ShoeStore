@@ -43,7 +43,7 @@ function LoginForm() {
             <h1 className="login-header">Вхід</h1>
             <div className="login-form">
 
-                <form onSubmit={handleSubmit}>
+                <form className="login-form--form" onSubmit={handleSubmit}>
                     <label>
                         Email:</label>
                     <input className="login-form-input"
