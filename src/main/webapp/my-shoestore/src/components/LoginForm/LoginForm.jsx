@@ -29,12 +29,14 @@ function LoginForm() {
                 setError('Wrong password or login. Try again');
             } else {
                 localStorage.setItem('user', JSON.stringify(data));
+                window.dispatchEvent(new Event('storage'));
                navigate('/clientcabinet');
             }
         }).catch((error) => {
             console.error("There was a problem with the fetch operation:", error);
         });
     }
+
 
     return (
         <div className="login">
