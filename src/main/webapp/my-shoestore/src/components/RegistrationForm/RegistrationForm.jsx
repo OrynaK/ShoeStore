@@ -33,8 +33,8 @@ function RegistrationForm() {
             <h1 className="registration-header">Реєстрація</h1>
             <div className="registration-form">
 
-                <form onSubmit={handleSubmit}>
-                    <label>
+                <form className="registration-form--form" onSubmit={handleSubmit}>
+                    <label className="registration-form-label">
                         First Name:</label>
                     <input className="registration-form-input"
                         type="text"
@@ -43,7 +43,7 @@ function RegistrationForm() {
                         onChange={event => setName(event.target.value)}
                     />
 
-                    <label>
+                    <label className="registration-form-label">
                         Last Name:</label>
                     <input className="registration-form-input"
                         type="text"
@@ -52,7 +52,7 @@ function RegistrationForm() {
                         onChange={event => setSurname(event.target.value)}
                     />
 
-                    <label>
+                    <label className="registration-form-label">
                         Email:</label>
                     <input className="registration-form-input"
                         type="email"
@@ -61,7 +61,7 @@ function RegistrationForm() {
                         onChange={event => setEmail(event.target.value)}
                     />
 
-                    <label>
+                    <label className="registration-form-label">
                         Phone Number:</label>
                     <input className="registration-form-input"
                         type="tel"
@@ -70,7 +70,7 @@ function RegistrationForm() {
                         onChange={event => setPhoneNumber(event.target.value)}
                     />
 
-                    <label>
+                    <label className="registration-form-label">
                         Password:</label>
                     <input className="registration-form-input"
                         type="password"

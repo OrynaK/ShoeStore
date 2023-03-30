@@ -27,6 +27,11 @@
     display: none;
 
 }
+.filter-dropdown__sublist--option:hover {
+
+    border-radius:10px ;
+    padding: 1px;
+}
 
 .filter-dropdown:hover .filter-dropdown__list {
     display: block;
