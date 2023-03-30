@@ -9,6 +9,7 @@ import ua.nure.shoestore.service.AuthenticationService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin
@@ -21,7 +22,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value={"/registration"})
-    public String addUser(@RequestBody User user){
+    public String registration(@RequestBody User user){
         if(user != null){
             service.addUser(user);
             return "New student added";
@@ -31,11 +32,7 @@ public class AuthenticationController {
     @PostMapping(value = "/login")
     public User loginUser(@RequestBody LoginForm loginForm){
         User user = service.logIn(loginForm.getEmail(), loginForm.getPassword());
-        if(user == null){
-            return new User();
-        } else {
-            return user;
-        }
+        return Objects.requireNonNullElseGet(user, User::new);
     }
 
 
