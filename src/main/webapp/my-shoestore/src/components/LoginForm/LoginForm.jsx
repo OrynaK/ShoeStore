@@ -44,7 +44,7 @@ function LoginForm() {
             <div className="login-form">
 
                 <form className="login-form--form" onSubmit={handleSubmit}>
-                    <label>
+                    <label className="login-form-label">
                         Email:</label>
                     <input className="login-form-input"
                         type="email"
@@ -53,7 +53,7 @@ function LoginForm() {
                         onChange={event => setEmail(event.target.value)}
                     />
 
-                    <label>
+                    <label className="login-form-label">
                         Password:</label>
                     <input className="login-form-input"
                         type="password"
