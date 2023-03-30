@@ -10,6 +10,7 @@ import NavbarParser from "./components/navbars/NavbarParser/NavbarParser";
 import NavbarAdmin from "./components/navbars/NavbarAdmin/NavbarAdmin";
 import Contacts from "./components/Contacts/Contacts";
 import PaymentAndDelivery from "./components/PaymentAndDelivery/PaymentAndDelivery";
+import Main from "./components/Main/Main";
 
 function App() {
     localStorage.clear();
@@ -25,6 +26,7 @@ function App() {
                   <Route path="/registrationform" element={<RegistrationForm/>}></Route>
                   <Route path="/contacts" element={<Contacts/>}></Route>
                   <Route path="/paymentanddelivery" element={<PaymentAndDelivery/>}></Route>
+                  <Route path="/main" element={<Main/>}></Route>
               </Routes>
 
           </div>

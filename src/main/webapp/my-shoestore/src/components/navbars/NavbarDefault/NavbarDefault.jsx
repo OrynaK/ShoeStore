@@ -9,12 +9,12 @@ function NavbarClient () {
         <nav className="nav">
             <div className="container">
                 <div className="nav-row">
-                    <NavLink to="/">
+                    <NavLink to="/main">
                         <img className="logo" src={logo} alt="logo"/>
                     </NavLink>
 
                     <ul className="nav-list">
-                        <NavLink to="/" className="nav-list__item">
+                        <NavLink to="/main" className="nav-list__item">
                             Головна
                         </NavLink>
 
