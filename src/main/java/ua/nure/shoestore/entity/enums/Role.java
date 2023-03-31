@@ -1,6 +1,5 @@
 package ua.nure.shoestore.entity.enums;
 
-import javax.swing.*;
 
 public enum Role {
     CLIENT("Client"),

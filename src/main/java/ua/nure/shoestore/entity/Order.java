@@ -19,7 +19,7 @@ public class Order {
     private LocalDate date;
     private LocalTime time;
     private BigDecimal cost;
-    private Map<Long, Integer> shoes;
+    private Map<Long, Integer> shoes_amount_in_order;
     private OrderStatus status;
 
     public long getOrderId() {
@@ -94,12 +94,12 @@ public class Order {
         this.cost = cost;
     }
 
-    public Map<Long, Integer> getShoes() {
-        return shoes;
+    public Map<Long, Integer> getShoes_amount_in_order() {
+        return shoes_amount_in_order;
     }
 
-    public void setShoes(Map<Long, Integer> shoes) {
-        this.shoes = shoes;
+    public void setShoes_amount_in_order(Map<Long, Integer> shoes_amount_in_order) {
+        this.shoes_amount_in_order = shoes_amount_in_order;
     }
 
     public OrderStatus getStatus() {
@@ -115,12 +115,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return orderId == order.orderId && clientId == order.clientId && adminId == order.adminId && packerId == order.packerId && warehouseId == order.warehouseId && courierId == order.courierId && Objects.equals(date, order.date) && Objects.equals(time, order.time) && Objects.equals(cost, order.cost) && Objects.equals(shoes, order.shoes) && status == order.status;
+        return orderId == order.orderId && clientId == order.clientId && adminId == order.adminId && packerId == order.packerId && warehouseId == order.warehouseId && courierId == order.courierId && Objects.equals(date, order.date) && Objects.equals(time, order.time) && Objects.equals(cost, order.cost) && Objects.equals(shoes_amount_in_order, order.shoes_amount_in_order) && status == order.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, clientId, adminId, packerId, warehouseId, courierId, date, time, cost, shoes, status);
+        return Objects.hash(orderId, clientId, adminId, packerId, warehouseId, courierId, date, time, cost, shoes_amount_in_order, status);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class Order {
                 ", date=" + date +
                 ", time=" + time +
                 ", cost=" + cost +
-                ", shoes=" + shoes +
+                ", shoes=" + shoes_amount_in_order +
                 ", status=" + status +
                 '}';
     }
