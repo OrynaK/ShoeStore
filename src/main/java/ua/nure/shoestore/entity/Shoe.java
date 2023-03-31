@@ -10,12 +10,13 @@ import java.util.Objects;
 public class Shoe {
     private long shoeId;
     private BigDecimal size;
-    private Color color;
+    private String color;
     private Season season;
     private Sex sex;
     private BigDecimal price;
     private String name;
     private int amount;
+    private int imageId;
 
     public long getShoeId() {
         return shoeId;
@@ -33,11 +34,11 @@ public class Shoe {
         this.size = size;
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
@@ -79,6 +80,14 @@ public class Shoe {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
     @Override
