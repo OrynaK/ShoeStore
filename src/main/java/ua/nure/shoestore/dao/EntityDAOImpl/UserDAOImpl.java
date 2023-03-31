@@ -12,7 +12,7 @@ import java.util.Properties;
 public class UserDAOImpl implements UserDAO {
     //ROLE AUTOMATICALLY IS "CLIENT"
     private static final String ADD_USER="INSERT INTO user (name, surname, password, email, phone_number) VALUES (?, ?, ?, ?, ?)";
-    private static final String LOGIN_ATTEMPT="SELECT user_id, name, surname, role, blocked, address_id FROM user WHERE email=? AND password=?";
+    private static final String LOGIN_ATTEMPT="SELECT user_id, name, surname, role, address_id FROM user WHERE email=? AND password=?";
     private final String url;
     private final Properties dbProps = new Properties();
 
@@ -53,7 +53,6 @@ public class UserDAOImpl implements UserDAO {
                         user.setSurname(resultSet.getString("surname"));
                         user.setRole(Role.valueOf(resultSet.getString("role").toUpperCase()));
                         user.setAddress_id(resultSet.getLong("address_id"));
-                        user.setBlocked(false);
                         user.setPhoneNumber(resultSet.getString("phone_number"));
                     } else {
                         return null;

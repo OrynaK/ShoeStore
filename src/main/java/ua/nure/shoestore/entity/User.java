@@ -13,7 +13,6 @@ public class User {
     private String password;
     private Role role;
     private Long address_id;
-    private boolean blocked;
     private String phoneNumber;
 
     public long getUser_id() {
@@ -72,14 +71,6 @@ public class User {
         this.address_id = address_id;
     }
 
-    public boolean isBlocked() {
-        return blocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -93,12 +84,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return user_id == user.user_id && blocked == user.blocked && name.equals(user.name) && surname.equals(user.surname) && email.equals(user.email) && password.equals(user.password) && role == user.role && Objects.equals(address_id, user.address_id) && phoneNumber.equals(user.phoneNumber);
+        return user_id == user.user_id && name.equals(user.name) && surname.equals(user.surname) && email.equals(user.email) && password.equals(user.password) && role == user.role && Objects.equals(address_id, user.address_id) && phoneNumber.equals(user.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, name, surname, email, password, role, address_id, blocked, phoneNumber);
+        return Objects.hash(user_id, name, surname, email, password, role, address_id, phoneNumber);
     }
 
     @Override
@@ -111,7 +102,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 ", address_id=" + address_id +
-                ", blocked=" + blocked +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
