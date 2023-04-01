@@ -168,8 +168,8 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-INSERT INTO user (name, surname, password, email, phone_number) VALUES ('client', 'client', 'client', 'client@gmail.com', '+380111111111');
-INSERT INTO user (name, surname, password, email, phone_number) VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', '+380222222222');
-INSERT INTO user (name, surname, password, email, phone_number) VALUES ('packer', 'packer', 'packer', 'packer@gmail.com', '+380333333333');
-INSERT INTO user (name, surname, password, email, phone_number) VALUES ('warehouse', 'warehouse', 'warehouse', 'warehouse@gmail.com', '+380444444444');
-INSERT INTO user (name, surname, password, email, phone_number) VALUES ('courier', 'courier', 'courier', 'courier@gmail.com', '+380555555555');
+INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('client', 'client','client', 'client', 'client@gmail.com', '+380111111111');
+INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('admin', 'admin','admin', 'admin', 'admin@gmail.com', '+380222222222');
+INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('packer', 'packer','packer', 'packer', 'packer@gmail.com', '+380333333333');
+INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('warehouse', 'warehouse','warehouse', 'warehouse', 'warehouse@gmail.com', '+380444444444');
+INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('courier', 'courier','courier', 'courier', 'courier@gmail.com', '+380555555555');
