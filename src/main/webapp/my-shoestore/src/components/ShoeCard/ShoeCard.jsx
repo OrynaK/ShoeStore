@@ -1,7 +1,9 @@
 import React from "react";
 import "./ShoeCard.css";
 import sneaker from "./../../assets/sneaker.png"
+
 function ShoeCard() {
+
 
     return (
         <div className="shoe-card">

@@ -1,0 +1,61 @@
+.shoe-page-form {
+    width: 750px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f3f3f3;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+
+    padding:40px 60px;
+}
+.shoe-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    justify-content: center;
+    text-align: center;
+}
+
+.shoe-page-form-btn {
+    width: 150px;
+    height: 40px;
+    border: none;
+    background: #4ff069;
+    border-radius: 20px;
+    margin-top: 50px;
+    cursor: pointer;
+
+
+
+}
+.shoe-page-form-btn:hover {
+    background: #47e760;
+}
+.shoe-page-form-sizes{
+    display: flex;
+    gap: 10px;
+}
+.shoe-page-form-size {
+    cursor: pointer;
+    padding: 8px;
+    background-color: lightgray;
+    border-radius: 20px;
+}
+.shoe-page-form-sizes:hover {
+    background-color: #cecece;
+}
+.shoe-page-form-properties {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+}
+.shoe-page-form-price {
+    font-size: 22px;
+}
