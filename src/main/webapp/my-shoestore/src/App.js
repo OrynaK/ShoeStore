@@ -11,6 +11,7 @@ import NavbarAdmin from "./components/navbars/NavbarAdmin/NavbarAdmin";
 import Contacts from "./components/Contacts/Contacts";
 import PaymentAndDelivery from "./components/PaymentAndDelivery/PaymentAndDelivery";
 import Main from "./components/Main/Main";
+import ShoePage from "./components/ShoePage/ShoePage";
 
 function App() {
     localStorage.clear();
@@ -19,7 +20,9 @@ function App() {
           <div className="ShoeStore">
               <div className="__navbar">
                   <NavbarParser/>
+                  <ShoePage/>
               </div>
+
               <Routes>
                   <Route path="/loginform" element={<LoginForm/>}></Route>
                   <Route path="/clientcabinet" element={<ClientCabinet/>}></Route>
