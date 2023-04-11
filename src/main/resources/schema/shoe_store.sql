@@ -53,6 +53,26 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`image` (
 
 
 -- -----------------------------------------------------
+-- Table `shoe_store`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `shoe_store`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `shoe_store`.`user` (
+                                                   `user_id` INT NOT NULL AUTO_INCREMENT,
+                                                   `name` VARCHAR(45) NOT NULL,
+    `surname` VARCHAR(45) NOT NULL,
+    `password` VARCHAR(45) NOT NULL,
+    `email` VARCHAR(45) NOT NULL,
+    `role` ENUM('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
+    `phone_number` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`user_id`))
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 11
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `shoe_store`.`order`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `shoe_store`.`order` ;
@@ -62,8 +82,18 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`order` (
                                                     `date` DATE NOT NULL,
                                                     `time` TIME NOT NULL,
                                                     `status` ENUM('processing', 'accepted', 'compiled', 'ready_for_sending', 'delivered', 'basket') NOT NULL DEFAULT 'basket',
+    `user_id` INT NOT NULL,
+    `address_id` INT NOT NULL,
     PRIMARY KEY (`order_id`),
-    UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE)
+    UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
+    UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
+    INDEX `order_address_fk_idx` (`address_id` ASC) VISIBLE,
+    CONSTRAINT `order_address_fk`
+    FOREIGN KEY (`address_id`)
+    REFERENCES `shoe_store`.`address` (`address_id`),
+    CONSTRAINT `order_user_fk`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `shoe_store`.`user` (`user_id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
@@ -80,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`shoe` (
     `color` VARCHAR(45) NOT NULL,
     `season` ENUM('winter', 'demi', 'summer') NOT NULL,
     `sex` ENUM('male', 'female') NOT NULL,
-    `price` DECIMAL(10,2) NOT NULL,
+    `actual_price` DECIMAL(10,2) NOT NULL,
     `name` VARCHAR(45) NOT NULL,
     `amount` INT NOT NULL,
     `image_id` INT NOT NULL,
@@ -104,7 +134,8 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`shoes_order` (
                                                           `order_id` INT NOT NULL,
                                                           `shoe_id` INT NOT NULL,
                                                           `shoes_amount` INT NOT NULL,
-                                                          PRIMARY KEY (`order_id`, `shoe_id`),
+                                                          `shoe_price` DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (`order_id`, `shoe_id`),
     INDEX `shoe_pk_idx` (`shoe_id` ASC) VISIBLE,
     CONSTRAINT `order_pk1`
     FOREIGN KEY (`order_id`)
@@ -117,59 +148,6 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`shoes_order` (
     COLLATE = utf8mb4_0900_ai_ci;
 
 
--- -----------------------------------------------------
--- Table `shoe_store`.`user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`user` ;
-
-CREATE TABLE IF NOT EXISTS `shoe_store`.`user` (
-                                                   `user_id` INT NOT NULL AUTO_INCREMENT,
-                                                   `name` VARCHAR(45) NOT NULL,
-    `surname` VARCHAR(45) NOT NULL,
-    `password` VARCHAR(45) NOT NULL,
-    `email` VARCHAR(45) NOT NULL,
-    `role` ENUM('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
-    `address_id` INT NULL DEFAULT NULL,
-    `phone_number` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`user_id`),
-    INDEX `user_address_fk_idx` (`address_id` ASC) VISIBLE,
-    CONSTRAINT `user_address_fk`
-    FOREIGN KEY (`address_id`)
-    REFERENCES `shoe_store`.`address` (`address_id`))
-    ENGINE = InnoDB
-    AUTO_INCREMENT = 6
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `shoe_store`.`user_order`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`user_order` ;
-
-CREATE TABLE IF NOT EXISTS `shoe_store`.`user_order` (
-                                                         `user_id` INT NOT NULL,
-                                                         `order_id` INT NOT NULL,
-                                                         PRIMARY KEY (`user_id`, `order_id`),
-    INDEX `order_pk2_idx` (`order_id` ASC) VISIBLE,
-    CONSTRAINT `order_pk2`
-    FOREIGN KEY (`order_id`)
-    REFERENCES `shoe_store`.`order` (`order_id`),
-    CONSTRAINT `user_pk`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `shoe_store`.`user` (`user_id`))
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('client', 'client','client', 'client', 'client@gmail.com', '+380111111111');
-INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('admin', 'admin','admin', 'admin', 'admin@gmail.com', '+380222222222');
-INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('packer', 'packer','packer', 'packer', 'packer@gmail.com', '+380333333333');
-INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('warehouse', 'warehouse','warehouse', 'warehouse', 'warehouse@gmail.com', '+380444444444');
-INSERT INTO user (name, surname, role, password, email, phone_number) VALUES ('courier', 'courier','courier', 'courier', 'courier@gmail.com', '+380555555555');
