@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`address` (
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
-
+insert into shoe_store.address value (1, 'Ukraine','Kharkiv', 'Tselinogradska', '58', 1, '23');
 -- -----------------------------------------------------
 -- Table `shoe_store`.`image`
 -- -----------------------------------------------------
@@ -64,14 +64,14 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`user` (
     `password` VARCHAR(45) NOT NULL,
     `email` VARCHAR(45) NOT NULL,
     `role` ENUM('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
+    `address_id` INT NOT NULL,
     `phone_number` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`user_id`))
     ENGINE = InnoDB
     AUTO_INCREMENT = 11
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
-
-
+insert into shoe_store.user value (default,'admin', 'admin', '1234', 'admin@gmail.com', 'admin', 1, '+380950000000');
 -- -----------------------------------------------------
 -- Table `shoe_store`.`order`
 -- -----------------------------------------------------

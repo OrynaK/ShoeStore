@@ -16,18 +16,17 @@ function ClientCabinet() {
             <h2 className="cabinet-data">Особисті данні</h2>
             <h2 className="cabinet-basket-header">Кошик</h2>
         <div className="cabinet-form">
-
             <span className="cabinet-form-span">{user && user.name}</span>
             <span className="cabinet-form-span">{user && user.surname}</span>
             <span className="cabinet-form-span">Номер телефону</span>
-            <span className="cabinet-form-span"><em>+38 050 133 33 56</em></span>
+            <span className="cabinet-form-span"><em>{user && user.phoneNumber}</em></span>
             <span className="cabinet-form-span">Email</span>
+            <span className="cabinet-form-span">{user && user.email}</span>
             <span className="cabinet-form-span">Роль</span>
             <span className="cabinet-form-span"><em>{user && user.role}</em></span>
             <span className="cabinet-form-span">Адреса</span>
-            <span className="cabinet-form-span"><em>Харкiв, вул. Х кв 13</em></span>
+            <span className="cabinet-form-span"><em>{user && user.address_id}</em></span>
             <button className="cabinet-form-btn">Змiнити даннi</button>
-
         </div>
             <div className="cabinet-basket">
                 <div className="basket-form">

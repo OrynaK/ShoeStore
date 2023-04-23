@@ -25,8 +25,8 @@ function App() {
                   <NavbarParser/>
 
               </div>
-                <WarehouseOrders/>
-              {/*
+                {/*<WarehouseOrders/>*/}
+              {
                 <Routes>
                   <Route path="/loginform" element={<LoginForm/>}></Route>
                   <Route path="/clientcabinet" element={<ClientCabinet/>}></Route>
@@ -35,7 +35,7 @@ function App() {
                   <Route path="/paymentanddelivery" element={<PaymentAndDelivery/>}></Route>
                   <Route path="/main" element={<Main/>}></Route>
                 </Routes>
-                */}
+                }
 
           </div>
 
