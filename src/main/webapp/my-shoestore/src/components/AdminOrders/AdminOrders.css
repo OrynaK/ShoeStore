@@ -1,0 +1,37 @@
+.admin-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    align-items: center;
+    align-content: center;
+    gap: 20px;
+
+}
+
+.admin-orders-table-th, .admin-orders-table-td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-orders-table-th {
+    background-color: #f2f2f2;
+}
+.admin-orders-table-btn-green {
+    width: 150px;
+    height: 40px;
+    border: transparent;
+    background-color: #4ff069;
+    border-radius: 20px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.admin-orders-table-btn-red {
+    width: 150px;
+    height: 40px;
+    border: none;
+    background-color: #f54545;
+    border-radius: 20px;
+    margin-top: 10px;
+
+}
