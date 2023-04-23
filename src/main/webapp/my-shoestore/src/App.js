@@ -12,6 +12,9 @@ import Contacts from "./components/Contacts/Contacts";
 import PaymentAndDelivery from "./components/PaymentAndDelivery/PaymentAndDelivery";
 import Main from "./components/Main/Main";
 import ShoePage from "./components/ShoePage/ShoePage";
+import AdminOrders from "./components/AdminOrders/AdminOrders";
+import CourierOrders from "./components/CourierOrders/CourierOrders";
+import WarehouseOrders from "./components/WarehouseOrders/WarehouseOrders";
 
 function App() {
     localStorage.clear();
@@ -20,17 +23,19 @@ function App() {
           <div className="ShoeStore">
               <div className="__navbar">
                   <NavbarParser/>
-                  <ShoePage/>
-              </div>
 
-              <Routes>
+              </div>
+                <WarehouseOrders/>
+              {/*
+                <Routes>
                   <Route path="/loginform" element={<LoginForm/>}></Route>
                   <Route path="/clientcabinet" element={<ClientCabinet/>}></Route>
                   <Route path="/registrationform" element={<RegistrationForm/>}></Route>
                   <Route path="/contacts" element={<Contacts/>}></Route>
                   <Route path="/paymentanddelivery" element={<PaymentAndDelivery/>}></Route>
                   <Route path="/main" element={<Main/>}></Route>
-              </Routes>
+                </Routes>
+                */}
 
           </div>
 
