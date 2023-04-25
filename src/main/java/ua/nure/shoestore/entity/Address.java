@@ -1,12 +1,11 @@
 package ua.nure.shoestore.entity;
 
-import ua.nure.shoestore.entity.enums.Country;
 
 import java.util.Objects;
 
 public class Address {
     private long addressId;
-    private Country country;
+    private String country;
     private String city;
     private String street;
     private String houseNumber;
@@ -21,11 +20,11 @@ public class Address {
         this.addressId = addressId;
     }
 
-    public Country getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
@@ -74,13 +73,7 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return addressId == address.addressId
-                && entrance == address.entrance
-                && apartmentNumber == address.apartmentNumber
-                && country == address.country
-                && Objects.equals(city, address.city)
-                && Objects.equals(street, address.street)
-                && Objects.equals(houseNumber, address.houseNumber);
+        return addressId == address.addressId && entrance == address.entrance && apartmentNumber == address.apartmentNumber && Objects.equals(country, address.country) && Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(houseNumber, address.houseNumber);
     }
 
     @Override

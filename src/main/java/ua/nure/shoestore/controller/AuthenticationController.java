@@ -3,8 +3,10 @@ package ua.nure.shoestore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ua.nure.shoestore.entity.Address;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.forms.LoginForm;
+import ua.nure.shoestore.service.AddressService;
 import ua.nure.shoestore.service.AuthenticationService;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class AuthenticationController {
     public String registration(@RequestBody User user){
         if(user != null){
             service.addUser(user);
-            return "New student added";
+            return "New user added";
         } else return "";
     }
 
@@ -40,4 +42,6 @@ public class AuthenticationController {
     public List<User> getAll(){
         return new ArrayList<>();
     }
+
+
 }
