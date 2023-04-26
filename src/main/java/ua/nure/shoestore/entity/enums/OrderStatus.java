@@ -7,6 +7,7 @@ public enum OrderStatus {
     READY_FOR_SENDING("ReadyForSending"),
     DELIVERED("Delivered"),
     BASKET("Basket");
+
     private String orderStatus;
 
     OrderStatus(String orderStatus) {

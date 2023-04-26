@@ -81,7 +81,7 @@ public class ShoeDAOImpl implements ShoeDAO {
         s.setColor(rs.getString("color"));
         s.setSeason(Season.valueOf(rs.getString("season").toUpperCase()));
         s.setSex(Sex.valueOf(rs.getString("sex").toUpperCase()));
-        s.setPrice(rs.getBigDecimal("price"));
+        s.setPrice(rs.getBigDecimal("actual_price"));
         s.setName(rs.getString("name"));
         s.setAmount(rs.getInt("shoe_id"));
         s.setImageId(rs.getInt("shoe_id"));
