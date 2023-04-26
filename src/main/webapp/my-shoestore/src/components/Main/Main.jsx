@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Main.css";
 import ShoeCard from "../ShoeCard/ShoeCard";
 import FilterDropdown from "../FilterDropdown/FilterDropdown";
@@ -13,6 +13,14 @@ function Main() {
         setIsOpen(!isOpen);
     };
 
+    const [shoes, setShoes] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:8080/getShoes')
+            .then(response => response.json())
+            .then(data => setShoes(data));
+    }, []);
+
     return(
         <div className="main">
             <div className="main-menu">
@@ -22,10 +30,9 @@ function Main() {
 
             </div>
             <div className="main-shoe-cards">
-                <ShoeCard/>
-                <ShoeCard/>
-                <ShoeCard/>
-                <ShoeCard/>
+                {shoes.map(shoe => (
+                    <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image} />
+                ))}
             </div>
 
         </div>
