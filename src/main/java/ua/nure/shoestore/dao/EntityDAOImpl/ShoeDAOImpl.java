@@ -6,6 +6,7 @@ import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.enums.Season;
 import ua.nure.shoestore.entity.enums.Sex;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.Properties;
 public class ShoeDAOImpl implements ShoeDAO {
 
     private static final String GET_ALL_SHOES="SELECT * FROM shoe";
+    private static final String GET_SHOES_BY_COLOR="SELECT * FROM shoe WHERE color=?";
+    private static final String GET_SHOES_BY_SIZE="SELECT * FROM shoe WHERE size=?";
+    private static final String GET_SHOES_BY_SEX="SELECT * FROM shoe WHERE sex=?";
     private final String url;
     private final Properties dbProps = new Properties();
 
@@ -33,6 +37,63 @@ public class ShoeDAOImpl implements ShoeDAO {
             }
         }
         catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Shoe> getShoesByColor(String color) {
+        List<Shoe> shoeList = new ArrayList<>();
+        try (Connection con = getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_SHOES_BY_COLOR)) {
+                int k = 0;
+                ps.setString(++k, color);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        shoeList.add(mapShoes(rs));
+                    }
+                    return shoeList;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Shoe> getShoesBySize(BigDecimal size) {
+        List<Shoe> shoeList = new ArrayList<>();
+        try (Connection con = getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_SHOES_BY_SIZE)) {
+                int k = 0;
+                ps.setBigDecimal(++k, size);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        shoeList.add(mapShoes(rs));
+                    }
+                    return shoeList;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Shoe> getShoesBySex(Sex sex) {
+        List<Shoe> shoeList = new ArrayList<>();
+        try (Connection con = getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_SHOES_BY_SEX)) {
+                int k = 0;
+                ps.setString(++k, sex.toString());
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        shoeList.add(mapShoes(rs));
+                    }
+                    return shoeList;
+                }
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
