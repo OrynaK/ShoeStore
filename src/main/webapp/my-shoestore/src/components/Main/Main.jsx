@@ -8,12 +8,15 @@ import SortBtn from "../SortBtn/SortBtn";
 
 function Main() {
     const [isOpen, setIsOpen] = useState(false);
+    const [shoes, setShoes] = useState([]);
+    const [filteredShoes, setFilteredShoes] = useState([]);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
-
-    const [shoes, setShoes] = useState([]);
+    const handleFilterChange = (filteredData) => {
+        setFilteredShoes(filteredData);
+    };
 
     useEffect(() => {
         fetch('http://localhost:8080/getShoes')
@@ -24,15 +27,21 @@ function Main() {
     return(
         <div className="main">
             <div className="main-menu">
-                <FilterDropdown/>
+                <FilterDropdown onFilterChange={handleFilterChange} />
                 <SortBtn/>
                 <SearchBox/>
 
             </div>
             <div className="main-shoe-cards">
-                {shoes.map(shoe => (
-                    <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image} />
-                ))}
+                {filteredShoes && filteredShoes.length > 0 ? (
+                    filteredShoes.map(shoe => (
+                        <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image} />
+                    ))
+                ) : (
+                    shoes.map(shoe => (
+                        <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image} />
+                    ))
+                )}
             </div>
 
         </div>

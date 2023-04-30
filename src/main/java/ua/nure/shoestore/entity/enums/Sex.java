@@ -1,9 +1,9 @@
 package ua.nure.shoestore.entity.enums;
 
 public enum Sex {
-    MALE("Male"),
-    FEMALE("Female"),
-    UNISEX("Unisex");
+    MALE("male"),
+    FEMALE("female"),
+    UNISEX("unisex");
     private String sex;
 
     Sex(String sex) {
