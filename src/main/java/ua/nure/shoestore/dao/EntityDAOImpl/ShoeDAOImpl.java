@@ -21,6 +21,7 @@ public class ShoeDAOImpl implements ShoeDAO {
     private static final String GET_SHOES_BY_COLOR="SELECT * FROM shoe WHERE color=?";
     private static final String GET_SHOES_BY_SIZE="SELECT * FROM shoe WHERE size=?";
     private static final String GET_SHOES_BY_SEX="SELECT * FROM shoe WHERE sex=?";
+    private static final String GET_SHOES_BY_NAME="SELECT * FROM shoe WHERE name LIKE ?";
     private final String url;
     private final Properties dbProps = new Properties();
 
@@ -132,6 +133,25 @@ public class ShoeDAOImpl implements ShoeDAO {
             }
         }
         catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Shoe> searchShoes(String name) {
+        List<Shoe> shoeList = new ArrayList<>();
+        try (Connection con = getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_SHOES_BY_NAME)) {
+                int k = 0;
+                ps.setString(++k, "%"+name+"%");
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        shoeList.add(mapShoes(rs));
+                    }
+                    return shoeList;
+                }
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -26,26 +26,22 @@ function Main() {
             .then(data => setShoes(data));
     }, [sortType]);
 
-
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
     const handleFilterChange = (filteredData) => {
         setFilteredShoes(filteredData);
     };
-
-    useEffect(() => {
-        fetch('http://localhost:8080/getShoes')
-            .then(response => response.json())
-            .then(data => setShoes(data));
-    }, []);
+    const handleSearch = (searchResults) => {
+        setFilteredShoes(searchResults);
+    };
 
     return(
         <div className="main">
             <div className="main-menu">
                 <FilterDropdown onFilterChange={handleFilterChange} />
                 <SortBtn onSortChange={handleSortChange}/>
-                <SearchBox/>
+                <SearchBox onSearch={handleSearch}/>
 
             </div>
             <div className="main-shoe-cards">
