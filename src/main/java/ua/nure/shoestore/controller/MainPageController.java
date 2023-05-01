@@ -50,4 +50,9 @@ public class MainPageController {
         System.out.println(shoeService.getShoesDescendingPrice());
         return shoeService.getShoesDescendingPrice();
     }
+    @GetMapping(value = "/searchShoes")
+    public List<Shoe> searchShoes(@RequestParam("name") String name){
+        System.out.println(shoeService.searchShoes(name));
+        return shoeService.searchShoes(name);
+    }
 }

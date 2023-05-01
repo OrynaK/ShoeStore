@@ -32,5 +32,8 @@ public class ShoeService {
     public List<Shoe> getShoesDescendingPrice(){
         return shoeDAO.getShoesDescendingPrice();
     }
+    public List<Shoe> searchShoes(String name){
+        return shoeDAO.searchShoes(name);
+    }
 
 }

@@ -9,7 +9,9 @@ function SearchBox(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.onSearch(query);
+        fetch(`http://localhost:8080/searchShoes?name=${query}`)
+            .then(response => response.json())
+            .then(data => props.onSearch(data));
     };
 
     return (
