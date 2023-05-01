@@ -7,9 +7,9 @@ function FilterDropdown({onFilterChange}) {
     const [isOpenSublistColor, setIsOpenSublistColor] = useState(false);
     const [isOpenSublistSize, setIsOpenSublistSize] = useState(false);
     const [isOpenSublistSex, setIsOpenSublistSex] = useState(false);
-    const [color,setSelectedColor] = useState("");
-    const [size,setSelectedSize] = useState("");
-    const [sex,setSelectedSex] = useState("");
+    const [color, setSelectedColor] = useState("");
+    const [size, setSelectedSize] = useState("");
+    const [sex, setSelectedSex] = useState("");
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -108,7 +108,7 @@ function FilterDropdown({onFilterChange}) {
                             >
                                 За розміром
                             </a>
-                            {isOpenSublistColor && (
+                            {isOpenSublistSize && (
                                 <ul className="filter-dropdown__sublist-content">
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
@@ -147,12 +147,12 @@ function FilterDropdown({onFilterChange}) {
                         </div>
                         <div className="filter-dropdown__sublist">
                             <a className="filter-dropdown__sublist--option"
-                               onClick={toggleSublistSize}
+                               onClick={toggleSublistSex}
                                href="#"
                             >
                                 За статтю
                             </a>
-                            {isOpenSublistColor && (
+                            {isOpenSublistSex && (
                                 <ul className="filter-dropdown__sublist-content">
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"

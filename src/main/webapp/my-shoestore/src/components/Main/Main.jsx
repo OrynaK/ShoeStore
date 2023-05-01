@@ -10,6 +10,22 @@ function Main() {
     const [isOpen, setIsOpen] = useState(false);
     const [shoes, setShoes] = useState([]);
     const [filteredShoes, setFilteredShoes] = useState([]);
+    const [sortType, setSortType] = useState('default');
+    const handleSortChange = (sortType) => {
+        setSortType(sortType);
+    };
+    useEffect(() => {
+        let url = 'http://localhost:8080/getShoes';
+        if (sortType === 'asc') {
+            url = 'http://localhost:8080/getShoesAscendingPrice';
+        } else if (sortType === 'desc') {
+            url = 'http://localhost:8080/getShoesDescendingPrice';
+        }
+        fetch(url)
+            .then(response => response.json())
+            .then(data => setShoes(data));
+    }, [sortType]);
+
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -28,7 +44,7 @@ function Main() {
         <div className="main">
             <div className="main-menu">
                 <FilterDropdown onFilterChange={handleFilterChange} />
-                <SortBtn/>
+                <SortBtn onSortChange={handleSortChange}/>
                 <SearchBox/>
 
             </div>
