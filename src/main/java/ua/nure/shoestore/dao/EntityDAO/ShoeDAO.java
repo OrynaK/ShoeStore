@@ -7,8 +7,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ShoeDAO {
-    public List<Shoe> getAllShoes();
-    public List<Shoe> getShoesByColor(String color);
-    public List<Shoe> getShoesBySize(BigDecimal size);
-    public List<Shoe> getShoesBySex(Sex sex);
+    List<Shoe> getAllShoes();
+    List<Shoe> getShoesByColor(String color);
+    List<Shoe> getShoesBySize(BigDecimal size);
+    List<Shoe> getShoesBySex(Sex sex);
+    List<Shoe> getShoesAscendingPrice();
+    List<Shoe> getShoesDescendingPrice();
+
 }

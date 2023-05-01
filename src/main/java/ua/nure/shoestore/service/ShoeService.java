@@ -26,4 +26,11 @@ public class ShoeService {
     public List<Shoe> getShoesBySex(Sex sex){
        return shoeDAO.getShoesBySex(sex);
     }
+    public List<Shoe> getShoesAscendingPrice(){
+        return shoeDAO.getShoesAscendingPrice();
+    }
+    public List<Shoe> getShoesDescendingPrice(){
+        return shoeDAO.getShoesDescendingPrice();
+    }
+
 }

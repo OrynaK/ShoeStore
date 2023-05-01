@@ -16,6 +16,8 @@ import java.util.Properties;
 public class ShoeDAOImpl implements ShoeDAO {
 
     private static final String GET_ALL_SHOES="SELECT * FROM shoe";
+    private static final String GET_SHOES_ASCENDING_PRICE="SELECT * FROM shoe ORDER BY actual_price ASC";
+    private static final String GET_SHOES_DESCENDING_PRICE="SELECT * FROM shoe ORDER BY actual_price DESC";
     private static final String GET_SHOES_BY_COLOR="SELECT * FROM shoe WHERE color=?";
     private static final String GET_SHOES_BY_SIZE="SELECT * FROM shoe WHERE size=?";
     private static final String GET_SHOES_BY_SEX="SELECT * FROM shoe WHERE sex=?";
@@ -94,6 +96,42 @@ public class ShoeDAOImpl implements ShoeDAO {
                 }
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Shoe> getShoesAscendingPrice() {
+        List<Shoe> shoeList = new ArrayList<>();
+        try (Connection con = getConnection()) {
+            try (Statement st = con.createStatement()) {
+                try (ResultSet rs = st.executeQuery(GET_SHOES_ASCENDING_PRICE)) {
+                    while (rs.next()) {
+                        shoeList.add(mapShoes(rs));
+                    }
+                    return shoeList;
+                }
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Shoe> getShoesDescendingPrice() {
+        List<Shoe> shoeList = new ArrayList<>();
+        try (Connection con = getConnection()) {
+            try (Statement st = con.createStatement()) {
+                try (ResultSet rs = st.executeQuery(GET_SHOES_DESCENDING_PRICE)) {
+                    while (rs.next()) {
+                        shoeList.add(mapShoes(rs));
+                    }
+                    return shoeList;
+                }
+            }
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
