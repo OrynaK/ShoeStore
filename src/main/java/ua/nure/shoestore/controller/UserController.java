@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.nure.shoestore.entity.Address;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
+import ua.nure.shoestore.forms.UpdateForm;
 import ua.nure.shoestore.service.AddressService;
 import ua.nure.shoestore.service.UserService;
 
@@ -23,10 +24,9 @@ public class UserController {
     }
 
     @PostMapping(value="/updateUserInfo")
-    public String updateInfo(@RequestBody User user){
-        if( user!=null){
-            userService.updateInfo(user);
-            return "User info updated";
+    public User updateInfo(@RequestBody UpdateForm updateForm){
+        if( updateForm!=null){
+            return userService.updateInfo(updateForm);
         }
         return null;
     }
