@@ -20,39 +20,32 @@ public class MainPageController {
 
     @GetMapping(value = "/getShoes")
     public List<Shoe> getAll(){
-        System.out.println(shoeService.getShoes());
         return shoeService.getShoes();
     }
     @GetMapping(value = "/getShoesByColor")
     public List<Shoe> getShoesByColor(@RequestParam("color") String color){
-        System.out.println(shoeService.getShoesByColor(color));
         return shoeService.getShoesByColor(color);
     }
 
     @GetMapping(value = "/getShoesBySize")
     public List<Shoe> getShoesBySize(@RequestParam("size") BigDecimal size){
-        System.out.println(shoeService.getShoesBySize(size));
         return shoeService.getShoesBySize(size);
     }
 
     @GetMapping(value = "/getShoesBySex")
     public List<Shoe> getShoesBySex(@RequestParam("sex") String sex){
-        System.out.println(shoeService.getShoesBySex(Sex.valueOf(sex.toUpperCase())));
         return shoeService.getShoesBySex(Sex.valueOf(sex.toUpperCase()));
     }
     @GetMapping(value = "/getShoesAscendingPrice")
     public List<Shoe> getAllAscendingPrice(){
-        System.out.println(shoeService.getShoesAscendingPrice());
         return shoeService.getShoesAscendingPrice();
     }
     @GetMapping(value = "/getShoesDescendingPrice")
     public List<Shoe> getAllDescendingPrice(){
-        System.out.println(shoeService.getShoesDescendingPrice());
         return shoeService.getShoesDescendingPrice();
     }
     @GetMapping(value = "/searchShoes")
     public List<Shoe> searchShoes(@RequestParam("name") String name){
-        System.out.println(shoeService.searchShoes(name));
         return shoeService.searchShoes(name);
     }
 }

@@ -24,8 +24,6 @@ function ClientCabinet() {
             <span className="cabinet-form-span">{user && user.email}</span>
             <span className="cabinet-form-span">Роль</span>
             <span className="cabinet-form-span"><em>{user && user.role}</em></span>
-            <span className="cabinet-form-span">Адреса</span>
-            <span className="cabinet-form-span"><em>{user && user.address_id}</em></span>
             <button className="cabinet-form-btn">Змiнити даннi</button>
         </div>
             <div className="cabinet-basket">
