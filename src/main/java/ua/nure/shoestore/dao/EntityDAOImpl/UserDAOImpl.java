@@ -4,6 +4,8 @@ import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
+import ua.nure.shoestore.forms.UpdateForm;
+
 import java.sql.*;
 import java.util.Properties;
 
@@ -66,17 +68,19 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public void update(User user) {
+    public User update(UpdateForm updateForm) {
         try (Connection con = getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(UPDATE)) {
                 int k = 0;
-                ps.setString(++k, user.getName());
-                ps.setString(++k, user.getSurname());
-                ps.setString(++k, user.getEmail());
-                ps.setString(++k, user.getPassword());
-                ps.setString(++k, user.getPhoneNumber());
+                ps.setString(++k, updateForm.getName());
+                ps.setString(++k, updateForm.getSurname());
+                ps.setString(++k, updateForm.getEmail());
+                ps.setString(++k, updateForm.getPassword());
+                ps.setString(++k, updateForm.getPhoneNumber());
+                ps.setLong(++k, updateForm.getUser_id());
                 ps.executeUpdate();
             }
+            return getUser(updateForm.getEmail(), updateForm.getPassword());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
