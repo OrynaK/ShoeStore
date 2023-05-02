@@ -14,4 +14,7 @@ public class AddressService {
     public long addAddress(Address address){
         return addressDAO.add(address);
     }
+    public Address getById(long id){
+        return addressDAO.getById(id);
+    }
 }
