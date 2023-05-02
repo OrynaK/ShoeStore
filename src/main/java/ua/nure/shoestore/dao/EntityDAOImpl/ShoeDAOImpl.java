@@ -3,6 +3,7 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
 import ua.nure.shoestore.entity.Shoe;
+import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Season;
 import ua.nure.shoestore.entity.enums.Sex;
 
@@ -22,6 +23,8 @@ public class ShoeDAOImpl implements ShoeDAO {
     private static final String GET_SHOES_BY_SIZE="SELECT * FROM shoe WHERE size=?";
     private static final String GET_SHOES_BY_SEX="SELECT * FROM shoe WHERE sex=?";
     private static final String GET_SHOES_BY_NAME="SELECT * FROM shoe WHERE name LIKE ?";
+
+    private static final String ADD_SHOE = "INSERT INTO shoe (size, color, season, sex, actual_price, name, amount, image_id, shoe_id) VALUES(?,?,?,?,?,?,?,?,?)";
     private final String url;
     private final Properties dbProps = new Properties();
 
@@ -162,6 +165,31 @@ public class ShoeDAOImpl implements ShoeDAO {
         dbProps.setProperty("user", config.getUser());
         dbProps.setProperty("password", config.getPassword());
     }
+
+    public void add(Shoe shoe) {
+        try (Connection con = getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(ADD_SHOE, Statement.RETURN_GENERATED_KEYS)) {
+                int k=0;
+                ps.setString(++k, shoe.getName());
+                ps.setString(++k, shoe.getColor());
+                ps.setBigDecimal(++k, shoe.getSize());
+                ps.setString(++k, shoe.getSex().getSex()); // Використовуємо метод getSex()
+                ps.setString(++k, shoe.getSeason().getSeason()); // Використовуємо метод getSeason()
+                ps.setInt(++k, shoe.getAmount());
+                ps.setBigDecimal(++k, shoe.getPrice());
+                ps.executeUpdate();
+                try (ResultSet keys = ps.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        shoe.setShoeId(keys.getLong(1));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
     private static void close(AutoCloseable ac) {
         if (ac != null) {

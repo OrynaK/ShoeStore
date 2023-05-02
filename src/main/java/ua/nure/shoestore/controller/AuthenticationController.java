@@ -4,6 +4,7 @@ package ua.nure.shoestore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.entity.Address;
+import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.forms.LoginForm;
 import ua.nure.shoestore.service.AddressService;
@@ -30,6 +31,7 @@ public class AuthenticationController {
             return "New user added";
         } else return "";
     }
+
 
     @PostMapping(value = "/login")
     public User loginUser(@RequestBody LoginForm loginForm){

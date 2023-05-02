@@ -15,6 +15,7 @@ import ShoePage from "./components/ShoePage/ShoePage";
 import AdminOrders from "./components/AdminOrders/AdminOrders";
 import CourierOrders from "./components/CourierOrders/CourierOrders";
 import WarehouseOrders from "./components/WarehouseOrders/WarehouseOrders";
+import AddNewShoe from "./components/AddNewShoe/AddNewShoe";
 
 function App() {
     localStorage.clear();
@@ -33,6 +34,8 @@ function App() {
                   <Route path="/registrationform" element={<RegistrationForm/>}></Route>
                   <Route path="/contacts" element={<Contacts/>}></Route>
                   <Route path="/paymentanddelivery" element={<PaymentAndDelivery/>}></Route>
+                    <Route path="/adminorders" element={<AdminOrders/>}></Route>
+                    <Route path="/addnewshoe" element={<AddNewShoe/>}></Route>
                   <Route path="/main" element={<Main/>}></Route>
                     <Route path="/shoe/:id" element={<ShoePage/>}></Route>
                 </Routes>

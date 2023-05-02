@@ -1,6 +1,7 @@
 package ua.nure.shoestore.dao.EntityDAO;
 
 import ua.nure.shoestore.entity.Shoe;
+import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Sex;
 
 import java.math.BigDecimal;
@@ -14,5 +15,7 @@ public interface ShoeDAO {
     List<Shoe> getShoesAscendingPrice();
     List<Shoe> getShoesDescendingPrice();
     List<Shoe> searchShoes(String name);
+
+    void add(Shoe shoe);
 
 }
