@@ -36,4 +36,9 @@ public class ShoeService {
         return shoeDAO.searchShoes(name);
     }
 
+    public void addShoe(Shoe shoe) {
+        shoeDAO.add(shoe);
+    }
+
+
 }
