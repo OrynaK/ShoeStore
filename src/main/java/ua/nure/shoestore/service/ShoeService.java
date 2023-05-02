@@ -35,10 +35,8 @@ public class ShoeService {
     public List<Shoe> searchShoes(String name){
         return shoeDAO.searchShoes(name);
     }
-
     public void addShoe(Shoe shoe) {
         shoeDAO.add(shoe);
     }
-
 
 }

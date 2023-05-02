@@ -10,7 +10,7 @@ function AddNewShoe() {
     const[color, setColor]=useState('')
     const[season, setSeason]=useState('')
     const[sex, setSex]=useState('')
-    const[actualPrice, setActualPrice]=useState('')
+    const[price, setActualPrice]=useState('')
     const[amount, setAmount]=useState('');
     const[image, setImage]=useState('');
     const navigate = useNavigate();
@@ -49,8 +49,8 @@ function AddNewShoe() {
     }*/
     const handleSubmit = event => {
         event.preventDefault();
-        const shoe = {size, color, season, sex, actualPrice, name, amount, image}
-        fetch("http://localhost:3000/addnewshoe", {
+        const shoe = {name, size, color, season, sex, price, amount, image}
+        fetch("http://localhost:8080/addNewShoe", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(shoe)
@@ -116,7 +116,7 @@ function AddNewShoe() {
                     <input className="add-new-shoe-form-input"
                            type="text"
                            name="price"
-                           value={actualPrice}
+                           value={price}
                            onChange={event => setActualPrice(event.target.value)}
                     />
                     <label className="add-new-shoe-form-label">
