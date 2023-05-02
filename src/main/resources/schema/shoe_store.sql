@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`user` (
     AUTO_INCREMENT = 11
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
-insert into shoe_store.user value (default,'admin', 'admin', '1234', 'admin@gmail.com', 'admin', 1, '+380950000000');
+insert into shoe_store.user value (default,'admin', 'admin', '1234', 'admin@gmail.com', 'admin', '+380950000000');
 -- -----------------------------------------------------
 -- Table `shoe_store`.`order`
 -- -----------------------------------------------------

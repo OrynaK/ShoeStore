@@ -23,13 +23,14 @@ public class UserController {
     }
 
     @PostMapping(value="/updateUserInfo")
-    public String updateInfo(@RequestBody User user, @RequestBody Address address){
-        if(address!=null && user!=null){
-            userService.updateInfo(user,addressService.addAddress(address));
+    public String updateInfo(@RequestBody User user){
+        if( user!=null){
+            userService.updateInfo(user);
             return "User info updated";
         }
         return null;
     }
+    @PostMapping(value="/updateUserRole")
     public String updateStatus(@RequestBody long user_id, Role role){
         if(user_id>0 && role!=null){
             userService.updateRole(user_id, role);

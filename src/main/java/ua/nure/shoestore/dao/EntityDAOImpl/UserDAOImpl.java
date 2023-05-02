@@ -11,8 +11,7 @@ public class UserDAOImpl implements UserDAO {
     //ROLE AUTOMATICALLY IS "CLIENT"
     private static final String ADD_USER = "INSERT INTO user (name, surname, password, email, phone_number) VALUES (?, ?, ?, ?, ?)";
     private static final String LOGIN_ATTEMPT = "SELECT * FROM user WHERE email=? AND password=?";
- //   private static final String LOAD_ALL = "SELECT * FROM user";
-    private static final String UPDATE = "UPDATE user SET name=?, surname=?, email=?, password=?, address_id=?, phone_number=? WHERE user_id=?";
+    private static final String UPDATE = "UPDATE user SET name=?, surname=?, email=?, password=?, phone_number=? WHERE user_id=?";
     private static final String UPDATE_ROLE = "UPDATE user SET role=? WHERE user_id=?";
 
     private final String url;
@@ -67,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public void update(User user, long address_id) {
+    public void update(User user) {
         try (Connection con = getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(UPDATE)) {
                 int k = 0;
@@ -75,7 +74,6 @@ public class UserDAOImpl implements UserDAO {
                 ps.setString(++k, user.getSurname());
                 ps.setString(++k, user.getEmail());
                 ps.setString(++k, user.getPassword());
-                ps.setLong(++k, address_id);
                 ps.setString(++k, user.getPhoneNumber());
                 ps.executeUpdate();
             }

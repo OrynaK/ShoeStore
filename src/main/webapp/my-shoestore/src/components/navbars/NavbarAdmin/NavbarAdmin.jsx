@@ -14,7 +14,7 @@ function NavbarAdmin() {
                         <NavLink to="/main" className="nav-list__item">
                             Головна
                         </NavLink>
-                        <NavLink to="/addnewshoe" className="nav-list__item">
+                        <NavLink to="/addNewShoe" className="nav-list__item">
                             Додати товар
                         </NavLink>
                         <NavLink to="/main" className="nav-list__item">

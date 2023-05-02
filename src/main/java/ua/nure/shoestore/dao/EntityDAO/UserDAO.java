@@ -6,7 +6,7 @@ import ua.nure.shoestore.entity.enums.Role;
 
 public interface UserDAO{
     User getUser(String email, String password);
-    void update(User user, long address_id);
+    void update(User user);
     void updateRole(long user_id, Role role);
     void add(User user);
 }

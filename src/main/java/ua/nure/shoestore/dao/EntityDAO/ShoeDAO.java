@@ -15,7 +15,6 @@ public interface ShoeDAO {
     List<Shoe> getShoesAscendingPrice();
     List<Shoe> getShoesDescendingPrice();
     List<Shoe> searchShoes(String name);
-
     void add(Shoe shoe);
 
 }

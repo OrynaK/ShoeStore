@@ -24,7 +24,7 @@ public class ShoeDAOImpl implements ShoeDAO {
     private static final String GET_SHOES_BY_SEX="SELECT * FROM shoe WHERE sex=?";
     private static final String GET_SHOES_BY_NAME="SELECT * FROM shoe WHERE name LIKE ?";
 
-    private static final String ADD_SHOE = "INSERT INTO shoe (size, color, season, sex, actual_price, name, amount, image_id, shoe_id) VALUES(?,?,?,?,?,?,?,?,?)";
+    private static final String ADD_SHOE = "INSERT INTO shoe (size, color, season, sex, actual_price, name, amount) VALUES(?,?,?,?,?,?,?)";
     private final String url;
     private final Properties dbProps = new Properties();
 
@@ -159,7 +159,6 @@ public class ShoeDAOImpl implements ShoeDAO {
         }
     }
 
-
     public ShoeDAOImpl(DAOConfig config){
         url = config.getUrl();
         dbProps.setProperty("user", config.getUser());
@@ -170,13 +169,13 @@ public class ShoeDAOImpl implements ShoeDAO {
         try (Connection con = getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(ADD_SHOE, Statement.RETURN_GENERATED_KEYS)) {
                 int k=0;
-                ps.setString(++k, shoe.getName());
-                ps.setString(++k, shoe.getColor());
                 ps.setBigDecimal(++k, shoe.getSize());
-                ps.setString(++k, shoe.getSex().getSex()); // Використовуємо метод getSex()
-                ps.setString(++k, shoe.getSeason().getSeason()); // Використовуємо метод getSeason()
-                ps.setInt(++k, shoe.getAmount());
+                ps.setString(++k, shoe.getColor());
+                ps.setString(++k, shoe.getSeason().toString().toUpperCase()); // Використовуємо метод getSeason()
+                ps.setString(++k, shoe.getSex().toString().toUpperCase()); // Використовуємо метод getSex()
                 ps.setBigDecimal(++k, shoe.getPrice());
+                ps.setString(++k, shoe.getName());
+                ps.setInt(++k, shoe.getAmount());
                 ps.executeUpdate();
                 try (ResultSet keys = ps.getGeneratedKeys()) {
                     if (keys.next()) {

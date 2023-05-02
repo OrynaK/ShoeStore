@@ -16,7 +16,7 @@ public class AdminController {
         this.service = service;
     }
 
-    @PostMapping(value={"/addnewshoe"})
+    @PostMapping(value={"/addNewShoe"})
     public String registration(@RequestBody Shoe shoe){
         if(shoe != null){
             service.addShoe(shoe);

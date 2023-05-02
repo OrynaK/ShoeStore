@@ -9,8 +9,8 @@ import ua.nure.shoestore.entity.enums.Role;
 public class UserService {
     private UserDAO userDAO;
     public UserService(UserDAO userDAO){this.userDAO=userDAO;}
-    public void updateInfo(User user, long address_id) {
-        userDAO.update(user, address_id);
+    public void updateInfo(User user) {
+        userDAO.update(user);
     }
 
     public void updateRole(long user_id, Role role) {
