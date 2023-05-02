@@ -64,7 +64,6 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`user` (
     `password` VARCHAR(45) NOT NULL,
     `email` VARCHAR(45) NOT NULL,
     `role` ENUM('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
-    `address_id` INT NOT NULL,
     `phone_number` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`user_id`))
     ENGINE = InnoDB
@@ -109,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`shoe` (
                                                    `size` DECIMAL(10,1) NOT NULL,
     `color` VARCHAR(45) NOT NULL,
     `season` ENUM('winter', 'demi', 'summer') NOT NULL,
-    `sex` ENUM('male', 'female') NOT NULL,
+    `sex` ENUM('male', 'female', 'unisex') NOT NULL,
     `actual_price` DECIMAL(10,2) NOT NULL,
     `name` VARCHAR(45) NOT NULL,
     `amount` INT NOT NULL,

@@ -34,7 +34,6 @@ public class UserDAOImpl implements UserDAO {
                         user.setName(resultSet.getString("name"));
                         user.setSurname(resultSet.getString("surname"));
                         user.setRole(Role.valueOf(resultSet.getString("role").toUpperCase()));
-                        user.setAddress_id(resultSet.getLong("address_id"));
                         user.setPhoneNumber(resultSet.getString("phone_number"));
                     } else {
                         return null;
