@@ -2,6 +2,7 @@
 import "./AddNewShoe.css";
 import React, {useState} from "react";
 import {useNavigate} from "react-router";
+import app from "../../App";
 
 function AddNewShoe() {
     const[name, setName]=useState('')
@@ -14,7 +15,38 @@ function AddNewShoe() {
     const[image, setImage]=useState('');
     const navigate = useNavigate();
 
+   /* const multer = require('multer');
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, './assets/') // папка, куди будуть зберігатися завантажені файли
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname) // назва файлу буде оригінальною
+        }
+    });
+    const upload = multer({ storage: storage });
 
+    app.post('/assets', upload.single('image'), function (req, res) {
+        console.log(req.file); // виводимо інформацію про завантажений файл
+        // додайте код для збереження шляху до файлу у базі даних
+    });
+
+    function handleFileChange(event) {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+
+        fetch('/assets', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => {
+                // обробити відповідь сервера
+            })
+            .catch((error) => {
+                // обробити помилку
+            });
+    }*/
     const handleSubmit = event => {
         event.preventDefault();
         const shoe = {size, color, season, sex, actualPrice, name, amount, image}
@@ -96,13 +128,17 @@ function AddNewShoe() {
                            onChange={event => setAmount(event.target.value)}
                     />
                     <label className="add-new-shoe-form-label">
-                        Image</label>
+                        Image
+                    </label>
                     <input className="add-new-shoe-form-input"
-                           type="text"
+                           type="file"
                            name="image"
-                           value={image}
-                           onChange={event => setImage(event.target.value)}
+                           //onChange={handleFileChange}
+                           style={{ display: 'none' }}
                     />
+                    <button onClick={() => document.getElementsByName('image')[0].click()}>
+                        Додати фото товару
+                    </button>
 
                     <button className="add-new-shoe-form-btn" onClick={handleSubmit} type="submit">Додати</button>
                 </form>

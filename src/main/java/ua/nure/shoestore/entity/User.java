@@ -12,7 +12,7 @@ public class User {
     private String email;
     private String password;
     private Role role;
-    private Long address_id;
+
     private String phoneNumber;
 
     public long getUser_id() {
@@ -63,13 +63,7 @@ public class User {
         this.role = role;
     }
 
-    public Long getAddress_id() {
-        return address_id;
-    }
 
-    public void setAddress_id(Long address_id) {
-        this.address_id = address_id;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -84,12 +78,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return user_id == user.user_id && name.equals(user.name) && surname.equals(user.surname) && email.equals(user.email) && password.equals(user.password) && role == user.role && Objects.equals(address_id, user.address_id) && phoneNumber.equals(user.phoneNumber);
+        return user_id == user.user_id && name.equals(user.name) && surname.equals(user.surname) && email.equals(user.email) && password.equals(user.password) && role == user.role &&  phoneNumber.equals(user.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, name, surname, email, password, role, address_id, phoneNumber);
+        return Objects.hash(user_id, name, surname, email, password, role, phoneNumber);
     }
 
     @Override
@@ -101,7 +95,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
-                ", address_id=" + address_id +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
