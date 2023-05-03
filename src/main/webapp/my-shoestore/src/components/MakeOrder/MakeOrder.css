@@ -1,4 +1,4 @@
-.add-new-shoe-form--form {
+.make-order-form--form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,29 +6,28 @@
 }
 
 
-.add-new-shoe-form-label {
+.make-order-form-label {
     margin-bottom: 10px;
     font-size: 16px;
 }
 
-.add-new-shoe {
+.make-order {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 90vh;
     justify-content: center;
     text-align: center;
-    margin-bottom: 50px;
 }
 
-.add-new-shoe-header {
+.make-order-header {
     margin-bottom: 33px;
 
 }
 
-.add-new-shoe-form {
+.make-order-form {
     width: 460px;
-    height: 620px;
+    min-height: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,12 +36,11 @@
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     margin-top: -20px;
-
 }
 
 
 
-.add-new-shoe-form-btn {
+.make-order-form-btn {
     width: 130px;
     height: 30px;
     border: none;
@@ -54,11 +52,11 @@
 
 
 }
-.add-new-shoe-form-btn:hover {
+.make-order-form-btn:hover {
     background: #42cc55;
 }
 
-.add-new-shoe-form-input {
+.make-order-form-input {
     margin-bottom: 10px;
     border-radius: 20px;
     border: none;
@@ -67,5 +65,3 @@
     height: 20px;
     padding-left: 20px;
 }
-
-

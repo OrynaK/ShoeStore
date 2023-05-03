@@ -30,8 +30,8 @@
     height: 70vh;
     justify-content: center;
 }
-.cabinet-form-btn {
-    width: 130px;
+.cabinet-form-btn, .basket-form-btn {
+    width: 230px;
     height: 30px;
     border: none;
     background: #4ff069;
@@ -40,12 +40,12 @@
     margin-left: 45px;
     cursor: pointer;
 }
-.cabinet-form-btn:hover {
+.cabinet-form-btn:hover, .basket-form-btn:hover {
     background: #42cc55;
 }
 
 
-.cabinet-form-span {
+.cabinet-form-input {
     margin-left:45px ;
     margin-top: 10px;
 }
@@ -72,15 +72,23 @@
     min-height: 100px;
     width: 655px;
     margin-left: 120px;
+    margin-top: 50px;
     background: #F3F3F3;
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
+    align-items: center;
+    align-content: center;
 }
 
 .basket-form {
+    display: flex;
+    align-items: center;
+    align-content: center;
     box-sizing: border-box;
+    flex-direction: column;
     height: 100%;
+    margin-bottom: 50px;
 
 }
 
