@@ -1,5 +1,6 @@
 import "./ClientCabinet.css"
 import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 function ClientCabinet() {
     const [user, setUser] = useState(() => {
@@ -151,6 +152,10 @@ function ClientCabinet() {
                 <h2 className="cabinet-basket-header">Кошик</h2>
                 <div className="basket-form">
                     <h3 className="basket-form-header">Кошик пустий!</h3>
+                    <Link to={`/makeorder`}>
+                        <button className="basket-form-btn">Оформити замовлення</button>
+                    </Link>
+
                 </div>
             </div>
         </div>
