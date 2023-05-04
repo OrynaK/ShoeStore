@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ua.nure.shoestore.cards.ShoeCard;
 import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.enums.Sex;
 import ua.nure.shoestore.service.ShoeService;
@@ -19,7 +20,7 @@ public class MainPageController {
     private ShoeService shoeService;
 
     @GetMapping(value = "/getShoes")
-    public List<Shoe> getAll(){
+    public List<ShoeCard> getAll(){
         return shoeService.getShoes();
     }
     @GetMapping(value = "/getShoesByColor")

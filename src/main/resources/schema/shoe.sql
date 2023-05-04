@@ -158,3 +158,25 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 insert into shoe_store.address value (1, 'Ukraine','Kharkiv', 'Tselinogradska', '58', 1, '23');
 insert into shoe_store.user value (default,'admin', 'admin', '1234', 'admin@gmail.com', 'admin', 1, '+380950000000');
 insert into shoe_store.image value (1,'1', '1');
+INSERT INTO `shoe` (`size`, `color`, `season`, `sex`, `actual_price`, `name`, `amount`, `image_id`)
+VALUES
+    (33.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
+    (33.0, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
+    (33.5, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
+    (33.0, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
+    (35.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 1),
+    (34.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 1),
+    (35.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 1),
+    (34.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 1),
+    (37.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 1),
+    (36.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 1),
+    (37.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 1),
+    (36.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 1),
+    (38.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 1),
+    (37.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 1),
+    (38.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 1),
+    (37.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 1),
+    (40.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
+    (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
+    (40.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
+    (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1);
