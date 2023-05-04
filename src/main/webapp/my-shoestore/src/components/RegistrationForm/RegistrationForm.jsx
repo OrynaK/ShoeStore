@@ -16,7 +16,7 @@ function RegistrationForm() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        const user = {name, surname, email, phoneNumber, password, city, address, role:"Client"}
+        const user = {name, surname, email, phoneNumber, password, city, address, role:'CLIENT'}
         fetch("http://localhost:8080/registration", {
             method: "POST",
             headers: {"Content-Type": "application/json"},

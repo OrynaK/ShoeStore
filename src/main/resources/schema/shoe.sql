@@ -66,11 +66,10 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`user` (
     `password` VARCHAR(45) NOT NULL,
     `email` VARCHAR(45) NOT NULL,
     `role` ENUM('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
-    `address_id` INT NOT NULL,
     `phone_number` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`user_id`))
     ENGINE = InnoDB
-    AUTO_INCREMENT = 12
+    AUTO_INCREMENT = 14
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
@@ -124,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`shoe` (
     FOREIGN KEY (`image_id`)
     REFERENCES `shoe_store`.`image` (`image_id`))
     ENGINE = InnoDB
-    AUTO_INCREMENT = 15
+    AUTO_INCREMENT = 36
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
@@ -155,6 +154,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`shoes_order` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 insert into shoe_store.address value (1, 'Ukraine','Kharkiv', 'Tselinogradska', '58', 1, '23');
 insert into shoe_store.user value (default,'admin', 'admin', '1234', 'admin@gmail.com', 'admin', 1, '+380950000000');
 insert into shoe_store.image value (1,'1', '1');
