@@ -24,29 +24,27 @@ public class MainPageController {
         return shoeService.getShoes();
     }
     @GetMapping(value = "/getShoesByColor")
-    public List<Shoe> getShoesByColor(@RequestParam("color") String color){
+    public List<ShoeCard> getShoesByColor(@RequestParam("color") String color){
         return shoeService.getShoesByColor(color);
     }
-
     @GetMapping(value = "/getShoesBySize")
-    public List<Shoe> getShoesBySize(@RequestParam("size") BigDecimal size){
+    public List<ShoeCard> getShoesBySize(@RequestParam("size") BigDecimal size){
         return shoeService.getShoesBySize(size);
     }
-
     @GetMapping(value = "/getShoesBySex")
-    public List<Shoe> getShoesBySex(@RequestParam("sex") String sex){
+    public List<ShoeCard> getShoesBySex(@RequestParam("sex") String sex){
         return shoeService.getShoesBySex(Sex.valueOf(sex.toUpperCase()));
     }
     @GetMapping(value = "/getShoesAscendingPrice")
-    public List<Shoe> getAllAscendingPrice(){
+    public List<ShoeCard> getAllAscendingPrice(){
         return shoeService.getShoesAscendingPrice();
     }
     @GetMapping(value = "/getShoesDescendingPrice")
-    public List<Shoe> getAllDescendingPrice(){
+    public List<ShoeCard> getAllDescendingPrice(){
         return shoeService.getShoesDescendingPrice();
     }
     @GetMapping(value = "/searchShoes")
-    public List<Shoe> searchShoes(@RequestParam("name") String name){
+    public List<ShoeCard> searchShoes(@RequestParam("name") String name){
         return shoeService.searchShoes(name);
     }
 }

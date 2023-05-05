@@ -31,15 +31,16 @@ function Main() {
     };
     const handleFilterChange = (filteredData) => {
         setFilteredShoes(filteredData);
+        setShoes([]);
     };
     const handleSearch = (searchResults) => {
         setFilteredShoes(searchResults);
     };
 
-    return(
+    return (
         <div className="main">
             <div className="main-menu">
-                <FilterDropdown onFilterChange={handleFilterChange} />
+                <FilterDropdown onFilterChange={handleFilterChange}/>
                 <SortBtn onSortChange={handleSortChange}/>
                 <SearchBox onSearch={handleSearch}/>
 
@@ -50,14 +51,17 @@ function Main() {
                         <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image} />
                     ))
                 ) : (
-                    shoes.map(shoe => (
-                        <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image} />
-                    ))
+                    shoes.length > 0 ? (
+                        shoes.map(shoe => (
+                            <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image} />
+                        ))
+                    ) : (
+                        <h1>По вашому запиту нічого не знайдено</h1>
+                    )
                 )}
             </div>
-
         </div>
-
     );
 }
+
 export default Main;
