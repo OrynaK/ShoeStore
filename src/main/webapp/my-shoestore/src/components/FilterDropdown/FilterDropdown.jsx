@@ -71,7 +71,6 @@ function FilterDropdown({onFilterChange}) {
                             >
                                 За кольором
                             </a>
-                            {/* isOpenSublistColor перевіряється лише тоді, коли ми наводимо курсор на "За кольором" */}
                             {isOpenSublistColor && (
                                 <ul className="filter-dropdown__sublist-content">
                                     <li>
@@ -116,7 +115,15 @@ function FilterDropdown({onFilterChange}) {
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
+                                           onClick={() => handleSizeClick('36.5')}>36.5</a>
+                                    </li>
+                                    <li>
+                                        <a className="filter-dropdown__sublist--option" href="#"
                                            onClick={() => handleSizeClick('37')}>37</a>
+                                    </li>
+                                    <li>
+                                        <a className="filter-dropdown__sublist--option" href="#"
+                                           onClick={() => handleSizeClick('37.5')}>37.5</a>
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
@@ -124,7 +131,15 @@ function FilterDropdown({onFilterChange}) {
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
+                                           onClick={() => handleSizeClick('38.5')}>38.5</a>
+                                    </li>
+                                    <li>
+                                        <a className="filter-dropdown__sublist--option" href="#"
                                            onClick={() => handleSizeClick('39')}>39</a>
+                                    </li>
+                                    <li>
+                                        <a className="filter-dropdown__sublist--option" href="#"
+                                           onClick={() => handleSizeClick('39.5')}>39.5</a>
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
@@ -132,11 +147,23 @@ function FilterDropdown({onFilterChange}) {
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
+                                           onClick={() => handleSizeClick('40.5')}>40.5</a>
+                                    </li>
+                                    <li>
+                                        <a className="filter-dropdown__sublist--option" href="#"
                                            onClick={() => handleSizeClick('41')}>41</a>
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
+                                           onClick={() => handleSizeClick('41.5')}>41.5</a>
+                                    </li>
+                                    <li>
+                                        <a className="filter-dropdown__sublist--option" href="#"
                                            onClick={() => handleSizeClick('42')}>42</a>
+                                    </li>
+                                    <li>
+                                        <a className="filter-dropdown__sublist--option" href="#"
+                                           onClick={() => handleSizeClick('42.5')}>42.5</a>
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
@@ -156,11 +183,11 @@ function FilterDropdown({onFilterChange}) {
                                 <ul className="filter-dropdown__sublist-content">
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
-                                           onClick={() => handleSexClick('male')}>Жіноча</a>
+                                           onClick={() => handleSexClick('female')}>Жіноча</a>
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"
-                                           onClick={() => handleSexClick('female')}>Чоловіча</a>
+                                           onClick={() => handleSexClick('male')}>Чоловіча</a>
                                     </li>
                                     <li>
                                         <a className="filter-dropdown__sublist--option" href="#"

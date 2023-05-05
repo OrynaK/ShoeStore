@@ -156,7 +156,7 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 insert into shoe_store.address value (1, 'Ukraine','Kharkiv', 'Tselinogradska', '58', 1, '23');
-insert into shoe_store.user value (default,'admin', 'admin', '1234', 'admin@gmail.com', 'admin', 1, '+380950000000');
+insert into shoe_store.user value (default,'admin', 'admin', '1234', 'admin@gmail.com', 'admin', '+380950000000');
 insert into shoe_store.image value (1,'1', '1');
 INSERT INTO `shoe` (`size`, `color`, `season`, `sex`, `actual_price`, `name`, `amount`, `image_id`)
 VALUES

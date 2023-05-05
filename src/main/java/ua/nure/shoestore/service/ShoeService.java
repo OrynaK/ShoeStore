@@ -26,23 +26,65 @@ public class ShoeService {
         }
        return shoeCards;
     }
-    public List<Shoe> getShoesByColor(String color){
-       return shoeDAO.getShoesByColor(color);
+    public List<ShoeCard> getShoesByColor(String color){
+        List<ShoeCard> shoeCards = new ArrayList<>();
+        for (Shoe s : shoeDAO.getShoesByColor(color)) {
+            ShoeCard shoeCard = new ShoeCard(s.getPrice(), s.getName(), s.getImageId());
+            if(!shoeCards.contains(shoeCard)){
+                shoeCards.add(shoeCard);
+            }
+        }
+        return shoeCards;
     }
-    public List<Shoe> getShoesBySize(BigDecimal size){
-       return shoeDAO.getShoesBySize(size);
+    public List<ShoeCard> getShoesBySize(BigDecimal size){
+        List<ShoeCard> shoeCards = new ArrayList<>();
+        for (Shoe s : shoeDAO.getShoesBySize(size)) {
+            ShoeCard shoeCard = new ShoeCard(s.getPrice(), s.getName(), s.getImageId());
+            if(!shoeCards.contains(shoeCard)){
+                shoeCards.add(shoeCard);
+            }
+        }
+        return shoeCards;
     }
-    public List<Shoe> getShoesBySex(Sex sex){
-       return shoeDAO.getShoesBySex(sex);
+    public List<ShoeCard> getShoesBySex(Sex sex){
+        List<ShoeCard> shoeCards = new ArrayList<>();
+        for (Shoe s : shoeDAO.getShoesBySex(sex)) {
+            ShoeCard shoeCard = new ShoeCard(s.getPrice(), s.getName(), s.getImageId());
+            if(!shoeCards.contains(shoeCard)){
+                shoeCards.add(shoeCard);
+            }
+        }
+        return shoeCards;
     }
-    public List<Shoe> getShoesAscendingPrice(){
-        return shoeDAO.getShoesAscendingPrice();
+    public List<ShoeCard> getShoesAscendingPrice(){
+        List<ShoeCard> shoeCards = new ArrayList<>();
+        for (Shoe s : shoeDAO.getShoesAscendingPrice()) {
+            ShoeCard shoeCard = new ShoeCard(s.getPrice(), s.getName(), s.getImageId());
+            if(!shoeCards.contains(shoeCard)){
+                shoeCards.add(shoeCard);
+            }
+        }
+        return shoeCards;
     }
-    public List<Shoe> getShoesDescendingPrice(){
-        return shoeDAO.getShoesDescendingPrice();
+    public List<ShoeCard> getShoesDescendingPrice(){
+        List<ShoeCard> shoeCards = new ArrayList<>();
+        for (Shoe s : shoeDAO.getShoesDescendingPrice()) {
+            ShoeCard shoeCard = new ShoeCard(s.getPrice(), s.getName(), s.getImageId());
+            if(!shoeCards.contains(shoeCard)){
+                shoeCards.add(shoeCard);
+            }
+        }
+        return shoeCards;
     }
-    public List<Shoe> searchShoes(String name){
-        return shoeDAO.searchShoes(name);
+    public List<ShoeCard> searchShoes(String name){
+        List<ShoeCard> shoeCards = new ArrayList<>();
+        for (Shoe s : shoeDAO.searchShoes(name)) {
+            ShoeCard shoeCard = new ShoeCard(s.getPrice(), s.getName(), s.getImageId());
+            if(!shoeCards.contains(shoeCard)){
+                shoeCards.add(shoeCard);
+            }
+        }
+        return shoeCards;
     }
     public void addShoe(Shoe shoe) {
         shoeDAO.add(shoe);
