@@ -20,7 +20,7 @@ function NavbarAdmin() {
                         <NavLink to="/main" className="nav-list__item">
                             Видалити товар
                         </NavLink>
-                        <NavLink to="/main" className="nav-list__item">
+                        <NavLink to="/userslist" className="nav-list__item">
                             Список користувачів
                         </NavLink>
                         <NavLink to="/adminorders" className="nav-list__item">

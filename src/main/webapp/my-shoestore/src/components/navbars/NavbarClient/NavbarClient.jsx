@@ -24,6 +24,7 @@ function NavbarClient () {
                         <NavLink to="/loginform" className="nav-list__item">Вхід</NavLink>
                         <NavLink to="registrationform" className="nav-list__item">Реєстрація</NavLink>
                         <NavLink to="/clientcabinet" className="nav-list__item">Особистий кабінет</NavLink>
+                        <NavLink to="/basket" className="nav-list__item">Кошик</NavLink>
                     </ul>
                 </div>
             </div>
