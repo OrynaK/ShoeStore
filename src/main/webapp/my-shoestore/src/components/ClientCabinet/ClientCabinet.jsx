@@ -68,7 +68,6 @@ function ClientCabinet() {
     return (
         <div className="cabinet">
             <h1 className="cabinet-header">Особистий кабінет</h1>
-            <h2 className="cabinet-data">Особисті данні</h2>
             {isEditing ? (
                 <form className="cabinet-form" onSubmit={handleFormSubmit}>
                     <input
@@ -127,37 +126,31 @@ function ClientCabinet() {
                 </form>
             ) : (
                 <div className="cabinet-form">
-                    <p className="cabinet-form-input">
-                        Ім'я: {user && user.name}
-                    </p>
-                    <p className="cabinet-form-input">
-                        Прізвище: {user && user.surname}
-                    </p>
-                    <p className="cabinet-form-input">
-                        Номер телефону: {user && user.phoneNumber}
-                    </p>
-                    <p className="cabinet-form-input">
-                        Email: {user && user.email}
-                    </p>
-                    <button
-                        className="cabinet-form-btn"
-                        onClick={() => setIsEditing(true)}
-                    >
-                        Редагувати дані
-                    </button>
-                    {error && <div>{error}</div>}
-                </div>
-            )}
-            <div className="cabinet-basket">
-                <h2 className="cabinet-basket-header">Кошик</h2>
-                <div className="basket-form">
-                    <h3 className="basket-form-header">Кошик пустий!</h3>
-                    <Link to={`/makeorder`}>
-                        <button className="basket-form-btn">Оформити замовлення</button>
-                    </Link>
+                    <div className="cabinet-form--form">
+                        <p className="cabinet-form-input">
+                            Ім'я: {user && user.name}
+                        </p>
+                        <p className="cabinet-form-input">
+                            Прізвище: {user && user.surname}
+                        </p>
+                        <p className="cabinet-form-input">
+                            Номер телефону: {user && user.phoneNumber}
+                        </p>
+                        <p className="cabinet-form-input">
+                            Email: {user && user.email}
+                        </p>
+                        <button
+                            className="cabinet-form-btn"
+                            onClick={() => setIsEditing(true)}
+                        >
+                            Редагувати дані
+                        </button>
+                        {error && <div>{error}</div>}
+                    </div>
+                    </div>
 
-                </div>
-            </div>
+            )}
+
         </div>
 
 

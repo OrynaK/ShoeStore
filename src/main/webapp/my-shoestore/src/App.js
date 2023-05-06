@@ -17,6 +17,8 @@ import CourierOrders from "./components/CourierOrders/CourierOrders";
 import WarehouseOrders from "./components/WarehouseOrders/WarehouseOrders";
 import AddNewShoe from "./components/AddNewShoe/AddNewShoe";
 import MakeOrder from "./components/MakeOrder/MakeOrder";
+import Basket from "./components/Basket/Basket";
+import UsersList from "./components/UsersList/UsersList";
 
 function App() {
     localStorage.clear();
@@ -40,6 +42,8 @@ function App() {
                   <Route path="/main" element={<Main/>}></Route>
                     <Route path="/shoe/:id" element={<ShoePage/>}></Route>
                     <Route path="/makeorder" element={<MakeOrder/>}></Route>
+                    <Route path="/basket" element={<Basket/>}></Route>
+                    <Route path="/userslist" element={<UsersList/>}></Route>
                 </Routes>
                 }
 
