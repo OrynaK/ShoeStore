@@ -2,11 +2,16 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
+import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
+import ua.nure.shoestore.entity.enums.Season;
+import ua.nure.shoestore.entity.enums.Sex;
 import ua.nure.shoestore.forms.UpdateForm;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class UserDAOImpl implements UserDAO {
@@ -16,9 +21,40 @@ public class UserDAOImpl implements UserDAO {
     private static final String UPDATE = "UPDATE user SET name=?, surname=?, email=?, password=?, phone_number=? WHERE user_id=?";
     private static final String UPDATE_ROLE = "UPDATE user SET role=? WHERE user_id=?";
 
+    private static final String GET_ALL_USERS = "SELECT * from user";
+
     private final String url;
     private final Properties dbProps = new Properties();
 
+    @Override
+    public List<User> getAllUsers() {
+        List<User> userList = new ArrayList<>();
+        try (Connection con = getConnection()) {
+            try (Statement st = con.createStatement()) {
+                try (ResultSet rs = st.executeQuery(GET_ALL_USERS)) {
+                    while (rs.next()) {
+                        userList.add(mapUsers(rs));
+                    }
+                    return userList;
+                }
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private User mapUsers(ResultSet rs) throws SQLException{
+        User u = new User();
+        u.setUser_id(rs.getInt("user_id"));
+        u.setName(rs.getString("name"));
+        u.setSurname(rs.getString("surname"));
+        u.setPassword(rs.getString("password"));
+        u.setEmail(rs.getString("email"));
+        u.setRole(Role.valueOf(rs.getString("role").toUpperCase()));
+        u.setPhoneNumber(rs.getString("phone_number"));
+        return u;
+    }
     public User getUser(String email, String password) {
         User user = new User();
         try (Connection con = getConnection()) {
