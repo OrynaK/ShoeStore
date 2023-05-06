@@ -5,6 +5,7 @@ import ua.nure.shoestore.entity.enums.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -21,6 +22,13 @@ public class Order {
     private BigDecimal cost;
     private Map<Long, Integer> shoes_amount_in_order;
     private OrderStatus status;
+    private Address address;
+
+    public Order() {
+        if (Objects.isNull(shoes_amount_in_order)) {
+            shoes_amount_in_order = new HashMap<>();
+        }
+    }
 
     public long getOrderId() {
         return orderId;
@@ -108,6 +116,14 @@ public class Order {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
