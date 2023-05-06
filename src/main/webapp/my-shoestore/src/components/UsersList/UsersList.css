@@ -38,3 +38,15 @@
     margin-top: 10px;
 
 }
+
+.users-list-table-select {
+    margin-top: 10px;
+    border-radius: 30px;
+    border: none;
+    background: #e1e1e1;
+    width: 150px;
+    height: 20px;
+    padding-left: 20px;
+
+
+}

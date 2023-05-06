@@ -6,10 +6,13 @@ import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
 import ua.nure.shoestore.forms.UpdateForm;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private UserDAO userDAO;
 
+    public List <User> getUsers() {return this.userDAO.getAllUsers();}
     public UserService(UserDAO userDAO){this.userDAO=userDAO;}
 
     public User updateInfo(UpdateForm updateForm) {
