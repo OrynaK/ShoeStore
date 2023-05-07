@@ -45,19 +45,16 @@ public class UserDAOImpl implements UserDAO {
     public User getUserById(long id) {
         User user = new User();
         try (Connection con = getConnection()) {
-            try (Statement st = con.createStatement()) {
                 try (PreparedStatement ps = con.prepareStatement(GET_USER_BY_ID)) {
                     int k = 0;
                     ps.setLong(++k, id);
                     try (ResultSet resultSet = ps.executeQuery()) {
-                        boolean completed = resultSet.first();
-                        if (completed) {
+                        while(resultSet.next()) {
                             user = mapUsers(resultSet);
                         }
                         return user;
                     }
                 }
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
