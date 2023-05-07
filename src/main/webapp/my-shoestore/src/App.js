@@ -19,6 +19,7 @@ import AddNewShoe from "./components/AddNewShoe/AddNewShoe";
 import MakeOrder from "./components/MakeOrder/MakeOrder";
 import Basket from "./components/Basket/Basket";
 import UsersList from "./components/UsersList/UsersList";
+import ClientOrders from "./components/ClientOrders/ClientOrders";
 
 function App() {
     localStorage.clear();
@@ -44,6 +45,7 @@ function App() {
                     <Route path="/makeorder" element={<MakeOrder/>}></Route>
                     <Route path="/basket" element={<Basket/>}></Route>
                     <Route path="/userslist" element={<UsersList/>}></Route>
+                    <Route path="/clientorders" element={<ClientOrders/>}></Route>
                 </Routes>
                 }
 

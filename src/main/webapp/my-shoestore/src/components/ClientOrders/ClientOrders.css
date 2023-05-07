@@ -1,0 +1,22 @@
+.client-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    align-items: center;
+    align-content: center;
+    gap: 20px;
+
+}
+.client-orders {
+    text-align: center;
+}
+
+.client-orders-table-th, .client-orders-table-td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.client-orders-table-th {
+    background-color: #f2f2f2;
+}
+
