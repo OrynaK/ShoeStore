@@ -2,11 +2,8 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
-import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
-import ua.nure.shoestore.entity.enums.Season;
-import ua.nure.shoestore.entity.enums.Sex;
 import ua.nure.shoestore.forms.UpdateForm;
 
 import java.sql.*;
@@ -22,6 +19,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String UPDATE_ROLE = "UPDATE user SET role=? WHERE user_id=?";
 
     private static final String GET_ALL_USERS = "SELECT * from user";
+    private static final String GET_USER_BY_ID = "SELECT * from user WHERE user_id=?";
 
     private final String url;
     private final Properties dbProps = new Properties();
@@ -38,13 +36,34 @@ public class UserDAOImpl implements UserDAO {
                     return userList;
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private User mapUsers(ResultSet rs) throws SQLException{
+    @Override
+    public User getUserById(long id) {
+        User user = new User();
+        try (Connection con = getConnection()) {
+            try (Statement st = con.createStatement()) {
+                try (PreparedStatement ps = con.prepareStatement(GET_USER_BY_ID)) {
+                    int k = 0;
+                    ps.setLong(++k, id);
+                    try (ResultSet resultSet = ps.executeQuery()) {
+                        boolean completed = resultSet.first();
+                        if (completed) {
+                            user = mapUsers(resultSet);
+                        }
+                        return user;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private User mapUsers(ResultSet rs) throws SQLException {
         User u = new User();
         u.setUser_id(rs.getInt("user_id"));
         u.setName(rs.getString("name"));
@@ -55,6 +74,7 @@ public class UserDAOImpl implements UserDAO {
         u.setPhoneNumber(rs.getString("phone_number"));
         return u;
     }
+
     public User getUser(String email, String password) {
         User user = new User();
         try (Connection con = getConnection()) {
@@ -86,7 +106,7 @@ public class UserDAOImpl implements UserDAO {
     public void add(User user) {
         try (Connection con = getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
-                int k=0;
+                int k = 0;
                 ps.setString(++k, user.getName());
                 ps.setString(++k, user.getSurname());
                 ps.setString(++k, user.getPassword());
@@ -121,12 +141,17 @@ public class UserDAOImpl implements UserDAO {
             throw new RuntimeException(e);
         }
     }
+
     public void updateRole(long user_id, Role role) {
         try (Connection con = getConnection()) {
+            User user = getUserById(user_id);
+            if (user.getRole() == Role.ADMIN) {
+                throw new IllegalArgumentException("Admins cannot update admins");
+            }
             try (PreparedStatement ps = con.prepareStatement(UPDATE_ROLE)) {
                 int k = 0;
+                ps.setString(++k, role.toString().toLowerCase());
                 ps.setLong(++k, user_id);
-                ps.setString(++k, role.toString());
                 ps.executeUpdate();
             }
         } catch (SQLException e) {

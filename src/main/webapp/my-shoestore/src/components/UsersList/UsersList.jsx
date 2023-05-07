@@ -12,7 +12,6 @@ function UsersList() {
                 console.error("Error:", error);
             });
     }, []);
-
     const handleRoleChange = (userId, selectedRole) => {
         const requestData = {
             user_id: userId,
@@ -27,13 +26,21 @@ function UsersList() {
             body: JSON.stringify(requestData),
         })
             .then((response) => response.text())
-            .then((data) => setRole(data))
+            .then((data) => {
+                setUsers(users.map((user) => {
+                    if (user.user_id === userId) {
+                        return {
+                            ...user,
+                            role: selectedRole,
+                        };
+                    }
+                    return user;
+                }));
+            })
             .catch((error) => {
                 console.error("Error:", error);
             });
     };
-
-
 
     return (
         <div className="users-list">
@@ -51,8 +58,8 @@ function UsersList() {
                 </thead>
                 <tbody>
                 {users.map((user) => (
-                    <tr key={user.id}>
-                        <td className="users-list-table-td">{user.id}</td>
+                    <tr key={user.user_id}>
+                        <td className="users-list-table-td">{user.user_id}</td>
                         <td className="users-list-table-td">{user.name}</td>
                         <td className="users-list-table-td">{user.surname}</td>
                         <td className="users-list-table-td">{user.email}</td>
@@ -63,7 +70,7 @@ function UsersList() {
                                 name="role"
                                 value={role}
                                 onChange={(event) =>
-                                    handleRoleChange(user.id, event.target.value)
+                                    handleRoleChange(user.user_id, event.target.value)
                                 }
                             >
                                 <option value="">Змінити роль</option>

@@ -8,6 +8,8 @@ import ua.nure.shoestore.forms.UpdateForm;
 import java.util.List;
 
 public interface UserDAO{
+    User getUserById(long id);
+
     User getUser(String email, String password);
     User update(UpdateForm updateForm);
     void updateRole(long user_id, Role role);
