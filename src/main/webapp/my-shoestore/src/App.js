@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import "./index.css";
@@ -13,8 +13,6 @@ import PaymentAndDelivery from "./components/PaymentAndDelivery/PaymentAndDelive
 import Main from "./components/Main/Main";
 import ShoePage from "./components/ShoePage/ShoePage";
 import AdminOrders from "./components/AdminOrders/AdminOrders";
-import CourierOrders from "./components/CourierOrders/CourierOrders";
-import WarehouseOrders from "./components/WarehouseOrders/WarehouseOrders";
 import AddNewShoe from "./components/AddNewShoe/AddNewShoe";
 import MakeOrder from "./components/MakeOrder/MakeOrder";
 import Basket from "./components/Basket/Basket";
@@ -22,7 +20,6 @@ import UsersList from "./components/UsersList/UsersList";
 import ClientOrders from "./components/ClientOrders/ClientOrders";
 
 function App() {
-    localStorage.clear();
   return (
       <Router>
           <div className="ShoeStore">
