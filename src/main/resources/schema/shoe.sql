@@ -1,4 +1,4 @@
-- MySQL Workbench Forward Engineering
+-- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -10,6 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema shoe_store
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `shoe_store` ;
 
 -- -----------------------------------------------------
 -- Schema shoe_store
@@ -54,6 +55,29 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`image` (
 
 
 -- -----------------------------------------------------
+-- Table `shoe_store`.`order`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `shoe_store`.`order` ;
+
+CREATE TABLE IF NOT EXISTS `shoe_store`.`order` (
+                                                    `order_id` INT NOT NULL AUTO_INCREMENT,
+                                                    `date` DATE NOT NULL,
+                                                    `time` TIME NOT NULL,
+                                                    `status` ENUM('processing', 'accepted', 'compiled', 'ready_for_sending', 'delivered', 'basket') NOT NULL DEFAULT 'basket',
+    `address_id` INT NOT NULL,
+    `ordercol` VARCHAR(45) NULL DEFAULT NULL,
+    PRIMARY KEY (`order_id`),
+    UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
+    INDEX `order_address_fk_idx` (`address_id` ASC) VISIBLE,
+    CONSTRAINT `order_address_fk`
+    FOREIGN KEY (`address_id`)
+    REFERENCES `shoe_store`.`address` (`address_id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `shoe_store`.`user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `shoe_store`.`user` ;
@@ -66,65 +90,29 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`user` (
     `email` VARCHAR(45) NOT NULL,
     `role` ENUM('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
     `phone_number` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`user_id`),
-    UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+    PRIMARY KEY (`user_id`))
     ENGINE = InnoDB
-    AUTO_INCREMENT = 15
+    AUTO_INCREMENT = 14
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `shoe_store`.`order`
+-- Table `shoe_store`.`order_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`order` ;
+DROP TABLE IF EXISTS `shoe_store`.`order_user` ;
 
-CREATE TABLE IF NOT EXISTS `shoe_store`.`order` (
-                                                    `order_id` INT NOT NULL AUTO_INCREMENT,
-                                                    `date` DATE NOT NULL,
-                                                    `time` TIME NOT NULL,
-                                                    `status` ENUM('processing', 'accepted', 'compiled', 'ready_for_sending', 'delivered', 'basket') NOT NULL DEFAULT 'basket',
-    `client_id` INT NOT NULL,
-    `address_id` INT NOT NULL,
-    `admin_id` INT NOT NULL,
-    `packer_id` INT NOT NULL,
-    `warehouse_id` INT NOT NULL,
-    `courier_id` INT NOT NULL,
-    PRIMARY KEY (`order_id`),
-    INDEX `order_address_fk_idx` (`address_id` ASC) VISIBLE,
-    INDEX `order_admin_fk_idx` (`client_id` ASC) VISIBLE,
-    INDEX `order_admin_fk_idx1` (`admin_id` ASC) VISIBLE,
-    INDEX `order_packer_fk_idx` (`packer_id` ASC) VISIBLE,
-    INDEX `order_warehouse_fk_idx` (`warehouse_id` ASC) VISIBLE,
-    INDEX `order_courier_fk_idx` (`courier_id` ASC) VISIBLE,
-    CONSTRAINT `order_address_fk`
-    FOREIGN KEY (`address_id`)
-    REFERENCES `shoe_store`.`address` (`address_id`),
-    CONSTRAINT `order_client_fk`
-    FOREIGN KEY (`client_id`)
-    REFERENCES `shoe_store`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `order_admin_fk`
-    FOREIGN KEY (`admin_id`)
-    REFERENCES `shoe_store`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `order_packer_fk`
-    FOREIGN KEY (`packer_id`)
-    REFERENCES `shoe_store`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `order_warehouse_fk`
-    FOREIGN KEY (`warehouse_id`)
-    REFERENCES `shoe_store`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `order_courier_fk`
-    FOREIGN KEY (`courier_id`)
-    REFERENCES `shoe_store`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE TABLE IF NOT EXISTS `shoe_store`.`order_user` (
+                                                         `order_id` INT NOT NULL,
+                                                         `user_id` INT NOT NULL,
+                                                         PRIMARY KEY (`order_id`, `user_id`),
+    INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+    CONSTRAINT `order_fk`
+    FOREIGN KEY (`order_id`)
+    REFERENCES `shoe_store`.`order` (`order_id`),
+    CONSTRAINT `user_fk`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `shoe_store`.`user` (`user_id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
@@ -152,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`shoe` (
     FOREIGN KEY (`image_id`)
     REFERENCES `shoe_store`.`image` (`image_id`))
     ENGINE = InnoDB
-    AUTO_INCREMENT = 56
+    AUTO_INCREMENT = 36
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
@@ -183,6 +171,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`shoes_order` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 
 insert into shoe_store.address value (1, 'Ukraine','Kharkiv', 'Tselinogradska', '58', 1, '23');
