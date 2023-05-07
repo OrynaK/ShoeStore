@@ -2,17 +2,16 @@ package ua.nure.shoestore.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import ua.nure.shoestore.entity.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class Order {
     private long orderId;
     private long clientId;
@@ -22,8 +21,12 @@ public class Order {
     private long courierId;
     private LocalDate date;
     private LocalTime time;
-    private BigDecimal cost;
-    private Map<Long, Integer> shoesAmountInOrder;
     private OrderStatus status;
     private Address address;
+    private List<OrderShoe> shoesInOrder;
+    private BigDecimal cost;
+
+    public Order(){
+        shoesInOrder = new ArrayList<>();
+    }
 }

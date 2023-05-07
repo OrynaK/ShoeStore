@@ -71,7 +71,6 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`order`
     `time`       TIME                                                                                    NOT NULL,
     `status`     ENUM ('processing', 'accepted', 'compiled', 'ready_for_sending', 'delivered', 'basket') NOT NULL DEFAULT 'basket',
     `address_id` INT                                                                                     NOT NULL,
-    `ordercol`   VARCHAR(45)                                                                             NULL     DEFAULT NULL,
     PRIMARY KEY (`order_id`),
     UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
     INDEX `order_address_fk_idx` (`address_id` ASC) VISIBLE,

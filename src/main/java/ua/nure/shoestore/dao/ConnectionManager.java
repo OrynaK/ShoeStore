@@ -35,12 +35,15 @@ public class ConnectionManager {
         }
     }
 
-    public static void close(AutoCloseable ac) {
-        try {
-            Objects.requireNonNull(ac).close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage(), e);
+    public static void close(AutoCloseable... closeable) {
+        for (AutoCloseable c : closeable) {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
