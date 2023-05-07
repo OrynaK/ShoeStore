@@ -15,6 +15,16 @@ function AddNewShoe() {
     const[image, setImage]=useState('');
     const navigate = useNavigate();
 
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImage(reader.result);
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
    /* const multer = require('multer');
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -155,15 +165,13 @@ function AddNewShoe() {
                         <label className="add-new-shoe-form-label">
                             Image
                         </label>
-                        <input className="add-new-shoe-form-input"
-                               type="file"
-                               name="image"
-                               //onChange={handleFileChange}
-                               style={{ display: 'none' }}
+                        <input
+                            className="add-new-shoe-form-input"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
                         />
-                        <button onClick={() => document.getElementsByName('image')[0].click()}>
-                            Додати фото товару
-                        </button>
+                        {image && <img src={image} alt="Selected" />}
 
                         <button className="add-new-shoe-form-btn" onClick={handleSubmit} type="submit">Додати</button>
                     </form>
