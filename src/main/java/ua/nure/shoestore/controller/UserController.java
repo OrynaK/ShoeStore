@@ -17,8 +17,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private AddressService addressService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -33,13 +32,6 @@ public class UserController {
         }
         return null;
     }
-    @PostMapping(value="/updateUserRole")
-    public String updateStatus(@RequestBody long user_id, Role role){
-        if(user_id>0 && role!=null){
-            userService.updateRole(user_id, role);
-            return "User role updated";
-        }
-        return null;
-    }
+
 
 }
