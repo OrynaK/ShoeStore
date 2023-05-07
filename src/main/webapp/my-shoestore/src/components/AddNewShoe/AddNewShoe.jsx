@@ -12,62 +12,37 @@ function AddNewShoe() {
     const[sex, setSex]=useState('')
     const[price, setActualPrice]=useState('')
     const[amount, setAmount]=useState('');
-    const[image, setImage]=useState('');
+    const[image, setImage]=useState(null);
     const navigate = useNavigate();
 
     const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImage(reader.result);
-        };
-        if (file) {
-            reader.readAsDataURL(file);
-        }
+        setImage(event.target.files[0]);
     };
-   /* const multer = require('multer');
-    const storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, './assets/') // папка, куди будуть зберігатися завантажені файли
-        },
-        filename: function (req, file, cb) {
-            cb(null, file.originalname) // назва файлу буде оригінальною
-        }
-    });
-    const upload = multer({ storage: storage });
 
-    app.post('/assets', upload.single('image'), function (req, res) {
-        console.log(req.file); // виводимо інформацію про завантажений файл
-        // додайте код для збереження шляху до файлу у базі даних
-    });
-
-    function handleFileChange(event) {
-        const file = event.target.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
-
-        fetch('/assets', {
-            method: 'POST',
-            body: formData,
-        })
-            .then((response) => {
-                // обробити відповідь сервера
-            })
-            .catch((error) => {
-                // обробити помилку
-            });
-    }*/
     const handleSubmit = event => {
-        event.preventDefault();
-        const shoe = {name, size, color, season, sex, price, amount, image}
-        fetch("http://localhost:8080/addNewShoe", {
+        const formData = new FormData();
+        formData.append("image", image);
+        fetch("http://localhost:8080/api/upload", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(shoe)
-        }).then(() => {
-                navigate('/main');
-            }
-        )
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Путь к загруженному файлу
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        // event.preventDefault();
+        // const shoe = {name, size, color, season, sex, price, amount, image}
+        // fetch("http://localhost:8080/addNewShoe", {
+        //     method: "POST",
+        //     headers: {"Content-Type": "application/json"},
+        //     body: JSON.stringify(shoe)
+        // }).then(() => {
+        //         navigate('/main');
+        //     }
+        // )
     };
 
         return (
