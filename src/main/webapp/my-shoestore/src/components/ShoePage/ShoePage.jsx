@@ -15,7 +15,7 @@ function ShoePage(props) {
                         <span className="shoe-page-form-size">38</span>
                     </div>
 
-                    <span className="shoe-page-form-price"><strong>{price}</strong></span>
+                    <span className="shoe-page-form-price"><strong>{price}$</strong></span>
                 </div>
 
                 <button className="shoe-page-form-btn">Додати до кошика</button>

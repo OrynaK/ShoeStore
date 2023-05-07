@@ -13,19 +13,27 @@ function UsersList() {
             });
     }, []);
 
-    const handleRoleChange = () => {
+    const handleRoleChange = (userId, selectedRole) => {
+        const requestData = {
+            user_id: userId,
+            role: selectedRole,
+        };
+
         fetch("http://localhost:8080/updateUserRole", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify(requestData),
         })
-            .then((response) => response.json())
+            .then((response) => response.text())
             .then((data) => setRole(data))
             .catch((error) => {
                 console.error("Error:", error);
             });
     };
+
+
 
     return (
         <div className="users-list">
@@ -55,7 +63,7 @@ function UsersList() {
                                 name="role"
                                 value={role}
                                 onChange={(event) =>
-                                    handleRoleChange(user.role, event.target.value)
+                                    handleRoleChange(user.id, event.target.value)
                                 }
                             >
                                 <option value="">Змінити роль</option>
