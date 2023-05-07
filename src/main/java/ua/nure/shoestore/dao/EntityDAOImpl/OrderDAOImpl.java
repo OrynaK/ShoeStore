@@ -7,10 +7,7 @@ import ua.nure.shoestore.entity.Order;
 import ua.nure.shoestore.entity.OrderShoe;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -30,21 +27,18 @@ public class OrderDAOImpl implements OrderDAO {
         PreparedStatement st = null;
         try {
             conn = connectionManager.getConnection(false);
-            st = conn.prepareStatement(INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS);
-            int k = 0;
-            st.setDate(++k, java.sql.Date.valueOf(order.getDate()));
-            st.setTime(++k, java.sql.Time.valueOf(order.getTime()));
-            st.setLong(++k, order.getAddress().getAddressId());
+            st = conn.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);
+            setOrder(order, st);
             st.executeUpdate();
-
             ResultSet generatedKeys = st.getGeneratedKeys();
+
             st = conn.prepareStatement(INSERT_SHOES_ORDER);
             setShoesOrder(order, st, generatedKeys);
 
             st = conn.prepareStatement(INSERT_ORDER_USER);
             setUsers(order, st);
-
             st.executeBatch();
+
             conn.commit();
         } catch (Exception e) {
             ConnectionManager.rollback(conn);
@@ -52,6 +46,13 @@ public class OrderDAOImpl implements OrderDAO {
         } finally {
             ConnectionManager.close(st, conn);
         }
+    }
+
+    private static void setOrder(Order order, PreparedStatement st) throws SQLException {
+        int k = 0;
+        st.setDate(++k, java.sql.Date.valueOf(order.getDate()));
+        st.setTime(++k, java.sql.Time.valueOf(order.getTime()));
+        st.setLong(++k, order.getAddress().getAddressId());
     }
 
     private static void setShoesOrder(Order order, PreparedStatement st, ResultSet generatedKeys) throws SQLException {
@@ -93,6 +94,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     public static void main(String[] args) {
+        // test
         OrderDAO orderDAO = new OrderDAOImpl(new DAOConfig("MySQL", "jdbc:mysql://localhost:3306/shoe_store?sslMode=DISABLED&serverTimezone=UTC", "root", "root"));
         Order order = new Order();
         order.setClientId(14);
@@ -104,6 +106,7 @@ public class OrderDAOImpl implements OrderDAO {
         order.setTime(LocalTime.now());
         order.setAddress(new AddressDAOImpl(new DAOConfig("MySQL", "jdbc:mysql://localhost:3306/shoe_store?sslMode=DISABLED&serverTimezone=UTC", "root", "root")).getById(1));
         order.getShoesInOrder().add(new OrderShoe(37, 2, BigDecimal.valueOf(1000)));
+        order.getShoesInOrder().add(new OrderShoe(38, 1, BigDecimal.valueOf(2000)));
         orderDAO.create(order);
     }
 

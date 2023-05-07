@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`order`
     `time`       TIME                                                                                    NOT NULL,
     `status`     ENUM ('processing', 'accepted', 'compiled', 'ready_for_sending', 'delivered', 'basket') NOT NULL DEFAULT 'basket',
     `address_id` INT                                                                                     NOT NULL,
+    `total_cost` DECIMAL(10, 2)                                                                          NOT NULL DEFAULT '0',
     PRIMARY KEY (`order_id`),
     UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
     INDEX `order_address_fk_idx` (`address_id` ASC) VISIBLE,
@@ -81,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `shoe_store`.`order`
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
+
 
 
 -- -----------------------------------------------------
@@ -218,3 +220,14 @@ VALUES (33.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
        (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
        (40.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
        (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1);
+
+-- Create trigger to update total_cost in order table
+CREATE TRIGGER shoes_order_after_insert
+    AFTER INSERT
+    ON shoes_order
+    FOR EACH ROW
+BEGIN
+    DECLARE total DECIMAL(10, 2);
+    SELECT SUM(shoe_price * shoes_amount) INTO total FROM shoes_order WHERE order_id = NEW.order_id;
+    UPDATE `order` SET total_cost = total WHERE order_id = NEW.order_id;
+END;
