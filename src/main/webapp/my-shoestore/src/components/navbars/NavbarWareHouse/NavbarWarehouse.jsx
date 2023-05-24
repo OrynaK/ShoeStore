@@ -28,6 +28,7 @@ function NavbarWarehouse () {
                         <NavLink to="/clientcabinet" className="nav-list__item">
                             Особистий кабінет
                         </NavLink>
+                        <button className="btn-exit" onClick={handleSubmit}>Вихід</button>
                     </ul>
                 </div>
             </div>

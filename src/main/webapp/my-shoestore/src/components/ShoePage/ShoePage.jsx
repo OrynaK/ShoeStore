@@ -1,9 +1,13 @@
 import React from "react";
 import "./ShoePage.css";
 import sneaker from "./../../assets/sneaker.png"
-function ShoePage(props) {
-    const { id, name, price, image } = props;
+import {useLocation} from "react-router";
+function ShoePage() {
+
+    const location = useLocation();
+    const { id, name, price, image } = location.state || {};
     return (
+
         <div className="shoe-page">
             <h2 className="shoe-page-header">{name}</h2>
             <div className="shoe-page-form">
@@ -21,6 +25,7 @@ function ShoePage(props) {
                 <button className="shoe-page-form-btn">Додати до кошика</button>
             </div>
         </div>
+
     )
 }
 
