@@ -1,203 +1,235 @@
--- MySQL Workbench Forward Engineering
+DROP SCHEMA IF EXISTS shoe_store;
 
-SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
-SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
-SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
-        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+CREATE SCHEMA IF NOT EXISTS shoe_store DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema shoe_store
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `shoe_store`;
+USE shoe_store;
 
--- -----------------------------------------------------
--- Schema shoe_store
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `shoe_store` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `shoe_store`;
+DROP TABLE IF EXISTS user_order;
 
--- -----------------------------------------------------
--- Table `shoe_store`.`address`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`address`;
+DROP TABLE IF EXISTS cart_shoe;
 
-CREATE TABLE IF NOT EXISTS `shoe_store`.`address`
+DROP TABLE IF EXISTS cart;
+
+DROP TABLE IF EXISTS `user`;
+
+DROP TABLE IF EXISTS shoe_order;
+
+DROP TABLE IF EXISTS shoe;
+
+DROP TABLE IF EXISTS image;
+
+DROP TABLE IF EXISTS `order`;
+
+DROP TABLE IF EXISTS address;
+
+
+CREATE TABLE address
 (
-    `address_id`       INT         NOT NULL AUTO_INCREMENT,
-    `country`          VARCHAR(45) NOT NULL,
-    `city`             VARCHAR(45) NOT NULL,
-    `street`           VARCHAR(45) NOT NULL,
-    `house_number`     VARCHAR(10) NOT NULL,
-    `entrance`         INT         NULL DEFAULT NULL,
-    `apartment_number` INT         NULL DEFAULT NULL,
-    PRIMARY KEY (`address_id`)
+    id               MEDIUMINT   NOT NULL AUTO_INCREMENT,
+    country          VARCHAR(45) NOT NULL,
+    city             VARCHAR(45) NOT NULL,
+    street           VARCHAR(45) NOT NULL,
+    house_number     VARCHAR(10) NOT NULL,
+    entrance         INTEGER     NULL DEFAULT NULL CHECK (entrance >= 0),
+    apartment_number INTEGER     NULL DEFAULT NULL CHECK (apartment_number >= 0),
+    PRIMARY KEY (id),
+    UNIQUE INDEX address_id_UNIQUE (id ASC) VISIBLE
 )
-    ENGINE = InnoDB
-    AUTO_INCREMENT = 2
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
+    AUTO_INCREMENT = 10;
+
+CREATE INDEX XIE1address_city_street_country ON address
+    (city, street, country);
 
 
--- -----------------------------------------------------
--- Table `shoe_store`.`image`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`image`;
-
-CREATE TABLE IF NOT EXISTS `shoe_store`.`image`
+CREATE TABLE cart
 (
-    `image_id` INT          NOT NULL AUTO_INCREMENT,
-    `name`     VARCHAR(45)  NOT NULL,
-    `path`     VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`image_id`)
-)
-    ENGINE = InnoDB
-    AUTO_INCREMENT = 2
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
+    id        MEDIUMINT NOT NULL AUTO_INCREMENT,
+    client_id MEDIUMINT NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX cart_id_UNIQUE (id ASC) VISIBLE
+);
 
 
--- -----------------------------------------------------
--- Table `shoe_store`.`order`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`order`;
-
-CREATE TABLE IF NOT EXISTS `shoe_store`.`order`
+CREATE TABLE cart_shoe
 (
-    `order_id`   INT                                                                                     NOT NULL AUTO_INCREMENT,
-    `date`       DATE                                                                                    NOT NULL,
-    `time`       TIME                                                                                    NOT NULL,
-    `status`     ENUM ('processing', 'accepted', 'compiled', 'ready_for_sending', 'delivered', 'basket') NOT NULL DEFAULT 'basket',
-    `address_id` INT                                                                                     NOT NULL,
-    `total_cost` DECIMAL(10, 2)                                                                          NOT NULL DEFAULT '0',
-    PRIMARY KEY (`order_id`),
-    UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
-    INDEX `order_address_fk_idx` (`address_id` ASC) VISIBLE,
-    CONSTRAINT `order_address_fk`
-        FOREIGN KEY (`address_id`)
-            REFERENCES `shoe_store`.`address` (`address_id`)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
+    shoe_id MEDIUMINT     NOT NULL,
+    cart_id MEDIUMINT     NOT NULL,
+    price   DECIMAL(9, 2) NOT NULL CHECK (price >= 0),
+    amount  INTEGER       NOT NULL DEFAULT 1 CHECK (amount >= 0)
+);
+
+ALTER TABLE cart_shoe
+    ADD PRIMARY KEY (shoe_id, cart_id),
+    ADD INDEX shoe_pk (shoe_id ASC) VISIBLE;
 
 
-
--- -----------------------------------------------------
--- Table `shoe_store`.`user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`user`;
-
-CREATE TABLE IF NOT EXISTS `shoe_store`.`user`
+CREATE TABLE image
 (
-    `user_id`      INT                                                        NOT NULL AUTO_INCREMENT,
-    `name`         VARCHAR(45)                                                NOT NULL,
-    `surname`      VARCHAR(45)                                                NOT NULL,
-    `password`     VARCHAR(45)                                                NOT NULL,
-    `email`        VARCHAR(45)                                                NOT NULL,
-    `role`         ENUM ('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
-    `phone_number` VARCHAR(45)                                                NOT NULL,
-    PRIMARY KEY (`user_id`)
-)
-    ENGINE = InnoDB
-    AUTO_INCREMENT = 14
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
+    id   MEDIUMINT    NOT NULL AUTO_INCREMENT,
+    name VARCHAR(30)  NOT NULL,
+    path VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX image_id_UNIQUE (id ASC) VISIBLE
+);
+
+CREATE UNIQUE INDEX XAK1image_path ON image
+    (path);
+
+CREATE INDEX XIE1image_name ON image
+    (name);
 
 
--- -----------------------------------------------------
--- Table `shoe_store`.`order_user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`order_user`;
-
-CREATE TABLE IF NOT EXISTS `shoe_store`.`order_user`
+CREATE TABLE `order`
 (
-    `order_id` INT NOT NULL,
-    `user_id`  INT NOT NULL,
-    PRIMARY KEY (`order_id`, `user_id`),
-    INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
-    CONSTRAINT `order_fk`
-        FOREIGN KEY (`order_id`)
-            REFERENCES `shoe_store`.`order` (`order_id`),
-    CONSTRAINT `user_fk`
-        FOREIGN KEY (`user_id`)
-            REFERENCES `shoe_store`.`user` (`user_id`)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
+    id         MEDIUMINT                                                                                  NOT NULL DEFAULT 0,
+    address_id MEDIUMINT                                                                                  NOT NULL,
+    datetime   TIMESTAMP                                                                                  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    total_cost DECIMAL(9, 2)                                                                              NOT NULL DEFAULT 0 CHECK (total_cost >= 0),
+    status     ENUM ('processing', 'accepted', 'compiled', 'ready_for_sending', 'delivered', 'cancelled') NOT NULL DEFAULT 'processing',
+    PRIMARY KEY (id),
+    UNIQUE INDEX order_id_UNIQUE (id ASC) VISIBLE
+);
+
+CREATE INDEX XIE2order_address_id ON `order`
+    (address_id);
 
 
--- -----------------------------------------------------
--- Table `shoe_store`.`shoe`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`shoe`;
-
-CREATE TABLE IF NOT EXISTS `shoe_store`.`shoe`
+CREATE TABLE shoe
 (
-    `shoe_id`      INT                               NOT NULL AUTO_INCREMENT,
-    `size`         DECIMAL(10, 1)                    NOT NULL,
-    `color`        VARCHAR(45)                       NOT NULL,
-    `season`       ENUM ('winter', 'demi', 'summer') NOT NULL,
-    `sex`          ENUM ('male', 'female')           NOT NULL,
-    `actual_price` DECIMAL(10, 2)                    NOT NULL,
-    `name`         VARCHAR(45)                       NOT NULL,
-    `amount`       INT                               NOT NULL,
-    `image_id`     INT                               NOT NULL DEFAULT '1',
-    PRIMARY KEY (`shoe_id`),
-    UNIQUE INDEX `shoe_id_UNIQUE` (`shoe_id` ASC) VISIBLE,
-    INDEX `shoe_image_idx` (`image_id` ASC) VISIBLE,
-    CONSTRAINT `shoe_image`
-        FOREIGN KEY (`image_id`)
-            REFERENCES `shoe_store`.`image` (`image_id`)
+    id           MEDIUMINT                         NOT NULL AUTO_INCREMENT,
+    name         VARCHAR(30)                       NOT NULL,
+    size         DECIMAL(10, 1)                    NOT NULL,
+    color        VARCHAR(45)                       NOT NULL,
+    image_id     MEDIUMINT                         NOT NULL DEFAULT 1,
+    amount       INTEGER                           NOT NULL DEFAULT 0 CHECK (amount >= 0),
+    actual_price DECIMAL(9, 2)                     NOT NULL,
+    season       ENUM ('winter', 'demi', 'summer') NOT NULL,
+    sex          ENUM ('male', 'female')           NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX shoe_id_UNIQUE (id ASC) VISIBLE
 )
-    ENGINE = InnoDB
-    AUTO_INCREMENT = 36
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
+    AUTO_INCREMENT = 36;
+
+CREATE INDEX XIE1shoe_name ON shoe (name);
 
 
--- -----------------------------------------------------
--- Table `shoe_store`.`shoes_order`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `shoe_store`.`shoes_order`;
-
-CREATE TABLE IF NOT EXISTS `shoe_store`.`shoes_order`
+CREATE TABLE shoe_order
 (
-    `order_id`     INT            NOT NULL,
-    `shoe_id`      INT            NOT NULL,
-    `shoes_amount` INT            NOT NULL,
-    `shoe_price`   DECIMAL(10, 2) NOT NULL,
-    PRIMARY KEY (`order_id`, `shoe_id`),
-    INDEX `shoe_pk_idx` (`shoe_id` ASC) VISIBLE,
-    CONSTRAINT `order_pk1`
-        FOREIGN KEY (`order_id`)
-            REFERENCES `shoe_store`.`order` (`order_id`),
-    CONSTRAINT `shoe_pk`
-        FOREIGN KEY (`shoe_id`)
-            REFERENCES `shoe_store`.`shoe` (`shoe_id`)
+    shoe_id  MEDIUMINT     NOT NULL,
+    order_id MEDIUMINT     NOT NULL,
+    price    DECIMAL(9, 2) NOT NULL CHECK (price >= 0),
+    amount   INTEGER       NOT NULL DEFAULT 1 CHECK (amount >= 0)
+);
+
+ALTER TABLE shoe_order
+    ADD PRIMARY KEY (shoe_id, order_id),
+    ADD INDEX shoe_pk (shoe_id ASC) VISIBLE;
+
+
+CREATE TABLE user
+(
+    id           MEDIUMINT                                                  NOT NULL AUTO_INCREMENT,
+    name         VARCHAR(30)                                                NOT NULL,
+    surname      VARCHAR(30)                                                NOT NULL,
+    password     VARCHAR(45)                                                NOT NULL,
+    email        VARCHAR(30)                                                NOT NULL,
+    phone_number VARCHAR(13)                                                NOT NULL,
+    role         ENUM ('client', 'admin', 'packer', 'warehouse', 'courier') NOT NULL DEFAULT 'client',
+    PRIMARY KEY (id),
+    UNIQUE INDEX user_id_UNIQUE (id ASC) VISIBLE
 )
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
+    AUTO_INCREMENT = 20;
+
+CREATE UNIQUE INDEX XAK1user_email ON user
+    (email);
+
+CREATE UNIQUE INDEX XAK2user_phone_number ON user
+    (phone_number);
+
+CREATE INDEX XIE1user_name ON user
+    (name, surname);
 
 
-SET SQL_MODE = @OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
+CREATE TABLE user_order
+(
+    order_id    MEDIUMINT    NOT NULL,
+    user_id     MEDIUMINT    NOT NULL,
+    description VARCHAR(255) NULL,
+    datetime    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
+ALTER TABLE user_order
+    ADD PRIMARY KEY (order_id, user_id),
+    ADD INDEX order_pk (order_id ASC) VISIBLE;
+
+
+ALTER TABLE cart
+    ADD FOREIGN KEY fk_cart_client_id (client_id) REFERENCES user (id);
+
+ALTER TABLE cart_shoe
+    ADD FOREIGN KEY fk_cart_shoe_cart_id (cart_id) REFERENCES cart (id)
+        ON DELETE CASCADE;
+
+ALTER TABLE cart_shoe
+    ADD FOREIGN KEY fk_cart_shoe_shoe_id (shoe_id) REFERENCES shoe (id);
+
+ALTER TABLE `order`
+    ADD FOREIGN KEY fk_order_address_id (address_id) REFERENCES address (id)
+        ON DELETE CASCADE;
+
+ALTER TABLE shoe
+    ADD FOREIGN KEY fk_shoe_image_id (image_id) REFERENCES image (id);
+
+ALTER TABLE shoe_order
+    ADD FOREIGN KEY fk_shoe_order_order_id (order_id) REFERENCES `order` (id)
+        ON DELETE CASCADE;
+
+ALTER TABLE shoe_order
+    ADD FOREIGN KEY fk_shoe_order_shoe_id (shoe_id) REFERENCES shoe (id);
+
+ALTER TABLE user_order
+    ADD FOREIGN KEY fk_user_order_order_id (order_id) REFERENCES `order` (id)
+        ON DELETE CASCADE;
+
+ALTER TABLE user_order
+    ADD FOREIGN KEY fk_user_order_user_id (user_id) REFERENCES user (id);
+
+
+-- Trigger to update total cost of order after inserting new shoe_order
+DELIMITER |
+CREATE TRIGGER shoe_order_after_insert
+    AFTER INSERT
+    ON shoe_order
+    FOR EACH ROW
+BEGIN
+    DECLARE total DECIMAL(9, 2);
+    SELECT SUM(price * amount) INTO total FROM shoe_order WHERE order_id = NEW.order_id;
+    UPDATE `order` SET total_cost = total WHERE order_id = NEW.order_id;
+END;
+DELIMITER ;
+
+-- Trigger to update total cost of order after updating shoe_order
+DELIMITER |
+CREATE TRIGGER shoe_order_after_update
+    AFTER UPDATE
+    ON shoe_order
+    FOR EACH ROW
+BEGIN
+    DECLARE total DECIMAL(9, 2);
+    SELECT SUM(price * amount) INTO total FROM shoe_order WHERE order_id = NEW.order_id;
+    UPDATE `order` SET total_cost = total WHERE order_id = NEW.order_id;
+END;
+DELIMITER ;
 
 
 INSERT INTO shoe_store.address VALUE (1, 'Ukraine', 'Kharkiv', 'Tselinogradska', '58', 1, '23');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'client', 'client', '1234', 'client@gmail.com', 'client', '+380950000001');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'admin', 'admin', '1234', 'admin@gmail.com', 'admin', '+380950000000');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'warehouse', 'warehouse', '1234', 'warehouse@gmail.com', 'warehouse',
-                                   '+380950000002');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'packer', 'packer', '1234', 'packer@gmail.com', 'packer', '+380950000003');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'courier', 'courier', '1234', 'courier@gmail.com', 'courier',
-                                   '+380950000004');
+INSERT INTO shoe_store.user VALUE (DEFAULT, 'client', 'client', '1234', 'client@gmail.com', '+380950000001', 'client');
+INSERT INTO shoe_store.user VALUE (DEFAULT, 'admin', 'admin', '1234', 'admin@gmail.com', '+380950000000', 'admin');
+INSERT INTO shoe_store.user VALUE (DEFAULT, 'warehouse', 'warehouse', '1234', 'warehouse@gmail.com', '+380950000002',
+                                   'warehouse');
+INSERT INTO shoe_store.user VALUE (DEFAULT, 'packer', 'packer', '1234', 'packer@gmail.com', '+380950000003', 'packer');
+INSERT INTO shoe_store.user VALUE (DEFAULT, 'courier', 'courier', '1234', 'courier@gmail.com', '+380950000004',
+                                   'courier');
 INSERT INTO shoe_store.image VALUE (1, '1', '1');
 INSERT INTO `shoe` (`size`, `color`, `season`, `sex`, `actual_price`, `name`, `amount`, `image_id`)
 VALUES (33.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
@@ -220,14 +252,3 @@ VALUES (33.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
        (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
        (40.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
        (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1);
-
--- Create trigger to update total_cost in order table
-CREATE TRIGGER shoes_order_after_insert
-    AFTER INSERT
-    ON shoes_order
-    FOR EACH ROW
-BEGIN
-    DECLARE total DECIMAL(10, 2);
-    SELECT SUM(shoe_price * shoes_amount) INTO total FROM shoes_order WHERE order_id = NEW.order_id;
-    UPDATE `order` SET total_cost = total WHERE order_id = NEW.order_id;
-END;
