@@ -23,9 +23,8 @@ public class ShoeController {
     @PostMapping(value = "/addShoe")
     public void addShoe(@RequestParam("shoe") String shoeDTOJson, @RequestParam("image") MultipartFile file) throws IOException {
         System.out.println(file);
-//        if (file.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
+        if (file.isEmpty()) {
+        }
 
         String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
 
