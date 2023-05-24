@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.nure.shoestore.cards.ShoeCard;
+import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.enums.Sex;
 import ua.nure.shoestore.service.ShoeService;
 
