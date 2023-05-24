@@ -52,7 +52,7 @@ public class OrderDAOImpl implements OrderDAO {
         int k = 0;
         st.setDate(++k, java.sql.Date.valueOf(order.getDate()));
         st.setTime(++k, java.sql.Time.valueOf(order.getTime()));
-        st.setLong(++k, order.getAddress().getAddressId());
+        st.setLong(++k, order.getAddress().getId());
     }
 
     private static void setShoesOrder(Order order, PreparedStatement st, ResultSet generatedKeys) throws SQLException {
