@@ -4,18 +4,13 @@ import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.AddressDAO;
 import ua.nure.shoestore.entity.Address;
-import ua.nure.shoestore.entity.Shoe;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 
 public class AddressDAOImpl implements AddressDAO {
     ConnectionManager connectionManager;
     private static final String ADD_ADDRESS = "INSERT INTO address (country, city, street, house_number, entrance, apartment_number) values (?, ?, ?, ?, ?, ?)";
-    private static final String GET_ADDRESS_BY_ID = "SELECT * FROM address WHERE address_id=?";
-
+    private static final String GET_ADDRESS_BY_ID = "SELECT * FROM address WHERE id=?";
 
 
     public long add(Address address) {
@@ -31,10 +26,10 @@ public class AddressDAOImpl implements AddressDAO {
                 ps.executeUpdate();
                 try (ResultSet keys = ps.getGeneratedKeys()) {
                     if (keys.next()) {
-                        address.setAddressId(keys.getLong(1));
+                        address.setId(keys.getLong(1));
                     }
                 }
-                return address.getAddressId();
+                return address.getId();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -49,7 +44,7 @@ public class AddressDAOImpl implements AddressDAO {
                 ps.setLong(++k, id);
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
-                        address=mapAddress(rs);
+                        address = mapAddress(rs);
                     }
                     return address;
                 }
@@ -60,8 +55,8 @@ public class AddressDAOImpl implements AddressDAO {
     }
 
     private Address mapAddress(ResultSet rs) throws SQLException {
-        Address address=new Address();
-        address.setAddressId(rs.getLong("address_id"));
+        Address address = new Address();
+        address.setId(rs.getLong("id"));
         address.setCountry(rs.getString("country"));
         address.setCity(rs.getString("city"));
         address.setStreet(rs.getString("street"));
