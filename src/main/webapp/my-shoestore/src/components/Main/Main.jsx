@@ -56,7 +56,7 @@ function Main() {
                 ) : (
                     shoes.length > 0 ? (
                         shoes.map(shoe => (
-                            <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image}  />
+                            <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} image={shoe.image} />
                         ))
                     ) : (
                         <h1>По вашому запиту нічого не знайдено</h1>
