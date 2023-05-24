@@ -1,5 +1,6 @@
 package ua.nure.shoestore.dao.EntityDAOImpl;
 
+import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
 import ua.nure.shoestore.entity.User;
@@ -9,25 +10,26 @@ import ua.nure.shoestore.forms.UpdateForm;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class UserDAOImpl implements UserDAO {
+
     //ROLE AUTOMATICALLY IS "CLIENT"
     private static final String ADD_USER = "INSERT INTO user (name, surname, password, email, phone_number) VALUES (?, ?, ?, ?, ?)";
     private static final String LOGIN_ATTEMPT = "SELECT * FROM user WHERE email=? AND password=?";
-    private static final String UPDATE = "UPDATE user SET name=?, surname=?, email=?, password=?, phone_number=? WHERE user_id=?";
-    private static final String UPDATE_ROLE = "UPDATE user SET role=? WHERE user_id=?";
-
+    private static final String UPDATE = "UPDATE user SET name=?, surname=?, email=?, password=?, phone_number=? WHERE id=?";
+    private static final String UPDATE_ROLE = "UPDATE user SET role=? WHERE id=?";
     private static final String GET_ALL_USERS = "SELECT * from user";
-    private static final String GET_USER_BY_ID = "SELECT * from user WHERE user_id=?";
+    private static final String GET_USER_BY_ID = "SELECT * from user WHERE id=?";
+    private final ConnectionManager connectionManager;
 
-    private final String url;
-    private final Properties dbProps = new Properties();
+    public UserDAOImpl(DAOConfig config) {
+        connectionManager = new ConnectionManager(config);
+    }
 
     @Override
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        try (Connection con = getConnection()) {
+        try (Connection con = connectionManager.getConnection()) {
             try (Statement st = con.createStatement()) {
                 try (ResultSet rs = st.executeQuery(GET_ALL_USERS)) {
                     while (rs.next()) {
@@ -44,17 +46,17 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserById(long id) {
         User user = new User();
-        try (Connection con = getConnection()) {
-                try (PreparedStatement ps = con.prepareStatement(GET_USER_BY_ID)) {
-                    int k = 0;
-                    ps.setLong(++k, id);
-                    try (ResultSet resultSet = ps.executeQuery()) {
-                        while(resultSet.next()) {
-                            user = mapUsers(resultSet);
-                        }
-                        return user;
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_USER_BY_ID)) {
+                int k = 0;
+                ps.setLong(++k, id);
+                try (ResultSet resultSet = ps.executeQuery()) {
+                    while (resultSet.next()) {
+                        user = mapUsers(resultSet);
                     }
+                    return user;
                 }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -62,7 +64,7 @@ public class UserDAOImpl implements UserDAO {
 
     private User mapUsers(ResultSet rs) throws SQLException {
         User u = new User();
-        u.setUser_id(rs.getInt("user_id"));
+        u.setId(rs.getInt("id"));
         u.setName(rs.getString("name"));
         u.setSurname(rs.getString("surname"));
         u.setPassword(rs.getString("password"));
@@ -74,7 +76,7 @@ public class UserDAOImpl implements UserDAO {
 
     public User getUser(String email, String password) {
         User user = new User();
-        try (Connection con = getConnection()) {
+        try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement pstmt = con.prepareStatement(LOGIN_ATTEMPT,
                     ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
                 pstmt.setString(1, email);
@@ -84,7 +86,7 @@ public class UserDAOImpl implements UserDAO {
                     if (completed) {
                         user.setEmail(email);
                         user.setPassword(password);
-                        user.setUser_id(resultSet.getInt("user_id"));
+                        user.setId(resultSet.getInt("id"));
                         user.setName(resultSet.getString("name"));
                         user.setSurname(resultSet.getString("surname"));
                         user.setRole(Role.valueOf(resultSet.getString("role").toUpperCase()));
@@ -101,7 +103,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public void add(User user) {
-        try (Connection con = getConnection()) {
+        try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
                 int k = 0;
                 ps.setString(++k, user.getName());
@@ -112,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
                 ps.executeUpdate();
                 try (ResultSet keys = ps.getGeneratedKeys()) {
                     if (keys.next()) {
-                        user.setUser_id(keys.getLong(1));
+                        user.setId(keys.getLong(1));
                     }
                 }
             }
@@ -122,7 +124,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public User update(UpdateForm updateForm) {
-        try (Connection con = getConnection()) {
+        try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(UPDATE)) {
                 int k = 0;
                 ps.setString(++k, updateForm.getName());
@@ -130,7 +132,7 @@ public class UserDAOImpl implements UserDAO {
                 ps.setString(++k, updateForm.getEmail());
                 ps.setString(++k, updateForm.getPassword());
                 ps.setString(++k, updateForm.getPhoneNumber());
-                ps.setLong(++k, updateForm.getUser_id());
+                ps.setLong(++k, updateForm.getId());
                 ps.executeUpdate();
             }
             return getUser(updateForm.getEmail(), updateForm.getPassword());
@@ -139,56 +141,20 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public void updateRole(long user_id, Role role) {
-        try (Connection con = getConnection()) {
-            User user = getUserById(user_id);
+    public void updateRole(long userId, Role role) {
+        try (Connection con = connectionManager.getConnection()) {
+            User user = getUserById(userId);
             if (user.getRole() == Role.ADMIN) {
                 throw new IllegalArgumentException("Admins cannot update admins");
             }
             try (PreparedStatement ps = con.prepareStatement(UPDATE_ROLE)) {
                 int k = 0;
                 ps.setString(++k, role.toString().toLowerCase());
-                ps.setLong(++k, user_id);
+                ps.setLong(++k, userId);
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public UserDAOImpl(DAOConfig config) {
-        url = config.getUrl();
-        dbProps.setProperty("user", config.getUser());
-        dbProps.setProperty("password", config.getPassword());
-    }
-
-    private static void close(AutoCloseable ac) {
-        if (ac != null) {
-            try {
-                ac.close();
-            } catch (Exception e) {
-                // nothing
-            }
-        }
-    }
-
-    private Connection getConnection() throws SQLException {
-        return getConnection(true);
-    }
-
-    private Connection getConnection(boolean autoCommit) throws SQLException {
-        Connection con = DriverManager.getConnection(url, dbProps);
-        con.setAutoCommit(autoCommit);
-        return con;
-    }
-
-    private void rollback(Connection con) {
-        if (con != null) {
-            try {
-                con.rollback();
-            } catch (SQLException e) {
-                // nothing to do
-            }
         }
     }
 }
