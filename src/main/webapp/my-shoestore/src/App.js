@@ -20,6 +20,7 @@ import UsersList from "./components/UsersList/UsersList";
 import ClientOrders from "./components/ClientOrders/ClientOrders";
 
 function App() {
+    //localStorage.clear();
   return (
       <Router>
           <div className="ShoeStore">

@@ -1,7 +1,16 @@
 import "./NavbarAdmin.css"
 import logo from "../../../assets/logo.png";
 import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router";
 function NavbarAdmin() {
+    const navigate = useNavigate();
+    function handleSubmit() {
+        localStorage.clear();
+
+        navigate('/main'); // Перенаправлення на головну сторінку
+        window.location.reload(); // Оновлення сторінки
+    }
+
 
     return (
         <nav className="nav">
@@ -29,6 +38,7 @@ function NavbarAdmin() {
                         <NavLink to="/clientcabinet" className="nav-list__item">
                             Особистий кабінет
                         </NavLink>
+                       <button className="btn-exit" onClick={handleSubmit}>Вихід</button>
 
                     </ul>
                 </div>
