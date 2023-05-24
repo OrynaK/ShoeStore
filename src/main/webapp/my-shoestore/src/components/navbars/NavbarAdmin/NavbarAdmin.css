@@ -28,4 +28,12 @@
     align-items: center;
 }
 
+.btn-exit {
+    padding: 10px 15px;
+    background-color: #4ff069;
+    border-radius: 5px;
+    border-color: transparent;
+    cursor: pointer;
+}
+
 

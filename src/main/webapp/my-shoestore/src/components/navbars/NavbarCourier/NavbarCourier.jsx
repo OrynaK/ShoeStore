@@ -1,22 +1,37 @@
 import "./NavbarCourier.css"
 import logo from "../../../assets/logo.png"
+import {useNavigate} from "react-router";
+import {NavLink} from "react-router-dom";
 
 function NavbarCourier () {
+    const navigate = useNavigate();
+    function handleSubmit() {
+        localStorage.clear();
+
+        navigate('/main'); // Перенаправлення на головну сторінку
+        window.location.reload(); // Оновлення сторінки
+    }
 
 
     return (
         <nav className="nav">
             <div className="container">
                 <div className="nav-row">
-                    <img className="logo" src={logo} alt="logo"/>
+                    <NavLink to="/main">
+                        <img className="logo" src={logo} alt="logo"/>
+                    </NavLink>
                     <ul className="nav-list">
-                        <li className="nav-list__item">Замовлення</li>
-                        <li className="nav-list__item">Особистий кабінет</li>
+                        <NavLink to="/courierorders" className="nav-list__item">
+                            Замовлення
+                        </NavLink>
+                        <NavLink to="/clientcabinet" className="nav-list__item">
+                            Особистий кабінет
+                        </NavLink>
                     </ul>
                 </div>
             </div>
         </nav>
-        /*top: 270px;*/
+
     );
 
 }
