@@ -39,11 +39,12 @@ function App() {
                     <Route path="/adminorders" element={<AdminOrders/>}></Route>
                     <Route path="/addNewShoe" element={<AddNewShoe/>}></Route>
                   <Route path="/main" element={<Main/>}></Route>
-                    <Route path="/shoe/:id" element={<ShoePage/>}></Route>
                     <Route path="/makeorder" element={<MakeOrder/>}></Route>
                     <Route path="/basket" element={<Basket/>}></Route>
                     <Route path="/userslist" element={<UsersList/>}></Route>
                     <Route path="/clientorders" element={<ClientOrders/>}></Route>
+                    <Route path="/shoepage" element={<ShoePage/>}></Route>
+                    <Route path="/shoepage/:id" element={<ShoePage/>}/>
                 </Routes>
                 }
 

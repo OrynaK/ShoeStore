@@ -2,6 +2,7 @@ import "./NavbarPacker.css"
 import logo from "../../../assets/logo.png"
 import {useNavigate} from "react-router";
 import {NavLink} from "react-router-dom";
+import React from "react";
 
 function NavbarPacker () {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ function NavbarPacker () {
                         <NavLink to="/clientcabinet" className="nav-list__item">
                             Особистий кабінет
                         </NavLink>
+                        <button className="btn-exit" onClick={handleSubmit}>Вихід</button>
                     </ul>
                 </div>
             </div>
