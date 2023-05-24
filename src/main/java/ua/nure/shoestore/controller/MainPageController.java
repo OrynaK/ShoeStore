@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ua.nure.shoestore.dto.ShoeCardDTO;
+import ua.nure.shoestore.cards.ShoeCard;
 import ua.nure.shoestore.entity.enums.Sex;
 import ua.nure.shoestore.service.ShoeService;
 
@@ -19,31 +19,31 @@ public class MainPageController {
     private ShoeService shoeService;
 
     @GetMapping(value = "/getShoes")
-    public List<ShoeCardDTO> getAll(){
+    public List<ShoeCard> getAll(){
         return shoeService.getShoes();
     }
     @GetMapping(value = "/getShoesByColor")
-    public List<ShoeCardDTO> getShoesByColor(@RequestParam("color") String color){
+    public List<ShoeCard> getShoesByColor(@RequestParam("color") String color){
         return shoeService.getShoesByColor(color);
     }
     @GetMapping(value = "/getShoesBySize")
-    public List<ShoeCardDTO> getShoesBySize(@RequestParam("size") BigDecimal size){
+    public List<ShoeCard> getShoesBySize(@RequestParam("size") BigDecimal size){
         return shoeService.getShoesBySize(size);
     }
     @GetMapping(value = "/getShoesBySex")
-    public List<ShoeCardDTO> getShoesBySex(@RequestParam("sex") String sex){
+    public List<ShoeCard> getShoesBySex(@RequestParam("sex") String sex){
         return shoeService.getShoesBySex(Sex.valueOf(sex.toUpperCase()));
     }
     @GetMapping(value = "/getShoesAscendingPrice")
-    public List<ShoeCardDTO> getAllAscendingPrice(){
+    public List<ShoeCard> getAllAscendingPrice(){
         return shoeService.getShoesAscendingPrice();
     }
     @GetMapping(value = "/getShoesDescendingPrice")
-    public List<ShoeCardDTO> getAllDescendingPrice(){
+    public List<ShoeCard> getAllDescendingPrice(){
         return shoeService.getShoesDescendingPrice();
     }
     @GetMapping(value = "/searchShoes")
-    public List<ShoeCardDTO> searchShoes(@RequestParam("name") String name){
+    public List<ShoeCard> searchShoes(@RequestParam("name") String name){
         return shoeService.searchShoes(name);
     }
 }
