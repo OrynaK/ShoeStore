@@ -8,6 +8,7 @@ import ua.nure.shoestore.entity.ShoeOrder;
 import ua.nure.shoestore.entity.enums.Role;
 
 import java.sql.*;
+import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
     private static final String INSERT_ORDER = "INSERT INTO `order` (address_id, datetime, status) VALUES (?, DEFAULT, DEFAULT)";
@@ -20,7 +21,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void create(Order order) {
+    public long insert(Order order) {
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -44,6 +45,7 @@ public class OrderDAOImpl implements OrderDAO {
                 st.executeUpdate();
             }
             conn.commit();
+            return order.getOrderId();
         } catch (Exception e) {
             ConnectionManager.rollback(conn);
             throw new RuntimeException(e);
@@ -66,12 +68,22 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public Order getById(long orderId) {
+    public void update(Order entity) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void delete(Order order) {
+    public void delete(long id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Order> findAll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Order findById(long orderId) {
         throw new UnsupportedOperationException();
     }
 
