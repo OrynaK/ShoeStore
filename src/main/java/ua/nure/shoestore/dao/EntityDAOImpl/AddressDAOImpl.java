@@ -6,6 +6,7 @@ import ua.nure.shoestore.dao.EntityDAO.AddressDAO;
 import ua.nure.shoestore.entity.Address;
 
 import java.sql.*;
+import java.util.List;
 
 public class AddressDAOImpl implements AddressDAO {
     ConnectionManager connectionManager;
@@ -13,7 +14,7 @@ public class AddressDAOImpl implements AddressDAO {
     private static final String GET_ADDRESS_BY_ID = "SELECT * FROM address WHERE id=?";
 
 
-    public long add(Address address) {
+    public long insert(Address address) {
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(ADD_ADDRESS, Statement.RETURN_GENERATED_KEYS)) {
                 int k = 0;
@@ -36,7 +37,22 @@ public class AddressDAOImpl implements AddressDAO {
         }
     }
 
-    public Address getById(long id) {
+    @Override
+    public void update(Address address) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Address> findAll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void delete(long id) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Address findById(long id) {
         Address address = new Address();
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(GET_ADDRESS_BY_ID)) {

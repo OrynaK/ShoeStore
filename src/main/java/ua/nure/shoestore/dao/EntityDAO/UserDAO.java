@@ -1,18 +1,12 @@
 package ua.nure.shoestore.dao.EntityDAO;
 
-import ua.nure.shoestore.entity.Address;
+import ua.nure.shoestore.dao.CRUDRepository;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
 import ua.nure.shoestore.forms.UpdateForm;
 
-import java.util.List;
-
-public interface UserDAO{
-    User getUserById(long id);
-
+public interface UserDAO extends CRUDRepository<User> {
     User getUser(String email, String password);
+    void updateRole(long userId, Role role);
     User update(UpdateForm updateForm);
-    void updateRole(long user_id, Role role);
-    void add(User user);
-    List<User> getAllUsers();
 }

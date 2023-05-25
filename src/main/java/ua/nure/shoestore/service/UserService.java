@@ -10,16 +10,21 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
-    public List <User> getUsers() {return this.userDAO.getAllUsers();}
-    public UserService(UserDAO userDAO){this.userDAO=userDAO;}
-
-    public User updateInfo(UpdateForm updateForm) {
-       return userDAO.update(updateForm);
+    public List<User> getUsers() {
+        return this.userDAO.findAll();
     }
 
-    public void updateRole(long user_id, Role role) {
-        userDAO.updateRole(user_id, role);
+    public UserService(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    public User updateInfo(UpdateForm updateForm) {
+        return userDAO.update(updateForm);
+    }
+
+    public void updateRole(long userId, Role role) {
+        userDAO.updateRole(userId, role);
     }
 }
