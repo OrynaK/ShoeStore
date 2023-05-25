@@ -1,7 +1,6 @@
 import "./AddNewShoe.css";
 import React, {useState} from "react";
 import {useNavigate} from "react-router";
-import app from "../../App";
 
 function AddNewShoe() {
     const [name, setName] = useState('')
@@ -19,15 +18,18 @@ function AddNewShoe() {
     };
 
     const handleSubmit = event => {
-        const shoeDTO = {name, size, color, season, sex, price, amount};
+        event.preventDefault();
         const formData = new FormData();
-        formData.append('shoe', JSON.stringify(shoeDTO));
-        formData.append('image', image);
+        formData.append('shoeDTO', JSON.stringify({ name, size, color, season, sex, price, amount }));
+        formData.append('imageData', image);
+
         fetch("http://localhost:8080/addShoe", {
             method: "POST",
             body: formData
-        }).then(() => {
-            navigate("/main");
+        }).then((response) => {
+            if (response.ok) {
+                console.log("Data sent successfully");
+            }
         });
     };
 

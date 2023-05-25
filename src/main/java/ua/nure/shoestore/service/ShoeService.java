@@ -96,8 +96,8 @@ public class ShoeService {
         return shoeCards;
     }
 
-    public void addShoe(Shoe shoe) {
-        shoeDAO.insert(shoe);
+    public Long addShoe(Shoe shoe) {
+       return shoeDAO.insert(shoe);
     }
 
     public List<ShoeDTO> showShoePage(String name) {

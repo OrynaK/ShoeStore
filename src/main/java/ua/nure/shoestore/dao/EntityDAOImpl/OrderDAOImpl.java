@@ -18,13 +18,17 @@ public class OrderDAOImpl implements OrderDAO {
     private static final String INSERT_SHOES_ORDER = "INSERT INTO `shoe_order` (order_id, shoe_id, price, amount) VALUES (?, ?, ?, ?)";
     private static final String INSERT_ORDER_USER = "INSERT INTO `user_order` (order_id, user_id, description, datetime) VALUES (?, ?, DEFAULT, DEFAULT)";
     private static final String GET_ORDERS_BY_ROLE = "SELECT * from order WHERE status=?";
-    private AddressDAOImpl addressDAO;
-    private UserDAOImpl userDAO;
+//    private AddressDAOImpl addressDAO;
+//    private UserDAOImpl userDAO;
     private final ConnectionManager connectionManager;
 
-    public OrderDAOImpl(DAOConfig config, AddressDAOImpl addressDAO, UserDAOImpl userDAO) {
-        this.addressDAO = addressDAO;
-        this.userDAO = userDAO;
+//    public OrderDAOImpl(DAOConfig config, AddressDAOImpl addressDAO, UserDAOImpl userDAO) {
+//        this.addressDAO = addressDAO;
+//        this.userDAO = userDAO;
+//        connectionManager = new ConnectionManager(config);
+//    }
+
+    public OrderDAOImpl(DAOConfig config){
         connectionManager = new ConnectionManager(config);
     }
 
@@ -131,10 +135,10 @@ public class OrderDAOImpl implements OrderDAO {
         return o;
     }
 
-    private Order mapAddress(Order order, ResultSet rs) throws SQLException {
-        order.setAddress(addressDAO.mapAddress(rs));
-        return order;
-    }
+//    private Order mapAddress(Order order, ResultSet rs) throws SQLException {
+//        order.setAddress(addressDAO.mapAddress(rs));
+//        return order;
+//    }
 
     private Order mapShoeOrder(Order order, ResultSet rs) throws SQLException {
         List<ShoeOrder> shoeOrders = new ArrayList<>();
@@ -149,22 +153,22 @@ public class OrderDAOImpl implements OrderDAO {
         return order;
     }
 
-    private Order mapUserOrder(Order order, ResultSet rs) throws SQLException {
-        Map<Role, UserOrder> userOrders = new EnumMap<>(Role.class);
-
-        while (rs.next()) {
-            UserOrder userOrder = null;
-            userOrder.setUserId(rs.getLong("user_id"));
-            userOrder.setDescription(rs.getString("description"));
-            userOrder.setDate(rs.getDate("date").toLocalDate());
-            userOrder.setTime(rs.getTime("time").toLocalTime());
-
-            userOrders.put(userDAO.findById(userOrder.getUserId()).getRole(), userOrder);
-        }
-
-        order.setUsersInOrder(userOrders);
-        return order;
-    }
+//    private Order mapUserOrder(Order order, ResultSet rs) throws SQLException {
+//        Map<Role, UserOrder> userOrders = new EnumMap<>(Role.class);
+//
+//        while (rs.next()) {
+//            UserOrder userOrder = null;
+//            userOrder.setUserId(rs.getLong("user_id"));
+//            userOrder.setDescription(rs.getString("description"));
+//            userOrder.setDate(rs.getDate("date").toLocalDate());
+//            userOrder.setTime(rs.getTime("time").toLocalTime());
+//
+//            userOrders.put(userDAO.findById(userOrder.getUserId()).getRole(), userOrder);
+//        }
+//
+//        order.setUsersInOrder(userOrders);
+//        return order;
+//    }
 
 /*    public static void main(String[] args) throws SQLException {
         // test
