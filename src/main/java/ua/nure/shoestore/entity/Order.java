@@ -13,7 +13,7 @@ import java.util.*;
 @Data
 @AllArgsConstructor
 public class Order {
-    private long orderId;
+    private long id;
     private Map<Role, UserOrder> usersInOrder;
     private LocalDate date;
     private LocalTime time;

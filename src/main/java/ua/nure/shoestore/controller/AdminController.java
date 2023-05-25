@@ -32,7 +32,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/updateUserRole")
-    public String updateStatus(@RequestBody UpdateRoleDTO userInfo) {
+    public String updateRole(@RequestBody UpdateRoleDTO userInfo) {
         if (userInfo.getUser_id() > 0) {
             userService.updateRole(userInfo.getUser_id(), userInfo.getRole());
             return "User role updated";
