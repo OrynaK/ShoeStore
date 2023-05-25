@@ -13,6 +13,7 @@ public class AddressDAOImpl implements AddressDAO {
     private static final String ADD_ADDRESS = "INSERT INTO address (country, city, street, house_number, entrance, apartment_number) values (?, ?, ?, ?, ?, ?)";
     private static final String GET_ADDRESS_BY_ID = "SELECT * FROM address WHERE id=?";
 
+    private static final String GET_ADDRESS_BY_ORDER="SELECT address_id FROM `order` WHERE id=?";
 
     public long insert(Address address) {
         try (Connection con = connectionManager.getConnection()) {
@@ -84,5 +85,24 @@ public class AddressDAOImpl implements AddressDAO {
 
     public AddressDAOImpl(DAOConfig config) {
         connectionManager = new ConnectionManager(config);
+    }
+
+    @Override
+    public Address getAddressByOrder(Long id) {
+        Address address = new Address();
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_ADDRESS_BY_ORDER)) {
+                int k = 0;
+                ps.setLong(++k, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        address = mapAddress(rs);
+                    }
+                    return address;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

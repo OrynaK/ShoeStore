@@ -4,5 +4,5 @@ import ua.nure.shoestore.dao.CRUDRepository;
 import ua.nure.shoestore.entity.Address;
 
 public interface AddressDAO extends CRUDRepository<Address> {
-
+ Address getAddressByOrder(Long id);
 }

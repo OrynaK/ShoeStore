@@ -343,20 +343,5 @@ VALUES
 SELECT * FROM `order`;
 SELECT * from `order` WHERE status='processing';
 
-SELECT
-    a.*,
-    o.id AS order_id,
-    s.*,
-    u.role
-FROM
-    `order` o
-        INNER JOIN address a ON o.address_id = a.id
-        INNER JOIN user_order uo ON o.id = uo.order_id
-        INNER JOIN user u ON uo.user_id = u.id
-        INNER JOIN shoe_order so ON o.id = so.order_id
-        INNER JOIN shoe s ON so.shoe_id = s.id
-WHERE
-        o.status = 'processing'
-
-
+SELECT address_id FROM `order` WHERE id=1;
 
