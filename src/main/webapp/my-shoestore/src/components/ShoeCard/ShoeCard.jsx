@@ -7,9 +7,17 @@ import {useNavigate} from "react-router";
 function ShoeCard(props) {
     const { id, name, price, image} = props;
 
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate().push({
+            pathname: `/shoepage/${name}`,
+            state: { id, name, price, image }
+        });
+    };
 
     return (
-        <Link to={`/shoepage/${id}`} state={{ id, name, price, image}} className="shoe-card">
+        <Link to={`/shoepage/${name}`} state={{ id, name, price, image}} className="shoe-card">
         <div className="shoe-card">
             <div className="shoe-card-form">
                 <img className="shoe-card-form--img" src={sneaker} alt="shoe" width="170px" height="100px"/>
