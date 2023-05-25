@@ -5,9 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.nure.shoestore.dto.ShoeDTO;
@@ -15,7 +12,6 @@ import ua.nure.shoestore.service.ShoeService;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,14 +25,14 @@ public class ShoeController {
     public void addShoe(@RequestParam("shoeDTO") String shoeDTOJson, @RequestParam("imageData") MultipartFile imageData) throws IOException {
         ShoeDTO shoeDTO = new ObjectMapper().readValue(shoeDTOJson, ShoeDTO.class);
 
-        System.out.println(shoeDTO);
-
         String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(imageData.getOriginalFilename());
 
-
-        File newFile = new File("src/main/java/ua/nure/shoestore/photos/" + fileName);
+        File newFile = new File("src/main/webapp/my-shoestore/images/" + fileName);
         FileUtils.writeByteArrayToFile(newFile, imageData.getBytes());
-        String fileUrl = "src/main/java/ua/nure/shoestore/photos/" + fileName;
+
+        String fileUrl = "src/main/webapp/my-shoestore/images/photos/" + fileName;
+
+        shoeService.addShorWithImage(shoeDTO, fileUrl, fileName);
     }
 
     @GetMapping(value = "/showShoePage")
