@@ -81,14 +81,15 @@ CREATE INDEX XIE1image_name ON image
 
 CREATE TABLE `order`
 (
-    id         MEDIUMINT                                                                                  NOT NULL DEFAULT 0,
+    id         MEDIUMINT                                                                                  NOT NULL AUTO_INCREMENT,
     address_id MEDIUMINT                                                                                  NOT NULL,
     datetime   TIMESTAMP                                                                                  NOT NULL DEFAULT CURRENT_TIMESTAMP,
     total_cost DECIMAL(9, 2)                                                                              NOT NULL DEFAULT 0 CHECK (total_cost >= 0),
     status     ENUM ('processing', 'accepted', 'compiled', 'ready_for_sending', 'delivered', 'cancelled') NOT NULL DEFAULT 'processing',
     PRIMARY KEY (id),
     UNIQUE INDEX order_id_UNIQUE (id ASC) VISIBLE
-);
+)
+    AUTO_INCREMENT = 41;
 
 CREATE INDEX XIE2order_address_id ON `order`
     (address_id);
@@ -115,15 +116,15 @@ CREATE INDEX XIE1shoe_name ON shoe (name);
 
 CREATE TABLE shoe_order
 (
-    shoe_id  MEDIUMINT     NOT NULL,
     order_id MEDIUMINT     NOT NULL,
+    shoe_id  MEDIUMINT     NOT NULL,
     price    DECIMAL(9, 2) NOT NULL CHECK (price >= 0),
     amount   INTEGER       NOT NULL DEFAULT 1 CHECK (amount >= 0)
 );
 
 ALTER TABLE shoe_order
-    ADD PRIMARY KEY (shoe_id, order_id),
-    ADD INDEX shoe_pk (shoe_id ASC) VISIBLE;
+    ADD PRIMARY KEY (order_id, shoe_id),
+    ADD INDEX shoe_order_pk (order_id ASC) VISIBLE;
 
 
 CREATE TABLE user
@@ -160,7 +161,7 @@ CREATE TABLE user_order
 
 ALTER TABLE user_order
     ADD PRIMARY KEY (order_id, user_id),
-    ADD INDEX order_pk (order_id ASC) VISIBLE;
+    ADD INDEX user_order_pk (order_id ASC) VISIBLE;
 
 
 ALTER TABLE cart
@@ -181,14 +182,14 @@ ALTER TABLE shoe
     ADD FOREIGN KEY fk_shoe_image_id (image_id) REFERENCES image (id);
 
 ALTER TABLE shoe_order
-    ADD FOREIGN KEY fk_shoe_order_order_id (order_id) REFERENCES `order` (id)
+    ADD FOREIGN KEY fk_shoe_order_order_id (order_id) REFERENCES shoe_store.`order` (id)
         ON DELETE CASCADE;
 
 ALTER TABLE shoe_order
     ADD FOREIGN KEY fk_shoe_order_shoe_id (shoe_id) REFERENCES shoe (id);
 
 ALTER TABLE user_order
-    ADD FOREIGN KEY fk_user_order_order_id (order_id) REFERENCES `order` (id)
+    ADD FOREIGN KEY fk_user_order_order_id (order_id) REFERENCES shoe_store.`order` (id)
         ON DELETE CASCADE;
 
 ALTER TABLE user_order
@@ -204,8 +205,9 @@ CREATE TRIGGER shoe_order_after_insert
 BEGIN
     DECLARE total DECIMAL(9, 2);
     SELECT SUM(price * amount) INTO total FROM shoe_order WHERE order_id = NEW.order_id;
-    UPDATE `order` SET total_cost = total WHERE order_id = NEW.order_id;
+    UPDATE `order` SET total_cost = total WHERE id = NEW.order_id;
 END;
+|
 DELIMITER ;
 
 -- Trigger to update total cost of order after updating shoe_order
@@ -217,8 +219,9 @@ CREATE TRIGGER shoe_order_after_update
 BEGIN
     DECLARE total DECIMAL(9, 2);
     SELECT SUM(price * amount) INTO total FROM shoe_order WHERE order_id = NEW.order_id;
-    UPDATE `order` SET total_cost = total WHERE order_id = NEW.order_id;
+    UPDATE `order` SET total_cost = total WHERE id = NEW.order_id;
 END;
+|
 DELIMITER ;
 
 
