@@ -25,6 +25,9 @@ function NavbarPacker () {
                         <NavLink to="/packerorders" className="nav-list__item">
                             Замовлення
                         </NavLink>
+                        <NavLink to="/myorders" className="nav-list__item">
+                            Мої Замовлення
+                        </NavLink>
                         <NavLink to="/clientcabinet" className="nav-list__item">
                             Особистий кабінет
                         </NavLink>

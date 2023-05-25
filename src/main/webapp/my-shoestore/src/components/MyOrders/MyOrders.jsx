@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import "./CourierOrders.css";
-function CourierOrders() {
+import "./MyOrders.css";
+function MyOrders() {
     const [orders, setOrders] = useState([
         { client: 'John Doe', order: '1234', status: 'None' },
         { client: 'Jane Smith', order: '5678', status: 'None' },
@@ -13,30 +13,30 @@ function CourierOrders() {
         setOrders(updatedOrders);
     };
     return (
-        <div className="courier-orders">
+        <div className="my-orders">
 
-            <table className="courier-orders-table">
+            <table className="my-orders-table">
                 <thead>
                 <tr>
-                    <th className="courier-orders-table-th">Клієнт</th>
-                    <th className="courier-orders-table-th">Замовлення</th>
-                    <th className="courier-orders-table-th">Статус</th>
+                    <th className="my-orders-table-th">Клієнт</th>
+                    <th className="my-orders-table-th">Замовлення</th>
+                    <th className="my-orders-table-th">Статус</th>
                 </tr>
                 </thead>
                 <tbody>
                 {orders.map((order, index) => (
                     <tr key={index}>
-                        <td className="courier-orders-table-td">{order.client}</td>
-                        <td className="courier-orders-table-td">{order.order}</td>
-                        <td className="courier-orders-table-td">
+                        <td className="my-orders-table-td">{order.client}</td>
+                        <td className="my-orders-table-td">{order.order}</td>
+                        <td className="my-orders-table-td">
                             <li>
                                 {order.status}
                             </li>
                             <ul>
-                                <button className="courier-orders-table-btn-green" onClick={() => handleStatusChange(index, 'Accepted')}>
+                                <button className="my-orders-table-btn-green" onClick={() => handleStatusChange(index, 'Accepted')}>
                                     Прийняти замовлення
                                 </button>
-                                <button className="courier-orders-table-btn-red" onClick={() => handleStatusChange(index, 'Rejected')}>
+                                <button className="my-orders-table-btn-red" onClick={() => handleStatusChange(index, 'Rejected')}>
                                     Відхилити замовлення
                                 </button>
                             </ul>
@@ -49,4 +49,4 @@ function CourierOrders() {
         </div>
     )
 }
-export default CourierOrders;
+export default MyOrders;
