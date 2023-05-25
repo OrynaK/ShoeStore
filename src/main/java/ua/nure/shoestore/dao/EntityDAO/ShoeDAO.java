@@ -15,4 +15,6 @@ public interface ShoeDAO extends CRUDRepository<Shoe> {
     List<Shoe> getShoesAscendingPrice();
     List<Shoe> getShoesDescendingPrice();
     List<Shoe> searchShoes(String name);
+
+    List<Shoe> showShoePage(String name);
 }

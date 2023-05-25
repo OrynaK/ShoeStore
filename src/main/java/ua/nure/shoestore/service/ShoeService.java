@@ -3,6 +3,7 @@ package ua.nure.shoestore.service;
 import org.springframework.stereotype.Service;
 import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
 import ua.nure.shoestore.dto.ShoeCardDTO;
+import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.enums.Sex;
 
@@ -99,4 +100,15 @@ public class ShoeService {
         shoeDAO.insert(shoe);
     }
 
+    public List<ShoeDTO> showShoePage(String name) {
+        List<ShoeDTO> shoePages = new ArrayList<>();
+        for (Shoe s : shoeDAO.showShoePage(name)) {
+            ShoeDTO shoePage = new ShoeDTO(s.getName(), s.getSize(), s.getColor(), s.getSeason(), s.getSex(), s.getPrice(), s.getAmount());
+            if (!shoePages.contains(shoePage)) {
+                shoePages.add(shoePage);
+            }
+        }
+        return shoePages;
+
+    }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./ShoePage.css";
 import sneaker from "./../../assets/sneaker.png"
 import {useLocation} from "react-router";
@@ -6,6 +6,18 @@ function ShoePage() {
 
     const location = useLocation();
     const { id, name, price, image} = location.state || {};
+    const [shoesData, setShoesData] = useState([]);
+
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/showShoePage?name=${name}`)
+            .then((response) => response.json())
+            .then((data) => setShoesData(data))
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+
+    }, []);
     return (
 
         <div className="shoe-page">
@@ -14,7 +26,9 @@ function ShoePage() {
                 <img src={sneaker} alt="sneaker"/>
                 <div className="shoe-page-form-properties">
                     <div  className="shoe-page-form-sizes">
-                        <span className="shoe-page-form-size">{}</span>
+                        {shoesData.map(shoe => (
+                            <span key={shoe.id} className="shoe-page-form-size">{shoe.size}</span>
+                        ))}
 
                     </div>
 

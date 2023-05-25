@@ -163,6 +163,26 @@ public class ShoeDAOImpl implements ShoeDAO {
         }
     }
 
+    @Override
+    public List<Shoe> showShoePage(String name) {
+        List<Shoe> shoeList = new ArrayList<>();
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_SHOES_BY_NAME)) {
+                int k = 0;
+                ps.setString(++k, "%" + name + "%");
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        shoeList.add(mapShoes(rs));
+                    }
+                    return shoeList;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public long insert(Shoe shoe) {
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(ADD_SHOE, Statement.RETURN_GENERATED_KEYS)) {
@@ -206,7 +226,7 @@ public class ShoeDAOImpl implements ShoeDAO {
         s.setSex(Sex.valueOf(rs.getString("sex").toUpperCase()));
         s.setPrice(rs.getBigDecimal("actual_price"));
         s.setName(rs.getString("name"));
-        s.setAmount(rs.getInt("id"));
+        s.setAmount(rs.getInt("amount"));
         s.setImageId(rs.getInt("image_id"));
         return s;
     }
