@@ -2,12 +2,8 @@ package ua.nure.shoestore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ua.nure.shoestore.cards.ShoeCard;
-import ua.nure.shoestore.entity.Address;
 import ua.nure.shoestore.entity.User;
-import ua.nure.shoestore.entity.enums.Role;
 import ua.nure.shoestore.forms.UpdateForm;
-import ua.nure.shoestore.service.AddressService;
 import ua.nure.shoestore.service.UserService;
 
 import java.util.List;

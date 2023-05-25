@@ -5,7 +5,7 @@ import {useLocation} from "react-router";
 function ShoePage() {
 
     const location = useLocation();
-    const { id, name, price, image } = location.state || {};
+    const { id, name, price, image} = location.state || {};
     return (
 
         <div className="shoe-page">
@@ -14,9 +14,8 @@ function ShoePage() {
                 <img src={sneaker} alt="sneaker"/>
                 <div className="shoe-page-form-properties">
                     <div  className="shoe-page-form-sizes">
-                        <span className="shoe-page-form-size">36</span>
-                        <span className="shoe-page-form-size">37</span>
-                        <span className="shoe-page-form-size">38</span>
+                        <span className="shoe-page-form-size">{}</span>
+
                     </div>
 
                     <span className="shoe-page-form-price"><strong>{price}$</strong></span>

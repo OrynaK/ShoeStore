@@ -1,16 +1,15 @@
-package ua.nure.shoestore.cards;
+package ua.nure.shoestore.dto;
 
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
 
-public class ShoeCard {
+public class ShoeCardDTO {
     private BigDecimal price;
     private String name;
     private int imageId;
 
-    public ShoeCard(BigDecimal price, String name, int imageId) {
+    public ShoeCardDTO(BigDecimal price, String name, int imageId) {
         this.price = price;
         this.name = name;
         this.imageId = imageId;
@@ -44,7 +43,7 @@ public class ShoeCard {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ShoeCard shoeCard = (ShoeCard) o;
+        ShoeCardDTO shoeCard = (ShoeCardDTO) o;
         return imageId == shoeCard.imageId && price.equals(shoeCard.price) && name.equals(shoeCard.name);
     }
 
