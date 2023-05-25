@@ -8,11 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ua.nure.shoestore.dto.ShoeCardDTO;
 import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.service.ShoeService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,5 +35,10 @@ public class ShoeController {
 
         String fileUrl = "src/main/java/ua/nure/shoestore/photos/" + fileName;
 //        return new ResponseEntity<>(fileUrl, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/showShoePage")
+    public List<ShoeDTO> showShoePage(@RequestParam("name") String name){
+        return shoeService.showShoePage(name);
     }
 }
