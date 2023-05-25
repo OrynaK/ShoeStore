@@ -1,16 +1,15 @@
 package ua.nure.shoestore.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderShoe {
+@RequiredArgsConstructor
+public class ShoeOrder {
     private long shoeId;
-    private int amount;
     private BigDecimal price;
+    private int amount;
 }
