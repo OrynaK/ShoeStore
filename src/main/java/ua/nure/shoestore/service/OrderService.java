@@ -15,7 +15,7 @@ public class OrderService {
         this.addressDAO = addressDAO;
     }
 
-    public long addOrder(Order order) {
+    public long makeOrder(Order order) {
         long addressId = addressDAO.insert(order.getAddress());
         order.getAddress().setId(addressId);
         return orderDAO.insert(order);
