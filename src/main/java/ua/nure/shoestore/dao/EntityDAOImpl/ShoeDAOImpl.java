@@ -32,7 +32,7 @@ public class ShoeDAOImpl implements ShoeDAO {
     }
 
     @Override
-    public List<Shoe> getAllShoes() {
+    public List<Shoe> findAll() {
         List<Shoe> shoeList = new ArrayList<>();
         try (Connection con = connectionManager.getConnection()) {
             try (Statement st = con.createStatement()) {
@@ -46,6 +46,11 @@ public class ShoeDAOImpl implements ShoeDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Shoe findById(long id) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -158,7 +163,7 @@ public class ShoeDAOImpl implements ShoeDAO {
         }
     }
 
-    public void add(Shoe shoe) {
+    public long insert(Shoe shoe) {
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(ADD_SHOE, Statement.RETURN_GENERATED_KEYS)) {
                 int k = 0;
@@ -176,10 +181,20 @@ public class ShoeDAOImpl implements ShoeDAO {
                     }
                 }
             }
+            return shoe.getId();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Override
+    public void update(Shoe entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void delete(long id) {
+        throw new UnsupportedOperationException();
     }
 
     private Shoe mapShoes(ResultSet rs) throws SQLException {
