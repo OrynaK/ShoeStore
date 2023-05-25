@@ -27,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> findAll() {
         List<User> userList = new ArrayList<>();
         try (Connection con = connectionManager.getConnection()) {
             try (Statement st = con.createStatement()) {
@@ -44,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(long id) {
+    public User findById(long id) {
         User user = new User();
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(GET_USER_BY_ID)) {
@@ -102,7 +102,8 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public void add(User user) {
+    @Override
+    public long insert(User user) {
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
                 int k = 0;
@@ -118,9 +119,20 @@ public class UserDAOImpl implements UserDAO {
                     }
                 }
             }
+            return user.getId();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void update(User entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void delete(long id) {
+        throw new UnsupportedOperationException();
     }
 
     public User update(UpdateForm updateForm) {
@@ -143,7 +155,7 @@ public class UserDAOImpl implements UserDAO {
 
     public void updateRole(long userId, Role role) {
         try (Connection con = connectionManager.getConnection()) {
-            User user = getUserById(userId);
+            User user = findById(userId);
             if (user.getRole() == Role.ADMIN) {
                 throw new IllegalArgumentException("Admins cannot update admins");
             }
