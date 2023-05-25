@@ -1,8 +1,16 @@
 package ua.nure.shoestore.dao.EntityDAO;
 
+import ua.nure.shoestore.dao.CRUDRepository;
 import ua.nure.shoestore.entity.Address;
 
-public interface AddressDAO{
-    long add(Address address);
-    Address getById(long id);
+import java.util.List;
+
+public interface AddressDAO extends CRUDRepository<Address> {
+    long insert(Address address);
+
+    void update(Address address);
+
+    List<Address> findAll();
+
+    Address findById(long id);
 }

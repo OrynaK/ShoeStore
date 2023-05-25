@@ -7,14 +7,17 @@ import ua.nure.shoestore.entity.Address;
 
 @Service
 public class AddressService {
-    private AddressDAO addressDAO;
+    private final AddressDAO addressDAO;
+
     public AddressService(AddressDAO addressDAO) {
         this.addressDAO = addressDAO;
     }
-    public long addAddress(Address address){
-        return addressDAO.add(address);
+
+    public long addAddress(Address address) {
+        return addressDAO.insert(address);
     }
-    public Address getById(long id){
-        return addressDAO.getById(id);
+
+    public Address getById(long id) {
+        return addressDAO.findById(id);
     }
 }
