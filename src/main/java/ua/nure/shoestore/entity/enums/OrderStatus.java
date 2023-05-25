@@ -1,20 +1,20 @@
 package ua.nure.shoestore.entity.enums;
 
 public enum OrderStatus {
-    PROCESSING("Processing"),
-    ACCEPTED("Accepted"),
-    COMPILED("Compiled"),
-    READY_FOR_SENDING("ReadyForSending"),
-    DELIVERED("Delivered"),
-    BASKET("Basket");
+    PROCESSING("processing"),
+    ACCEPTED("accepted"),
+    COMPILED("compiled"),
+    READY_FOR_SENDING("ready_for_sending"),
+    DELIVERED("delivered"),
+    CANCELLED("cancelled");
 
-    private String orderStatus;
+    private final String status;
 
-    OrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    OrderStatus(String status) {
+        this.status = status;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
+    public String getStatus() {
+        return status;
     }
 }
