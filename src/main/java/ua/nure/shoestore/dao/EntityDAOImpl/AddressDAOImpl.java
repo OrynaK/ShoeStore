@@ -70,7 +70,7 @@ public class AddressDAOImpl implements AddressDAO {
         }
     }
 
-    private Address mapAddress(ResultSet rs) throws SQLException {
+    public Address mapAddress(ResultSet rs) throws SQLException {
         Address address = new Address();
         address.setId(rs.getLong("id"));
         address.setCountry(rs.getString("country"));
