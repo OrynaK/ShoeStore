@@ -1,6 +1,7 @@
 package ua.nure.shoestore.dao.EntityDAO;
 
 import ua.nure.shoestore.dao.CRUDRepository;
+import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Sex;
@@ -17,4 +18,8 @@ public interface ShoeDAO extends CRUDRepository<Shoe> {
     List<Shoe> searchShoes(String name);
 
     List<Shoe> showShoePage(String name);
+
+    //розділити image
+    Long addShoeWithImage(ShoeDTO shoeDTO, String imageName);
+    String imageNameByImageId(Long shoeId);
 }

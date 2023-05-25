@@ -3,6 +3,7 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
+import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.enums.Season;
 import ua.nure.shoestore.entity.enums.Sex;
@@ -23,7 +24,10 @@ public class ShoeDAOImpl implements ShoeDAO {
     private static final String GET_SHOES_BY_SEX = "SELECT * FROM shoe WHERE sex=?";
     private static final String GET_SHOES_BY_NAME = "SELECT * FROM shoe WHERE name LIKE ?";
 
+    private static final String GET_IMAGE_BY_SHOE_ID = "SELECT name FROM image WHERE image.id = ?";
+
     private static final String ADD_SHOE = "INSERT INTO shoe (size, color, season, sex, actual_price, name, amount) VALUES(?,?,?,?,?,?,?)";
+    private static final String ADD_SHOE_WITH_IMAGE = "INSERT INTO shoe (name, size, color, image_id, amount, actual_price, season, sex) VALUES(?,?,?,?,?,?,?,?)";
 
     private final ConnectionManager connectionManager;
 
@@ -180,6 +184,63 @@ public class ShoeDAOImpl implements ShoeDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Long addShoeWithImage(ShoeDTO shoeDTO, String imageName) {
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps1 = con.prepareStatement("INSERT INTO image (name, path) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS)) {
+                int k = 0;
+                ps1.setString(++k, imageName);
+                ps1.setString(++k, shoeDTO.getImagePath());
+                ps1.executeUpdate();
+                try (ResultSet key1 = ps1.getGeneratedKeys()) {
+                    if (key1.next()) {
+                        Long imageId = key1.getLong(1);
+                        try (PreparedStatement ps2 = con.prepareStatement(ADD_SHOE_WITH_IMAGE, Statement.RETURN_GENERATED_KEYS)) {
+                            int j = 0;
+                            ps2.setString(++j, shoeDTO.getName());
+                            ps2.setBigDecimal(++j, shoeDTO.getSize());
+                            ps2.setString(++k, shoeDTO.getColor());
+                            ps2.setLong(++k, imageId);
+                            ps2.setInt(++k, shoeDTO.getAmount());
+                            ps2.setBigDecimal(++k, shoeDTO.getPrice());
+                            ps2.setString(++k, shoeDTO.getSeason().toString().toUpperCase());
+                            ps2.setString(++k, shoeDTO.getSex().toString().toUpperCase());
+                            ps2.executeUpdate();
+                            try (ResultSet key2 = ps1.getGeneratedKeys()) {
+                                if (key2.next()) {
+                                    return key2.getLong(1);
+                                }
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String imageNameByImageId(Long shoeId) {
+        String name;
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_IMAGE_BY_SHOE_ID)) {
+                int k = 0;
+                ps.setLong(++k, shoeId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        name = rs.getString("name");
+                        return name;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
 
