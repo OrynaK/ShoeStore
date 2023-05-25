@@ -29,7 +29,6 @@ function NavbarClient () {
 
                         <NavLink to="/paymentanddelivery" className="nav-list__item">Оплата та доставка</NavLink>
                         <NavLink to="/contacts" className="nav-list__item">Контакти</NavLink>
-                        <NavLink to="/loginform" className="nav-list__item">Вхід</NavLink>
                         <NavLink to="/clientcabinet" className="nav-list__item">Особистий кабінет</NavLink>
                         <NavLink to="/basket" className="nav-list__item">Кошик</NavLink>
                         <NavLink to="/clientorders" className="nav-list__item">Мої замовлення</NavLink>
