@@ -15,10 +15,10 @@ public class OrderDAOImpl implements OrderDAO {
     private static final String INSERT_ORDER = "INSERT INTO `order` (address_id, datetime, status) VALUES (?, DEFAULT, DEFAULT)";
     private static final String INSERT_SHOES_ORDER = "INSERT INTO `shoe_order` (order_id, shoe_id, price, amount) VALUES (?, ?, ?, ?)";
     private static final String INSERT_ORDER_USER = "INSERT INTO `user_order` (order_id, user_id, description, datetime) VALUES (?, ?, DEFAULT, DEFAULT)";
-    private static final String GET_ORDERS_BY_ROLE = "SELECT * from order WHERE status=?";
-    private static final String GET_SHOE_ORDER = "SELECT * FROM shoe_order WHERE order_id=?";
-    private static final String GET_USER_ORDER = "SELECT * FROM user_order WHERE order_id=?";
-    private static final String GET_ROLE = "SELECT role FROM user WHERE id=?";
+    private static final String GET_ORDERS_BY_ROLE = "SELECT * from `order` WHERE status=?";
+    private static final String GET_SHOE_ORDER = "SELECT * FROM `shoe_order` WHERE order_id=?";
+    private static final String GET_USER_ORDER = "SELECT * FROM `user_order` WHERE order_id=?";
+    private static final String GET_ROLE = "SELECT role FROM `user` WHERE id=?";
 
     private final ConnectionManager connectionManager;
 
@@ -31,61 +31,56 @@ public class OrderDAOImpl implements OrderDAO {
         List<Order> orders = new ArrayList<>();
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(GET_ORDERS_BY_ROLE)) {
-                List<ShoeOrder> shoeOrders = new ArrayList<>();
-                Map<Role,UserOrder> usersInOrder=new EnumMap<Role, UserOrder>(Role.class);
                 int k = 0;
-                String status = null;
-                switch (role) {
-                    case ADMIN:
-                        status = "processing";
-                        break;
-                    case WAREHOUSE:
-                        status = "accepted";
-                        break;
-                    case PACKER:
-                        status = "compiled";
-                        break;
-                    case COURIER:
-                        status = "ready_for_sending";
-                        break;
-                }
+                String status = switch (role) {
+                    case ADMIN -> "processing";
+                    case WAREHOUSE -> "accepted";
+                    case PACKER -> "compiled";
+                    case COURIER -> "ready_for_sending";
+                    default -> null;
+                };
                 ps.setString(++k, status);
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
+                        boolean isChosen = false;
                         Order order = mapOrder(rs);
-                        try (PreparedStatement prs = con.prepareStatement(GET_SHOE_ORDER)) {
-                            int l = 0;
-                            prs.setLong(++l, order.getId());
-                            try (ResultSet resultSet = prs.executeQuery()) {
-                                while (resultSet.next()) {
-                                    shoeOrders.add(mapShoeOrder(resultSet));
-                                }
-                            }
-                            order.setShoesInOrder(shoeOrders);
-                        }
                         try (PreparedStatement prs = con.prepareStatement(GET_USER_ORDER)) {
                             int l = 0;
                             prs.setLong(++l, order.getId());
+                            UserOrder userOrder;
                             try (ResultSet resultSet = prs.executeQuery()) {
                                 while (resultSet.next()) {
-                                    UserOrder userOrder = mapUserOrder(resultSet);
+                                    userOrder = mapUserOrder(resultSet);
                                     Role role1 = null;
                                     try (PreparedStatement preparedStatement = con.prepareStatement(GET_ROLE)) {
                                         int m = 0;
-                                        prs.setLong(++m, order.getId());
+                                        preparedStatement.setLong(++m, userOrder.getUserId());
                                         try (ResultSet resultSet1 = preparedStatement.executeQuery()) {
                                             while (resultSet1.next()) {
-                                                role1=getRole(userOrder.getUserId());
+                                                role1 = getRole(userOrder.getUserId());
+                                                if (role1 == role) {
+                                                    isChosen = true;
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
-                                    usersInOrder.put(role1, userOrder);
+                                    order.putUser(role1, userOrder);
                                 }
                             }
-                            order.setUsersInOrder(usersInOrder);
                         }
-                        order.setShoesInOrder(shoeOrders);
-                        orders.add(mapOrder(rs));
+                        if (!isChosen) {
+                            try (PreparedStatement prs = con.prepareStatement(GET_SHOE_ORDER)) {
+                                int l = 0;
+                                prs.setLong(++l, order.getId());
+                                try (ResultSet resultSet = prs.executeQuery()) {
+                                    while (resultSet.next()) {
+                                        order.addShoe(mapShoeOrder(resultSet));
+                                    }
+                                }
+                            }
+                            orders.add(mapOrder(rs));
+                        }
                     }
                     return orders;
                 }
@@ -170,7 +165,7 @@ public class OrderDAOImpl implements OrderDAO {
                 ps.setLong(++k, id);
                 try (ResultSet resultSet = ps.executeQuery()) {
                     while (resultSet.next()) {
-                        role = Role.valueOf(resultSet.getString("role"));
+                        role = Role.valueOf(resultSet.getString("role").toUpperCase());
                     }
                     return role;
                 }
@@ -186,8 +181,8 @@ public class OrderDAOImpl implements OrderDAO {
         LocalDateTime dateTime = rs.getTimestamp("datetime").toLocalDateTime();
         o.setDate(dateTime.toLocalDate());
         o.setTime(dateTime.toLocalTime());
-        o.setStatus(OrderStatus.valueOf(rs.getString("status")));
-        o.setTotalCost(rs.getBigDecimal("totalCost"));
+        o.setStatus(OrderStatus.valueOf(rs.getString("status").toUpperCase()));
+        o.setTotalCost(rs.getBigDecimal("total_cost"));
         return o;
     }
 
@@ -201,7 +196,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     private UserOrder mapUserOrder(ResultSet rs) throws SQLException {
-        UserOrder userOrder = null;
+        UserOrder userOrder = new UserOrder();
         userOrder.setUserId(rs.getLong("user_id"));
         userOrder.setDescription(rs.getString("description"));
         LocalDateTime dateTime = rs.getTimestamp("datetime").toLocalDateTime();

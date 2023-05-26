@@ -96,7 +96,7 @@ public class AddressDAOImpl implements AddressDAO {
                 ps.setLong(++k, id);
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
-                        address = mapAddress(rs);
+                        address = findById(rs.getLong(1));
                     }
                     return address;
                 }
