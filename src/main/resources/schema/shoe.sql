@@ -51,21 +51,21 @@ CREATE TABLE cart
 
 CREATE TABLE cart_shoe
 (
-    shoe_id MEDIUMINT     NOT NULL,
     cart_id MEDIUMINT     NOT NULL,
+    shoe_id MEDIUMINT     NOT NULL,
     price   DECIMAL(9, 2) NOT NULL CHECK (price >= 0),
     amount  INTEGER       NOT NULL DEFAULT 1 CHECK (amount >= 0)
 );
 
 ALTER TABLE cart_shoe
-    ADD PRIMARY KEY (shoe_id, cart_id),
-    ADD INDEX shoe_pk (shoe_id ASC) VISIBLE;
+    ADD PRIMARY KEY (cart_id, shoe_id),
+    ADD INDEX cart_shoe_pk (cart_id ASC) VISIBLE;
 
 
 CREATE TABLE image
 (
     id   MEDIUMINT    NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255)  NOT NULL,
+    name VARCHAR(255) NOT NULL,
     path VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE INDEX image_id_UNIQUE (id ASC) VISIBLE
@@ -229,17 +229,16 @@ INSERT INTO shoe_store.user VALUE (DEFAULT, 'packer', 'packer', '1234', 'packer@
 INSERT INTO shoe_store.user VALUE (DEFAULT, 'courier', 'courier', '1234', 'courier@gmail.com', '+380950000004',
                                    'courier');
 INSERT INTO user (name, surname, password, email, phone_number, role)
-VALUES
-    ('John', 'Doe', 'password1', 'johndoe@example.com', '+380234567890', 'client'),
-    ('Jane', 'Smith', 'password2', 'janesmith@example.com', '+380987654321', 'client'),
-    ('Michael', 'Johnson', 'password3', 'michaeljohnson@example.com', '+380551234567', 'admin'),
-    ('Emily', 'Williams', 'password4', 'emilywilliams@example.com', '+380999999999', 'client'),
-    ('David', 'Brown', 'password5', 'davidbrown@example.com', '+380112223333', 'packer'),
-    ('Jennifer', 'Jones', 'password6', 'jenniferjones@example.com', '+380445556666', 'warehouse'),
-    ('Daniel', 'Taylor', 'password7', 'danieltaylor@example.com', '+380778889999', 'courier'),
-    ('Sarah', 'Wilson', 'password8', 'sarahwilson@example.com', '+380223334444', 'client'),
-    ('Matthew', 'Anderson', 'password9', 'matthewanderson@example.com', '+380887776666', 'client'),
-    ('Olivia', 'Davis', 'password10', 'oliviadavis@example.com', '+380666555444', 'client');
+VALUES ('John', 'Doe', 'password1', 'johndoe@example.com', '+380234567890', 'client'),
+       ('Jane', 'Smith', 'password2', 'janesmith@example.com', '+380987654321', 'client'),
+       ('Michael', 'Johnson', 'password3', 'michaeljohnson@example.com', '+380551234567', 'admin'),
+       ('Emily', 'Williams', 'password4', 'emilywilliams@example.com', '+380999999999', 'client'),
+       ('David', 'Brown', 'password5', 'davidbrown@example.com', '+380112223333', 'packer'),
+       ('Jennifer', 'Jones', 'password6', 'jenniferjones@example.com', '+380445556666', 'warehouse'),
+       ('Daniel', 'Taylor', 'password7', 'danieltaylor@example.com', '+380778889999', 'courier'),
+       ('Sarah', 'Wilson', 'password8', 'sarahwilson@example.com', '+380223334444', 'client'),
+       ('Matthew', 'Anderson', 'password9', 'matthewanderson@example.com', '+380887776666', 'client'),
+       ('Olivia', 'Davis', 'password10', 'oliviadavis@example.com', '+380666555444', 'client');
 
 -- IMAGES------------------------------------------------------------------
 INSERT INTO shoe_store.image VALUE (1, '1', '1');
@@ -270,78 +269,77 @@ VALUES (33.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
 -- ADDRESS-----------------------------------------------------------------------
 INSERT INTO shoe_store.address VALUE (1, 'Ukraine', 'Kharkiv', 'Tselinogradska', '58', 1, '23');
 INSERT INTO address (country, city, street, house_number, entrance, apartment_number)
-VALUES
-    ('Ukraine', 'Kyiv', 'Main Street', '123', 1, 1),
-    ('Ukraine', 'Lviv', 'Central Avenue', '456', 2, 5),
-    ('Ukraine', 'Kharkiv', 'Freedom Square', '789', NULL, 10),
-    ('Ukraine', 'Odessa', 'Deribasovskaya Street', '321', NULL, NULL),
-    ('Ukraine', 'Dnipro', 'Shevchenko Boulevard', '555', 3, 7),
-    ('Ukraine', 'Zaporizhzhia', 'Lenin Avenue', '777', 1, 3),
-    ('Ukraine', 'Vinnytsia', 'Soborna Street', '999', NULL, 15),
-    ('Ukraine', 'Kherson', 'Heroes of Stalingrad Street', '222', 4, 8),
-    ('Ukraine', 'Poltava', 'Pushkin Street', '444', 2, 6),
-    ('Ukraine', 'Lviv', 'Rynok Square', '666', 1, 2);
+VALUES ('Ukraine', 'Kyiv', 'Main Street', '123', 1, 1),
+       ('Ukraine', 'Lviv', 'Central Avenue', '456', 2, 5),
+       ('Ukraine', 'Kharkiv', 'Freedom Square', '789', NULL, 10),
+       ('Ukraine', 'Odessa', 'Deribasovskaya Street', '321', NULL, NULL),
+       ('Ukraine', 'Dnipro', 'Shevchenko Boulevard', '555', 3, 7),
+       ('Ukraine', 'Zaporizhzhia', 'Central Avenue', '777', 1, 3),
+       ('Ukraine', 'Vinnytsia', 'Soborna Street', '999', NULL, 15),
+       ('Ukraine', 'Kherson', 'Heroes of Ukraine Street', '222', 4, 8),
+       ('Ukraine', 'Poltava', 'Sadova Street', '444', 2, 6),
+       ('Ukraine', 'Lviv', 'Rynok Square', '666', 1, 2);
 
 -- IMAGES------------------------------------------------------------------------
 INSERT INTO image (name, path)
-VALUES
-    ('Winter Boot Image', '/images/winter-boot.jpg'),
-    ('Sandals Image', '/images/sandals.jpg'),
-    ('Sneakers Image', '/images/sneakers.jpg'),
-    ('Flip Flops Image', '/images/flip-flops.jpg'),
-    ('Sports Shoes Image', '/images/sports-shoes.jpg');
+VALUES ('Winter Boot Image', '/images/winter-boot.jpg'),
+       ('Sandals Image', '/images/sandals.jpg'),
+       ('Sneakers Image', '/images/sneakers.jpg'),
+       ('Flip Flops Image', '/images/flip-flops.jpg'),
+       ('Sports Shoes Image', '/images/sports-shoes.jpg');
 
 -- CART--------------------------------------------------------------------------
-INSERT INTO cart (client_id) VALUES (1), (6),(7),(9),(13);
+INSERT INTO cart (client_id)
+VALUES (1),
+       (6),
+       (7),
+       (9),
+       (13);
 
 -- CART_SHOE---------------------------------------------------------------------
 INSERT INTO cart_shoe (shoe_id, cart_id, price, amount)
-VALUES
-    (1, 1, 79.99, 2),
-    (3, 1, 79.99, 1),
-    (5, 2, 99.99, 1),
-    (7, 2, 99.99, 2),
-    (9, 3, 79.99, 1),
-    (11, 3, 79.99, 3),
-    (13, 4, 49.99, 4),
-    (15, 4, 49.99, 1),
-    (17, 5, 69.99, 2),
-    (19, 5, 69.99, 1);
+VALUES (1, 1, 79.99, 2),
+       (3, 1, 79.99, 1),
+       (5, 2, 99.99, 1),
+       (7, 2, 99.99, 2),
+       (9, 3, 79.99, 1),
+       (11, 3, 79.99, 3),
+       (13, 4, 49.99, 4),
+       (15, 4, 49.99, 1),
+       (17, 5, 69.99, 2),
+       (19, 5, 69.99, 1);
 
 -- ORDER------------------------------------------------------------------------
 INSERT INTO `order` (address_id, status)
-VALUES
-    (1, 'processing'),
-    (2, 'accepted'),
-    (3, 'compiled'),
-    (4, 'ready_for_sending'),
-    (5, 'delivered');
+VALUES (1, 'processing'),
+       (2, 'accepted'),
+       (3, 'compiled'),
+       (4, 'ready_for_sending'),
+       (5, 'delivered');
 
 -- SHOE_ORDER------------------------------------------------------------------------
 INSERT INTO shoe_order (order_id, shoe_id, price, amount)
-VALUES
-    (1, 1, 79.99, 2),
-    (1, 3, 79.99, 1),
-    (2, 5, 99.99, 1),
-    (2, 7, 99.99, 2),
-    (3, 9, 79.99, 1),
-    (3, 11, 79.99, 3),
-    (4, 13, 49.99, 4),
-    (4, 15, 49.99, 1),
-    (5, 17, 69.99, 2),
-    (5, 19, 69.99, 1);
+VALUES (1, 1, 79.99, 2),
+       (1, 3, 79.99, 1),
+       (2, 5, 99.99, 1),
+       (2, 7, 99.99, 2),
+       (3, 9, 79.99, 1),
+       (3, 11, 79.99, 3),
+       (4, 13, 49.99, 4),
+       (4, 15, 49.99, 1),
+       (5, 17, 69.99, 2),
+       (5, 19, 69.99, 1);
 
 -- USER_ORDER------------------------------------------------------------------------
 INSERT INTO user_order (order_id, user_id, description)
-VALUES
-    (1, 1, 'Order for John Doe'),
-    (2, 1, 'Order for John Doe'),
-    (3, 2, 'Order for Jennifer Jones'),
-    (4, 3, 'Order for Michael Johnson'),
-    (5, 4, 'Order for Emily Williams');
+VALUES (1, 1, 'Order for John Doe'),
+       (2, 1, 'Order for John Doe'),
+       (3, 2, 'Order for Jennifer Jones'),
+       (4, 3, 'Order for Michael Johnson'),
+       (5, 4, 'Order for Emily Williams');
 
 SELECT * FROM `order`;
-SELECT * from `order` WHERE status='processing';
+SELECT * from `order` WHERE status = 'processing';
 
-SELECT address_id FROM `order` WHERE id=1;
+SELECT address_id FROM `order` WHERE id = 1;
 
