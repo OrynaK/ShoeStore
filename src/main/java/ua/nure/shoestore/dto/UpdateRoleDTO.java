@@ -1,18 +1,16 @@
 package ua.nure.shoestore.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import ua.nure.shoestore.entity.enums.Role;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateRoleDTO {
     private long user_id;
     private Role role;
-
-    public UpdateRoleDTO() {
-    }
-
-    public UpdateRoleDTO(long user_id, Role role) {
-        this.user_id = user_id;
-        this.role = role;
-    }
 
     public long getUser_id() {
         return user_id;

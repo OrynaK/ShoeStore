@@ -334,12 +334,12 @@ VALUES (1, 1, 79.99, 2),
 INSERT INTO user_order (order_id, user_id, description)
 VALUES (1, 1, 'Order for John Doe'),
        (2, 1, 'Order for John Doe'),
-       (3, 2, 'Order for Jennifer Jones'),
+       (3, 4, 'Order for Jennifer Jones'),
        (4, 3, 'Order for Michael Johnson'),
        (5, 4, 'Order for Emily Williams');
 
-SELECT * FROM `order`;
+SELECT * FROM `user`;
 SELECT * from `order` WHERE status = 'processing';
 
-SELECT address_id FROM `order` WHERE id = 1;
+SELECT * from `order` WHERE status='compiled';
 
