@@ -22,28 +22,28 @@ public class MainPageController {
     public List<ShoeCardDTO> getAll(){
         return shoeService.getShoes();
     }
-//    @GetMapping(value = "/getShoesByColor")
-//    public List<ShoeCardDTO> getShoesByColor(@RequestParam("color") String color){
-//        return shoeService.getShoesByColor(color);
-//    }
-//    @GetMapping(value = "/getShoesBySize")
-//    public List<ShoeCardDTO> getShoesBySize(@RequestParam("size") BigDecimal size){
-//        return shoeService.getShoesBySize(size);
-//    }
-//    @GetMapping(value = "/getShoesBySex")
-//    public List<ShoeCardDTO> getShoesBySex(@RequestParam("sex") String sex){
-//        return shoeService.getShoesBySex(Sex.valueOf(sex.toUpperCase()));
-//    }
-//    @GetMapping(value = "/getShoesAscendingPrice")
-//    public List<ShoeCardDTO> getAllAscendingPrice(){
-//        return shoeService.getShoesAscendingPrice();
-//    }
-//    @GetMapping(value = "/getShoesDescendingPrice")
-//    public List<ShoeCardDTO> getAllDescendingPrice(){
-//        return shoeService.getShoesDescendingPrice();
-//    }
-//    @GetMapping(value = "/searchShoes")
-//    public List<ShoeCardDTO> searchShoes(@RequestParam("name") String name){
-//        return shoeService.searchShoes(name);
-//    }
+    @GetMapping(value = "/getShoesByColor")
+    public List<ShoeCardDTO> getShoesByColor(@RequestParam("color") String color){
+        return shoeService.getShoesByColor(color);
+    }
+    @GetMapping(value = "/getShoesBySize")
+    public List<ShoeCardDTO> getShoesBySize(@RequestParam("size") BigDecimal size){
+        return shoeService.getShoesBySize(size);
+    }
+    @GetMapping(value = "/getShoesBySex")
+    public List<ShoeCardDTO> getShoesBySex(@RequestParam("sex") String sex){
+        return shoeService.getShoesBySex(Sex.valueOf(sex.toUpperCase()));
+    }
+    @GetMapping(value = "/getShoesAscendingPrice")
+    public List<ShoeCardDTO> getAllAscendingPrice(){
+        return shoeService.getShoesAscendingPrice();
+    }
+    @GetMapping(value = "/getShoesDescendingPrice")
+    public List<ShoeCardDTO> getAllDescendingPrice(){
+        return shoeService.getShoesDescendingPrice();
+    }
+    @GetMapping(value = "/searchShoes")
+    public List<ShoeCardDTO> searchShoes(@RequestParam("name") String name){
+        return shoeService.searchShoes(name);
+    }
 }

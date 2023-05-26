@@ -288,7 +288,7 @@ public class ShoeDAOImpl implements ShoeDAO {
         s.setPrice(rs.getBigDecimal("actual_price"));
         s.setName(rs.getString("name"));
         s.setAmount(rs.getInt("amount"));
-        s.setImageId(rs.getInt("image_id"));
+        s.setImageId(rs.getLong("image_id"));
         return s;
     }
 
