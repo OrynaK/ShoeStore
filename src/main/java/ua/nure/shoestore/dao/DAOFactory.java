@@ -34,4 +34,8 @@ public class DAOFactory {
     public CartDAO getCartDAOInstance(DAOConfig config) {
         return new CartDAOImpl(config);
     }
+    @Bean
+    public WorkerDAO getWorkerDAOInstance(DAOConfig config) {
+        return new WorkerDAOImpl(config);
+    }
 }

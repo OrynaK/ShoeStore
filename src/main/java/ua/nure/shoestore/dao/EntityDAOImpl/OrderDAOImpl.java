@@ -15,9 +15,12 @@ public class OrderDAOImpl implements OrderDAO {
     private static final String INSERT_ORDER = "INSERT INTO `order` (address_id, datetime, status) VALUES (?, DEFAULT, DEFAULT)";
     private static final String INSERT_SHOES_ORDER = "INSERT INTO `shoe_order` (order_id, shoe_id, price, amount) VALUES (?, ?, ?, ?)";
     private static final String INSERT_ORDER_USER = "INSERT INTO `user_order` (order_id, user_id, description, datetime) VALUES (?, ?, DEFAULT, DEFAULT)";
-    private static final String GET_ORDERS_BY_ROLE = "SELECT * from `order` WHERE status=?";
+    private static final String GET_ORDER_BY_ROLE = "SELECT * from `order` WHERE status=?";
+    private static final String GET_ORDERS = "SELECT * from `order`";
+    private static final String GET_ORDER_BY_ID = "SELECT * from `order` WHERE id=?";
     private static final String GET_SHOE_ORDER = "SELECT * FROM `shoe_order` WHERE order_id=?";
     private static final String GET_USER_ORDER = "SELECT * FROM `user_order` WHERE order_id=?";
+    private static final String GET_ORDER_FROM_USER_ORDER = "SELECT order_id FROM `user_order` WHERE user_id=?";
     private static final String GET_ROLE = "SELECT role FROM `user` WHERE id=?";
 
     private final ConnectionManager connectionManager;
@@ -30,10 +33,13 @@ public class OrderDAOImpl implements OrderDAO {
     public List<Order> getOrdersByRole(Role role) {
         List<Order> orders = new ArrayList<>();
         try (Connection con = connectionManager.getConnection()) {
-            try (PreparedStatement ps = con.prepareStatement(GET_ORDERS_BY_ROLE)) {
+            try (PreparedStatement ps = con.prepareStatement(GET_ORDER_BY_ROLE)) {
                 int k = 0;
+                if (role == Role.ADMIN) {
+                    orders = findAll();
+                    return orders;
+                }
                 String status = switch (role) {
-                    case ADMIN -> "processing";
                     case WAREHOUSE -> "accepted";
                     case PACKER -> "compiled";
                     case COURIER -> "ready_for_sending";
@@ -70,16 +76,8 @@ public class OrderDAOImpl implements OrderDAO {
                             }
                         }
                         if (!isChosen) {
-                            try (PreparedStatement prs = con.prepareStatement(GET_SHOE_ORDER)) {
-                                int l = 0;
-                                prs.setLong(++l, order.getId());
-                                try (ResultSet resultSet = prs.executeQuery()) {
-                                    while (resultSet.next()) {
-                                        order.addShoe(mapShoeOrder(resultSet));
-                                    }
-                                }
-                            }
-                            orders.add(mapOrder(rs));
+                            getShoeOrder(order, con);
+                            orders.add(order);
                         }
                     }
                     return orders;
@@ -87,6 +85,79 @@ public class OrderDAOImpl implements OrderDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Order> getOrdersByUserId(Long userId) {
+        List<Order> orders = new ArrayList<>();
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_ORDER_FROM_USER_ORDER)) {
+                int k = 0;
+                ps.setLong(++k, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        orders.add(findById(rs.getLong(1)));
+                    }
+                    return orders;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Order> findAll() {
+        List<Order> orders = new ArrayList<>();
+        try (Connection con = connectionManager.getConnection()) {
+            try (Statement ps = con.createStatement()) {
+                try (ResultSet rs = ps.executeQuery(GET_ORDERS)) {
+                    while (rs.next()) {
+                        Order order = mapOrder(rs);
+                        try (PreparedStatement prs = con.prepareStatement(GET_USER_ORDER)) {
+                            int l = 0;
+                            prs.setLong(++l, order.getId());
+                            UserOrder userOrder;
+                            try (ResultSet resultSet = prs.executeQuery()) {
+                                while (resultSet.next()) {
+                                    userOrder = mapUserOrder(resultSet);
+                                    Role role1 = null;
+                                    try (PreparedStatement preparedStatement = con.prepareStatement(GET_ROLE)) {
+                                        int m = 0;
+                                        preparedStatement.setLong(++m, userOrder.getUserId());
+                                        try (ResultSet resultSet1 = preparedStatement.executeQuery()) {
+                                            while (resultSet1.next()) {
+                                                role1 = getRole(userOrder.getUserId());
+                                            }
+                                        }
+                                    }
+                                    order.putUser(role1, userOrder);
+                                }
+                            }
+                        }
+                        getShoeOrder(order, con);
+                        orders.add(order);
+                    }
+
+                    return orders;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void getShoeOrder(Order order, Connection con) throws SQLException {
+        try (PreparedStatement prs = con.prepareStatement(GET_SHOE_ORDER)) {
+            int l = 0;
+            prs.setLong(++l, order.getId());
+            try (ResultSet resultSet = prs.executeQuery()) {
+                while (resultSet.next()) {
+                    order.addShoe(mapShoeOrder(resultSet));
+                }
+            }
         }
     }
 
@@ -147,14 +218,46 @@ public class OrderDAOImpl implements OrderDAO {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public List<Order> findAll() {
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     public Order findById(long orderId) {
-        throw new UnsupportedOperationException();
+        Order order = new Order();
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(GET_ORDER_BY_ID)) {
+                int k = 0;
+                ps.setLong(++k, orderId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        order = mapOrder(rs);
+                        try (PreparedStatement prs = con.prepareStatement(GET_USER_ORDER)) {
+                            int l = 0;
+                            prs.setLong(++l, order.getId());
+                            UserOrder userOrder;
+                            try (ResultSet resultSet = prs.executeQuery()) {
+                                while (resultSet.next()) {
+                                    userOrder = mapUserOrder(resultSet);
+                                    Role role1 = null;
+                                    try (PreparedStatement preparedStatement = con.prepareStatement(GET_ROLE)) {
+                                        int m = 0;
+                                        preparedStatement.setLong(++m, userOrder.getUserId());
+                                        try (ResultSet resultSet1 = preparedStatement.executeQuery()) {
+                                            while (resultSet1.next()) {
+                                                role1 = getRole(userOrder.getUserId());
+                                            }
+                                        }
+                                    }
+                                    order.putUser(role1, userOrder);
+                                }
+                            }
+                        }
+                        getShoeOrder(order, con);
+                    }
+                    return order;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Role getRole(Long id) {
@@ -205,8 +308,6 @@ public class OrderDAOImpl implements OrderDAO {
 
         return userOrder;
     }
-
-    // userOrders.put(userDAO.findById(userOrder.getUserId()).getRole(), userOrder);
 
 
 /*    public static void main(String[] args) throws SQLException {

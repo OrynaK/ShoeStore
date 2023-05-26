@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkerDAOImpl implements WorkerDAO {
-
+    private final String INSERT_USER_ORDER = "INSERT INTO user_order (order_id, user_id) VALUES (?, ?)";
     private final ConnectionManager connectionManager;
 
     public WorkerDAOImpl(DAOConfig config) {
@@ -24,12 +24,12 @@ public class WorkerDAOImpl implements WorkerDAO {
     }
 
     @Override
-    public void setWorker(Long order_id, Long user_id) {
+    public void setWorker(Long orderId, Long userId) {
 
     }
 
     @Override
-    public void changeStatus(Long order_id, Long user_id, OrderStatus status, String description) {
+    public void changeStatus(Long orderId, Long userId, OrderStatus status, String description) {
 
     }
 
