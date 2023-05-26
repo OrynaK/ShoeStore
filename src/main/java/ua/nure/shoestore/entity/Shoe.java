@@ -16,5 +16,5 @@ public class Shoe {
     private BigDecimal price;
     private String name;
     private int amount;
-    private int imageId;
+    private Long imageId;
 }

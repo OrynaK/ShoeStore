@@ -27,12 +27,12 @@ public class ShoeController {
 
         String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(imageData.getOriginalFilename());
 
-        File newFile = new File("src/main/webapp/my-shoestore/images/" + fileName);
+        File newFile = new File("src/main/webapp/my-shoestore/public/images/" + fileName);
         FileUtils.writeByteArrayToFile(newFile, imageData.getBytes());
 
-        String fileUrl = "src/main/webapp/my-shoestore/images/photos/" + fileName;
+        String fileUrl = "src/main/webapp/my-shoestore/public/images/" + fileName;
 
-        shoeService.addShorWithImage(shoeDTO, fileUrl, fileName);
+        shoeService.addShoeWithImage(shoeDTO, fileUrl, fileName);
     }
 
     @GetMapping(value = "/showShoePage")
