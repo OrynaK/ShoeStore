@@ -2,14 +2,8 @@ package ua.nure.shoestore.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import ua.nure.shoestore.dao.EntityDAO.AddressDAO;
-import ua.nure.shoestore.dao.EntityDAO.OrderDAO;
-import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
-import ua.nure.shoestore.dao.EntityDAO.UserDAO;
-import ua.nure.shoestore.dao.EntityDAOImpl.AddressDAOImpl;
-import ua.nure.shoestore.dao.EntityDAOImpl.OrderDAOImpl;
-import ua.nure.shoestore.dao.EntityDAOImpl.ShoeDAOImpl;
-import ua.nure.shoestore.dao.EntityDAOImpl.UserDAOImpl;
+import ua.nure.shoestore.dao.EntityDAO.*;
+import ua.nure.shoestore.dao.EntityDAOImpl.*;
 
 @Component
 public class DAOFactory {
@@ -17,13 +11,15 @@ public class DAOFactory {
     DAOConfig config;
 
     @Bean
-    public UserDAO getUserDAOInstance(DAOConfig config){
+    public UserDAO getUserDAOInstance(DAOConfig config) {
         return new UserDAOImpl(config);
     }
+
     @Bean
-    public AddressDAO getAddressDAOInstance(DAOConfig config){
+    public AddressDAO getAddressDAOInstance(DAOConfig config) {
         return new AddressDAOImpl(config);
     }
+
     @Bean
     public ShoeDAO getShoeDAOInstance(DAOConfig config) {
         return new ShoeDAOImpl(config);
@@ -32,5 +28,10 @@ public class DAOFactory {
     @Bean
     public OrderDAO getOrderDAOInstance(DAOConfig config) {
         return new OrderDAOImpl(config);
+    }
+
+    @Bean
+    public CartDAO getCartDAOInstance(DAOConfig config) {
+        return new CartDAOImpl(config);
     }
 }

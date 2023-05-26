@@ -17,6 +17,11 @@ public class Cart {
         shoesInCart = new ArrayList<>();
     }
 
+    public Cart(long userId) {
+        this.userId = userId;
+        shoesInCart = new ArrayList<>();
+    }
+
     public void addShoe(ShoeOrder shoeOrder) {
         shoesInCart.add(shoeOrder);
     }
