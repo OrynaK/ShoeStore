@@ -50,9 +50,10 @@ function Basket() {
                     </tr>
                 ))}
                 </tbody>
-                <Link to={`/makeorder`}>
+                {shoesInCart.length > 0 ? ( <Link to={`/makeorder`}>
                     <button className="basket-table-btn-green">Оформити замовлення</button>
-                </Link>
+                    </Link>) : (<h2>Кошик пустий</h2>)}
+
             </table>
         </div>
     );

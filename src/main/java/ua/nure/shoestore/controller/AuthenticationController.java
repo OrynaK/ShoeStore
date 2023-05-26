@@ -3,12 +3,11 @@ package ua.nure.shoestore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ua.nure.shoestore.entity.Address;
-import ua.nure.shoestore.entity.Shoe;
+import ua.nure.shoestore.entity.Cart;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.forms.LoginForm;
-import ua.nure.shoestore.service.AddressService;
 import ua.nure.shoestore.service.AuthenticationService;
+import ua.nure.shoestore.service.CartService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +18,19 @@ import java.util.Objects;
 public class AuthenticationController {
     @Autowired
     private AuthenticationService service;
+    private CartService cartService;
 
-    public AuthenticationController(AuthenticationService service) {
+    public AuthenticationController(AuthenticationService service, CartService cartService) {
         this.service = service;
+        this.cartService = cartService;
     }
 
     @PostMapping(value={"/registration"})
-    public String registration(@RequestBody User user){
+    public String registration(@RequestBody User user, Cart cart){
         if(user != null){
-            service.addUser(user);
-            return "New user added";
+            service.addUser(user, cart);
+
+            return "New user added and cart created";
         } else return "";
     }
 
