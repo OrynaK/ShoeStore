@@ -5,4 +5,5 @@ import ua.nure.shoestore.entity.Cart;
 
 
 public interface CartDAO extends CRUDRepository<Cart> {
+    Cart findByUserId(long userId);
 }
