@@ -54,7 +54,20 @@ public class ShoeDAOImpl implements ShoeDAO {
 
     @Override
     public Shoe findById(long id) {
-        throw new UnsupportedOperationException();
+        try( Connection connection = connectionManager.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM shoe WHERE id = ?")) {
+                ps.setLong(1, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return mapShoes(rs);
+                    }
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
