@@ -16,7 +16,7 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/cart")
+    @GetMapping("/cart")
     public List<Shoe> getShoesByUserId(@RequestBody long userId) {
         return cartService.getShoesByUserId(userId);
     }

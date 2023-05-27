@@ -13,6 +13,7 @@ import java.util.*;
 
 public class OrderDAOImpl implements OrderDAO {
     private static final String INSERT_ORDER = "INSERT INTO `order` (address_id, datetime, status) VALUES (?, DEFAULT, DEFAULT)";
+    private static final String UPDATE_STATUS = "UPDATE `order` SET status=? WHERE id=?";
     private static final String INSERT_SHOES_ORDER = "INSERT INTO `shoe_order` (order_id, shoe_id, price, amount) VALUES (?, ?, ?, ?)";
     private static final String INSERT_ORDER_USER = "INSERT INTO `user_order` (order_id, user_id, description, datetime) VALUES (?, ?, DEFAULT, DEFAULT)";
     private static final String GET_ORDER_BY_ROLE = "SELECT * from `order` WHERE status=?";
@@ -108,6 +109,20 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
+    public void changeStatus(Long orderId, OrderStatus status) {
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(UPDATE_STATUS)) {
+                int k = 0;
+                ps.setString(++k, String.valueOf(status));
+                ps.setLong(++k, orderId);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Order> findAll() {
         List<Order> orders = new ArrayList<>();
         try (Connection con = connectionManager.getConnection()) {
@@ -147,7 +162,6 @@ public class OrderDAOImpl implements OrderDAO {
             throw new RuntimeException(e);
         }
     }
-
 
     private void getShoeOrder(Order order, Connection con) throws SQLException {
         try (PreparedStatement prs = con.prepareStatement(GET_SHOE_ORDER)) {
@@ -207,17 +221,6 @@ public class OrderDAOImpl implements OrderDAO {
         st.setLong(1, order.getId());
         st.setLong(2, order.getUsersInOrder().get(Role.CLIENT).getUserId());
     }
-
-    @Override
-    public void update(Order entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void delete(long id) {
-        throw new UnsupportedOperationException();
-    }
-
 
     @Override
     public Order findById(long orderId) {
@@ -309,15 +312,13 @@ public class OrderDAOImpl implements OrderDAO {
         return userOrder;
     }
 
+    @Override
+    public void update(Order entity) {
+        throw new UnsupportedOperationException();
+    }
 
-/*    public static void main(String[] args) throws SQLException {
-        // test
-        OrderDAOImpl orderDAO = new OrderDAOImpl(new DAOConfig("MySQL", "jdbc:mysql://localhost:3306/shoe_store?sslMode=DISABLED&serverTimezone=UTC", "root", "root"));
-        Order order = new Order();
-        order.putUser(Role.CLIENT, new UserOrder(20));
-        order.setAddress(new AddressDAOImpl(new DAOConfig("MySQL", "jdbc:mysql://localhost:3306/shoe_store?sslMode=DISABLED&serverTimezone=UTC", "root", "root")).getById(1));
-        order.getShoesInOrder().add(new ShoeOrder(37, BigDecimal.valueOf(1000), 2));
-        order.getShoesInOrder().add(new ShoeOrder(38, BigDecimal.valueOf(2000), 1));
-        orderDAO.create(order);
-    }*/
+    @Override
+    public void delete(long id) {
+        throw new UnsupportedOperationException();
+    }
 }
