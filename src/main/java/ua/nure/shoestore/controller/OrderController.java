@@ -1,14 +1,17 @@
 package ua.nure.shoestore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.nure.shoestore.dto.ChangeStatusDTO;
+import ua.nure.shoestore.dto.MakeOrderDTO;
+
+import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.Order;
+import ua.nure.shoestore.entity.ShoeOrder;
+import ua.nure.shoestore.entity.UserOrder;
 import ua.nure.shoestore.entity.enums.Role;
 import ua.nure.shoestore.service.OrderService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,22 +24,40 @@ public class OrderController {
     public List<Order> showOrdersByRole(@RequestParam("role") Role role) {
         return service.getOrdersByRole(role);
     }
-
     @GetMapping(value = "/getOrderByUserId")
-    public List<Order> showOrdersByUserId(@RequestParam("userId") Long userId) {
+    public List <Order> showOrdersByUserId(@RequestParam("userId") Long userId) {
         return service.getOrderByUserId(userId);
     }
+    /*@PostMapping(value = "setWorker")
+    public void setWorker(@RequestParam SetWorkerDTO setWorkerDTO){
+        service.setWorker(setWorkerDTO.getOrderId(), setWorkerDTO.getUserId());
+    }*/
+    @PostMapping(value = "/makeorder")
+    public void makeOrder(@RequestBody MakeOrderDTO makeOrderDTO) {
+        Order order = new Order();
+        order.getAddress().setCountry(makeOrderDTO.getCountry());
+        order.getAddress().setCity(makeOrderDTO.getCity());
+        order.getAddress().setStreet(makeOrderDTO.getStreet());
+        order.getAddress().setHouseNumber(makeOrderDTO.getHouseNumber());
+        order.getAddress().setEntrance(makeOrderDTO.getEntrance());
+        order.getAddress().setApartmentNumber(makeOrderDTO.getApartmentNumber());
 
-    @PostMapping(value = "/setWorker")
-    public ResponseEntity<String> setWorker(@RequestParam Long orderId, @RequestParam Long userId) {
-        if (!service.setWorker(orderId, userId)) {
-            return ResponseEntity.status(HttpStatus.OK).body("Success");
+        List<ShoeOrder> shoeOrders = new ArrayList<>();
+        for (ShoeDTO shoeDTO : makeOrderDTO.getShoeOrder()) {
+            ShoeOrder shoeOrder = new ShoeOrder();
+            shoeOrder.setShoeId(shoeDTO.getId());
+            shoeOrder.setPrice(shoeDTO.getPrice());
+            shoeOrder.setAmount(shoeDTO.getAmount());
+
+            shoeOrders.add(shoeOrder);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to set worker");
+
+        for (ShoeOrder shoeOrder : shoeOrders) {
+            order.addShoe(shoeOrder);
+        }
+
+        service.makeOrder(order);
     }
 
-    @PostMapping(value = "/changeStatus")
-    public void changeStatus(@RequestBody ChangeStatusDTO dto) {
-        service.changeStatus(dto.getOrderId(), dto.getUserId(), dto.getStatus(), dto.getDescription());
-    }
+
 }

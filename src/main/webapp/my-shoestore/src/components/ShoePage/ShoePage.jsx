@@ -1,22 +1,26 @@
 import React, {useEffect, useState} from "react";
 import "./ShoePage.css";
-import {useLocation} from "react-router";
+import sneaker from "./../../assets/sneaker.png"
+import {useLocation, useNavigate} from "react-router";
 
 function ShoePage() {
     const {id, name, price, imageName} = useLocation().state || {};
     const [shoes, setShoes] = useState([]);
     const [cart, setCart] = useState([]);
+    const [amount, setAmount] = useState('');
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
+    console.log(userId);
+    const navigate = useNavigate();
     useEffect(() => {
         fetch(`http://localhost:8080/showShoePage?name=${name}`)
             .then((response) => response.json())
             .then((data) => {
                 setShoes(data);
+                console.log(data);
             })
             .catch((error) => {
                 console.error("Error:", error);
             });
-        console.log(imageName);
     }, [name]);
 
     const handleSubmit = (shoeId, price, amount) => {
@@ -37,6 +41,8 @@ function ShoePage() {
             .then((response) => response.json())
             .then((data) => {
                 setCart(data);
+                console.log(data);
+                navigate('/basket');
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -55,9 +61,17 @@ function ShoePage() {
                         <span className="shoe-page-form-size">{shoe.size}</span>
                         <span className="shoe-page-form-price"><strong>{shoe.price}$</strong></span>
                     </div>
+                    <label className="registration-form-label">
+                       Виберіть кількість</label>
+                    <input className="registration-form-input"
+                           type="amount"
+                           name="amount"
+                           value={amount}
+                           onChange={event => setAmount(event.target.value)}
+                    />
                     <button
                         className="shoe-page-form-btn"
-                        onClick={() => handleSubmit(shoe.id, shoe.price, 1)}
+                        onClick={() => handleSubmit(shoe.id, shoe.price, amount)}
                     >
                         Додати до кошика
                     </button>

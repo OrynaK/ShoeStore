@@ -4,6 +4,7 @@ import "./RegistrationForm.css"
 import {useNavigate} from "react-router";
 
 function RegistrationForm() {
+    const[id, setId]=useState('')
     const[name, setName]=useState('')
     const[surname, setSurname]=useState('')
     const[email, setEmail]=useState('')
@@ -16,7 +17,7 @@ function RegistrationForm() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        const user = {name, surname, email, phoneNumber, password, city, address, role:'CLIENT'}
+        const user = {id,name, surname, email, phoneNumber, password, city, address, role:'CLIENT'}
         fetch("http://localhost:8080/registration", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
