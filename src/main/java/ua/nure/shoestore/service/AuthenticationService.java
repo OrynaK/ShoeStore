@@ -17,7 +17,8 @@ public class AuthenticationService {
     }
 
     public void addUser(User user, Cart cart) {
-        userDAO.insert(user);
+        long userId = userDAO.insert(user);
+        cart.setUserId(userId);
         cartDAO.insert(cart);
     }
 

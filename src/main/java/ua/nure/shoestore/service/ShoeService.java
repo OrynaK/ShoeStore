@@ -116,7 +116,7 @@ public class ShoeService {
     public List<ShoeDTO> showShoePage(String name) {
         List<ShoeDTO> shoePages = new ArrayList<>();
         for (Shoe s : shoeDAO.showShoePage(name)) {
-            ShoeDTO shoePage = new ShoeDTO(s.getName(), s.getSize(), s.getColor(), s.getSeason(), s.getSex(), s.getPrice(), s.getAmount());
+            ShoeDTO shoePage = new ShoeDTO(s.getId(), s.getName(), s.getSize(), s.getColor(), s.getSeason(), s.getSex(), s.getPrice(), s.getAmount());
             if (!shoePages.contains(shoePage)) {
                 shoePages.add(shoePage);
             }
