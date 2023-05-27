@@ -15,9 +15,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 90vh;
+
     justify-content: center;
     text-align: center;
+
+    margin-bottom: 50px;
 }
 
 .make-order-header {
@@ -26,8 +28,8 @@
 }
 
 .make-order-form {
-    width: 460px;
-    min-height: 500px;
+    width: 700px;
+    min-height: 750px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,7 +37,7 @@
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    margin-top: -20px;
+    padding-top: 20px;
 }
 
 
@@ -64,4 +66,9 @@
     width: 150px;
     height: 20px;
     padding-left: 20px;
+}
+
+.make-order-table {
+    width: 100%;
+    margin-top: 20px;
 }

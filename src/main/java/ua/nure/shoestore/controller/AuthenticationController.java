@@ -28,7 +28,7 @@ public class AuthenticationController {
     @PostMapping(value={"/registration"})
     public String registration(@RequestBody User user, Cart cart){
         if(user != null){
-            service.addUser(user, cart);
+            service.addUser(user);
 
             return "New user added and cart created";
         } else return "";

@@ -16,10 +16,11 @@ public class AuthenticationService {
         this.cartDAO = cartDAO;
     }
 
-    public void addUser(User user, Cart cart) {
+    public User addUser(User user) {
         long userId = userDAO.insert(user);
-        cart.setUserId(userId);
-        cartDAO.insert(cart);
+        cartDAO.insert(new Cart(userId));
+        user.setId(userId);
+        return user;
     }
 
     public User logIn(String email, String password) {

@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 function Basket() {
     const [shoesInCart, setShoesInCart] = useState([]);
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
-
+    console.log(userId);
     const fetchShoesInCart = async () => {
         const response = await fetch(`http://localhost:8080/cart`, {
             method: 'POST',
@@ -48,6 +48,7 @@ function Basket() {
                     <th className="basket-table-th">Назва</th>
                     <th className="basket-table-th">Колір</th>
                     <th className="basket-table-th">Розмір</th>
+                    <th className="basket-table-th">Кількість</th>
                     <th className="basket-table-th">Ціна</th>
                     <th className="basket-table-th"></th>
                 </tr>
@@ -58,6 +59,7 @@ function Basket() {
                         <td className="admin-orders-table-td">{shoe.name}</td>
                         <td className="admin-orders-table-td">{shoe.color}</td>
                         <td className="admin-orders-table-td">{shoe.size}</td>
+                        <td className="admin-orders-table-td">{shoe.amount}</td>
                         <td className="admin-orders-table-td">{shoe.price}</td>
                         <td className="admin-orders-table-td">
                             <button className="basket-table-btn-red" onClick={() => deleteShoeFromCart(shoe.id)}>
