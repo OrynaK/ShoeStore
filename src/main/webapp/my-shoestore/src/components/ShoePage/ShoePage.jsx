@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import "./ShoePage.css";
-import sneaker from "./../../assets/sneaker.png"
 import {useLocation, useNavigate} from "react-router";
 
 function ShoePage() {
@@ -53,10 +52,9 @@ function ShoePage() {
     return (
         <div className="shoe-page">
             <h2 className="shoe-page-header">{name}</h2>
-
             {shoes.map(shoe => (
                 <div key={shoe.id} className="shoe-page-form">
-                    <img src={"/./../images/" + {imageName}} alt="sneaker"/>
+                    <img src={"./../images/" + imageName} alt="shoe" width="350px" height="250px"/>
                     <div className="shoe-page-form-properties">
                         <span className="shoe-page-form-size">{shoe.size}</span>
                         <span className="shoe-page-form-price"><strong>{shoe.price}$</strong></span>
