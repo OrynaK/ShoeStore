@@ -335,7 +335,7 @@ VALUES (1, 1, 'Order for John Doe'),
        (4, 3, 'Order for Michael Johnson'),
        (5, 4, 'Order for Emily Williams');
 
-SELECT * FROM `user`;
+SELECT * FROM `user_order`;
 SELECT * from `order` WHERE status = 'processing';
 
 SELECT * from `order` WHERE status='compiled';
