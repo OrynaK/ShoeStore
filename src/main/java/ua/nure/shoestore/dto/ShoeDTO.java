@@ -6,6 +6,7 @@ import ua.nure.shoestore.entity.enums.Season;
 import ua.nure.shoestore.entity.enums.Sex;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -20,6 +21,8 @@ public class ShoeDTO {
     private BigDecimal price;
     private int amount;
     private String imagePath;
+
+    private String imageName;
 
     public ShoeDTO(String name, BigDecimal size, String color, Season season, Sex sex, BigDecimal price, int amount) {
         this.name = name;

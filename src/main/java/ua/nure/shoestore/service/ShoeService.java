@@ -6,6 +6,7 @@ import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
 import ua.nure.shoestore.dto.ShoeCardDTO;
 import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.Shoe;
+import ua.nure.shoestore.entity.enums.Role;
 import ua.nure.shoestore.entity.enums.Sex;
 
 import java.math.BigDecimal;
@@ -18,6 +19,10 @@ public class ShoeService {
 
     public ShoeService(ShoeDAO shoeDAO) {
         this.shoeDAO = shoeDAO;
+    }
+
+    public void updateAmount(long shoeId, int amount) {
+        shoeDAO.updateShoeAmount(shoeId, amount);
     }
 
     public List<ShoeCardDTO> getShoes() {
@@ -111,6 +116,16 @@ public class ShoeService {
     public Long addShoeWithImage(ShoeDTO shoeDTO, String path, String name){
         shoeDTO.setImagePath(path);
         return shoeDAO.addShoeWithImage(shoeDTO, name);
+    }
+
+    public List<ShoeDTO> showShoeAmount() {
+        List<ShoeDTO> shoePages = new ArrayList<>();
+        for (Shoe s : shoeDAO.findAll()) {
+            ShoeDTO shoePage = new ShoeDTO(s.getId(), s.getName(), s.getSize(), s.getColor(), s.getSeason(), s.getSex(), s.getPrice(), s.getAmount());
+            shoePage.setImageName(shoeDAO.imageNameByImageId(s.getImageId()));
+            shoePages.add(shoePage);
+        }
+        return shoePages;
     }
 
     public List<ShoeDTO> showShoePage(String name) {

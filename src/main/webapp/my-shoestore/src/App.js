@@ -22,7 +22,7 @@ import WarehouseOrders from "./components/WarehouseOrders/WarehouseOrders";
 import PackerOrders from "./components/PackerOrders/PackerOrders";
 import CourierOrders from "./components/CourierOrders/CourierOrders";
 import MyOrders from "./components/MyOrders/MyOrders";
-
+import ChangeShoesAmount from "./components/ChangeShoesAmount/СhangeShoesAmount";
 function App() {
     //localStorage.clear();
   return (
@@ -53,6 +53,7 @@ function App() {
                     <Route path="/packerorders" element={<PackerOrders/>}></Route>
                     <Route path="/courierorders" element={<CourierOrders/>}></Route>
                     <Route path="/myorders" element={<MyOrders/>}></Route>
+                    <Route path="/changeShoesAmount" element={<ChangeShoesAmount/>}></Route>
                 </Routes>
                 }
 

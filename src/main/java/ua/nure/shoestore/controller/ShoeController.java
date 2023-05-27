@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.nure.shoestore.dto.ShoeDTO;
+import ua.nure.shoestore.dto.UpdateAmountDTO;
+import ua.nure.shoestore.dto.UpdateRoleDTO;
 import ua.nure.shoestore.service.ShoeService;
 
 import java.io.File;
@@ -38,5 +40,14 @@ public class ShoeController {
     @GetMapping(value = "/showShoePage")
     public List<ShoeDTO> showShoePage(@RequestParam("name") String name) {
         return shoeService.showShoePage(name);
+    }
+
+    @PostMapping(value = "/updateShoesAmount")
+    public String updateRole(@RequestBody UpdateAmountDTO updateAmountDTO) {
+        if (updateAmountDTO.getId() > 0) {
+            shoeService.updateAmount(updateAmountDTO.getId(), updateAmountDTO.getSelectedAmount());
+            return "Shoe amount updated";
+        }
+        return null;
     }
 }

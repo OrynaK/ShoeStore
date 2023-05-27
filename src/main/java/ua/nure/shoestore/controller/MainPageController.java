@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.nure.shoestore.dto.ShoeCardDTO;
+import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.enums.Sex;
 import ua.nure.shoestore.service.ShoeService;
 
@@ -22,6 +23,11 @@ public class MainPageController {
     public List<ShoeCardDTO> getAll(){
         return shoeService.getShoes();
     }
+    @GetMapping(value = "/getShoesAmount")
+    public List<ShoeDTO> getAllShoesAmount(){
+        return shoeService.showShoeAmount();
+    }
+
     @GetMapping(value = "/getShoesByColor")
     public List<ShoeCardDTO> getShoesByColor(@RequestParam("color") String color){
         return shoeService.getShoesByColor(color);
