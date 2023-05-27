@@ -240,8 +240,13 @@ VALUES ('John', 'Doe', 'password1', 'johndoe@example.com', '+380234567890', 'cli
        ('Matthew', 'Anderson', 'password9', 'matthewanderson@example.com', '+380887776666', 'client'),
        ('Olivia', 'Davis', 'password10', 'oliviadavis@example.com', '+380666555444', 'client');
 
--- IMAGES------------------------------------------------------------------
-INSERT INTO shoe_store.image VALUE (1, '1', '1');
+-- IMAGES------------------------------------------------------------------------
+INSERT INTO image (name, path)
+VALUES ('d636586b-cf5b-4299-94f1-45e6cc2de815.png', 'src/main/webapp/my-shoestore/public/images/d636586b-cf5b-4299-94f1-45e6cc2de815.png'),
+       ('74d49ff0-7732-4563-8c0d-8716db04a0ed.png', 'src/main/webapp/my-shoestore/public/images/74d49ff0-7732-4563-8c0d-8716db04a0ed.png'),
+       ('2fb15150-e71a-478d-b04c-6260261f08f1.png', 'src/main/webapp/my-shoestore/public/images/2fb15150-e71a-478d-b04c-6260261f08f1.png'),
+       ('f77812e0-1f15-46de-ab17-db4686731ab2.png', 'src/main/webapp/my-shoestore/public/images/f77812e0-1f15-46de-ab17-db4686731ab2.png'),
+       ('3d8ae73d-e219-476d-89f9-b4e42e7a5570.png', 'src/main/webapp/my-shoestore/public/images/3d8ae73d-e219-476d-89f9-b4e42e7a5570.png');
 
 -- SHOES-------------------------------------------------------------------
 INSERT INTO `shoe` (`size`, `color`, `season`, `sex`, `actual_price`, `name`, `amount`, `image_id`)
@@ -249,22 +254,22 @@ VALUES (33.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
        (33.0, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
        (33.5, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
        (33.0, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
-       (35.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 1),
-       (34.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 1),
-       (35.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 1),
-       (34.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 1),
-       (37.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 1),
-       (36.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 1),
-       (37.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 1),
-       (36.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 1),
-       (38.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 1),
-       (37.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 1),
-       (38.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 1),
-       (37.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 1),
-       (40.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
-       (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
-       (40.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1),
-       (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 1);
+       (35.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
+       (34.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
+       (35.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
+       (34.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
+       (37.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
+       (36.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
+       (37.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
+       (36.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
+       (38.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
+       (37.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
+       (38.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
+       (37.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
+       (40.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
+       (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
+       (40.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
+       (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5);
 
 -- ADDRESS-----------------------------------------------------------------------
 INSERT INTO shoe_store.address VALUE (1, 'Ukraine', 'Kharkiv', 'Tselinogradska', '58', 1, '23');
@@ -279,14 +284,6 @@ VALUES ('Ukraine', 'Kyiv', 'Main Street', '123', 1, 1),
        ('Ukraine', 'Kherson', 'Heroes of Ukraine Street', '222', 4, 8),
        ('Ukraine', 'Poltava', 'Sadova Street', '444', 2, 6),
        ('Ukraine', 'Lviv', 'Rynok Square', '666', 1, 2);
-
--- IMAGES------------------------------------------------------------------------
-INSERT INTO image (name, path)
-VALUES ('Winter Boot Image', '/images/winter-boot.jpg'),
-       ('Sandals Image', '/images/sandals.jpg'),
-       ('Sneakers Image', '/images/sneakers.jpg'),
-       ('Flip Flops Image', '/images/flip-flops.jpg'),
-       ('Sports Shoes Image', '/images/sports-shoes.jpg');
 
 -- CART--------------------------------------------------------------------------
 INSERT INTO cart (client_id)
