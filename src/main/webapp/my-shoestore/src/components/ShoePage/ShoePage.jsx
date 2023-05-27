@@ -1,24 +1,22 @@
 import React, {useEffect, useState} from "react";
 import "./ShoePage.css";
-import sneaker from "./../../assets/sneaker.png"
 import {useLocation} from "react-router";
 
 function ShoePage() {
-    const {id, name, price, image} = useLocation().state || {};
+    const {id, name, price, imageName} = useLocation().state || {};
     const [shoes, setShoes] = useState([]);
     const [cart, setCart] = useState([]);
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
-
     useEffect(() => {
         fetch(`http://localhost:8080/showShoePage?name=${name}`)
             .then((response) => response.json())
             .then((data) => {
                 setShoes(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error("Error:", error);
             });
+        console.log(imageName);
     }, [name]);
 
     const handleSubmit = (shoeId, price, amount) => {
@@ -52,7 +50,7 @@ function ShoePage() {
 
             {shoes.map(shoe => (
                 <div key={shoe.id} className="shoe-page-form">
-                    <img src={sneaker} alt="sneaker"/>
+                    <img src={"/./../images/" + {imageName}} alt="sneaker"/>
                     <div className="shoe-page-form-properties">
                         <span className="shoe-page-form-size">{shoe.size}</span>
                         <span className="shoe-page-form-price"><strong>{shoe.price}$</strong></span>
