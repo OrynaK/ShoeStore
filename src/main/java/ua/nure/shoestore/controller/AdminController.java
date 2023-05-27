@@ -1,12 +1,10 @@
 package ua.nure.shoestore.controller;
 
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import ua.nure.shoestore.dto.UpdateRoleDTO;
 import ua.nure.shoestore.entity.Shoe;
-import ua.nure.shoestore.entity.enums.Role;
 import ua.nure.shoestore.service.ShoeService;
 import ua.nure.shoestore.service.UserService;
 
@@ -33,8 +31,8 @@ public class AdminController {
 
     @PostMapping(value = "/updateUserRole")
     public String updateRole(@RequestBody UpdateRoleDTO userInfo) {
-        if (userInfo.getUser_id() > 0) {
-            userService.updateRole(userInfo.getUser_id(), userInfo.getRole());
+        if (userInfo.getId() > 0) {
+            userService.updateRole(userInfo.getId(), userInfo.getRole());
             return "User role updated";
         }
         return null;
