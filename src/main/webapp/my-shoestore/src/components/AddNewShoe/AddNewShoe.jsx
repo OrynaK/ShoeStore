@@ -28,7 +28,7 @@ function AddNewShoe() {
             body: formData
         }).then((response) => {
             if (response.ok) {
-                console.log("Data sent successfully");
+                navigate('/main');
             }
         });
     };
