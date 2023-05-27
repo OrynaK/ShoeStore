@@ -14,9 +14,10 @@ function UsersList() {
     }, []);
     const handleRoleChange = (userId, selectedRole) => {
         const requestData = {
-            user_id: userId,
+            id: userId,
             role: selectedRole,
         };
+
 
         fetch("http://localhost:8080/updateUserRole", {
             method: "POST",
@@ -28,7 +29,7 @@ function UsersList() {
             .then((response) => response.text())
             .then((data) => {
                 setUsers(users.map((user) => {
-                    if (user.user_id === userId) {
+                    if (user.id === userId) {
                         return {
                             ...user,
                             role: selectedRole,
@@ -48,7 +49,6 @@ function UsersList() {
             <table className="users-list-table">
                 <thead>
                 <tr>
-                    <th className="users-list-table-th">Айді</th>
                     <th className="users-list-table-th">Ім'я</th>
                     <th className="users-list-table-th">Прізвище</th>
                     <th className="users-list-table-th">Пошта</th>
@@ -58,8 +58,8 @@ function UsersList() {
                 </thead>
                 <tbody>
                 {users.map((user) => (
-                    <tr key={user.user_id}>
-                        <td className="users-list-table-td">{user.user_id}</td>
+                    <tr key={user.id}>
+                        <td className="users-list-table-td">{user.id}</td>
                         <td className="users-list-table-td">{user.name}</td>
                         <td className="users-list-table-td">{user.surname}</td>
                         <td className="users-list-table-td">{user.email}</td>
@@ -70,7 +70,7 @@ function UsersList() {
                                 name="role"
                                 value={role}
                                 onChange={(event) =>
-                                    handleRoleChange(user.user_id, event.target.value)
+                                    handleRoleChange(user.id, event.target.value)
                                 }
                             >
                                 <option value="">Змінити роль</option>
