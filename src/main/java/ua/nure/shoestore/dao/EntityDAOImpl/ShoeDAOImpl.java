@@ -5,6 +5,8 @@ import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
 import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.Shoe;
+import ua.nure.shoestore.entity.User;
+import ua.nure.shoestore.entity.enums.Role;
 import ua.nure.shoestore.entity.enums.Season;
 import ua.nure.shoestore.entity.enums.Sex;
 
@@ -26,6 +28,7 @@ public class ShoeDAOImpl implements ShoeDAO {
 
     private static final String GET_IMAGE_BY_SHOE_ID = "SELECT name FROM image WHERE image.id = ?";
 
+    private static final String UPDATE_AMOUNT = "UPDATE shoe SET amount=? WHERE id=?";
     private static final String ADD_SHOE = "INSERT INTO shoe (size, color, season, sex, actual_price, name, amount) VALUES(?,?,?,?,?,?,?)";
     private static final String ADD_SHOE_WITH_IMAGE = "INSERT INTO shoe (name, size, color, image_id, amount, actual_price, season, sex) VALUES(?,?,?,?,?,?,?,?)";
 
@@ -276,6 +279,19 @@ public class ShoeDAOImpl implements ShoeDAO {
                 }
             }
             return shoe.getId();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateShoeAmount(long shoeId, int amount) {
+        try (Connection con = connectionManager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(UPDATE_AMOUNT)) {
+                int k = 0;
+                ps.setInt(++k, amount);
+                ps.setLong(++k, shoeId);
+                ps.executeUpdate();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

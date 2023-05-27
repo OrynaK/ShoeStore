@@ -26,8 +26,8 @@ function NavbarAdmin() {
                         <NavLink to="/addNewShoe" className="nav-list__item">
                             Додати товар
                         </NavLink>
-                        <NavLink to="/main" className="nav-list__item">
-                            Видалити товар
+                        <NavLink to="/changeShoesAmount" className="nav-list__item">
+                            Змінити кількість взуття
                         </NavLink>
                         <NavLink to="/userslist" className="nav-list__item">
                             Список користувачів

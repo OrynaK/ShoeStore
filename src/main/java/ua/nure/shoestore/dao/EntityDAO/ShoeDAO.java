@@ -22,4 +22,6 @@ public interface ShoeDAO extends CRUDRepository<Shoe> {
     //розділити image
     Long addShoeWithImage(ShoeDTO shoeDTO, String imageName);
     String imageNameByImageId(Long shoeId);
+
+    void updateShoeAmount(long shoeId, int amount);
 }
