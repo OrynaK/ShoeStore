@@ -133,12 +133,12 @@ public class CartDAOImpl implements CartDAO {
 //        shoeOrder.setAmount(1);
 //        cart.getShoesInCart().add(shoeOrder);
 //        cartDAO.insert(cart);*/
-//        Cart cart = cartDAO.findByUserId(9);
+//        Cart cart = cartDAO.findByUserId(1);
 //        System.out.println(cart);
-////        cartDAO.insertShoe(cart.getId(), new ShoeOrder(3, new BigDecimal(2000), 1));
-//        System.out.println(cartDAO.findByUserId(9));
-//        cartDAO.deleteShoeFromCart(cart.getId(), 2);
-//        System.out.println(cartDAO.findByUserId(9));
+//        cartDAO.insertShoeToCart(cart.getId(), new ShoeOrder(3, new BigDecimal(2000), 1));
+//        System.out.println(cartDAO.findByUserId(1));
+////        cartDAO.deleteShoeFromCart(cart.getId(), 2);
+////        System.out.println(cartDAO.findByUserId(9));
 //    }
 
     @Override

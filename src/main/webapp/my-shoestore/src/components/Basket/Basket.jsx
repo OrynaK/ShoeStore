@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './Basket.css';
 import {Link} from "react-router-dom";
 
@@ -9,7 +9,7 @@ function Basket() {
     const fetchShoesInCart = async () => {
         const response = await fetch(`http://localhost:8080/cart`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userId)
         });
 
@@ -25,6 +25,19 @@ function Basket() {
         fetchShoesInCart().then(r => console.log('Shoes in cart fetched'));
     }, [userId]);
 
+    const deleteShoeFromCart = useCallback(async (shoeId) => {
+        const response = await fetch(`http://localhost:8080/deleteShoeFromCart?userId=${userId}&shoeId=${shoeId}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+        });
+
+        if (response.ok) {
+            // Оновлюємо список взуття у кошику після видалення
+            fetchShoesInCart().then();
+        } else {
+            console.log('Error while deleting shoe from cart');
+        }
+    }, [userId]);
 
     return (
         <div className="basket">
@@ -46,13 +59,17 @@ function Basket() {
                         <td className="admin-orders-table-td">{shoe.color}</td>
                         <td className="admin-orders-table-td">{shoe.size}</td>
                         <td className="admin-orders-table-td">{shoe.price}</td>
-                        <button className="basket-table-btn-red">Видалити</button>
+                        <td className="admin-orders-table-td">
+                            <button className="basket-table-btn-red" onClick={() => deleteShoeFromCart(shoe.id)}>
+                                Видалити
+                            </button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
-                {shoesInCart.length > 0 ? ( <Link to={`/makeorder`}>
+                {shoesInCart.length > 0 ? (<Link to={`/makeorder`}>
                     <button className="basket-table-btn-green">Оформити замовлення</button>
-                    </Link>) : (<h2>Кошик пустий</h2>)}
+                </Link>) : (<h2>Кошик пустий</h2>)}
 
             </table>
         </div>

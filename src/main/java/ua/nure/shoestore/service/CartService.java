@@ -1,12 +1,16 @@
 package ua.nure.shoestore.service;
 
 import org.springframework.stereotype.Service;
+import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.CartDAO;
 import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
+import ua.nure.shoestore.dao.EntityDAOImpl.CartDAOImpl;
+import ua.nure.shoestore.dao.EntityDAOImpl.ShoeDAOImpl;
 import ua.nure.shoestore.entity.Cart;
 import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.ShoeOrder;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +28,12 @@ public class CartService {
         return cartDAO.insert(cart);
     }
 
-    public void addShoeToCart(long cartId, ShoeOrder shoeOrder) {
-        cartDAO.insertShoeToCart(cartId, shoeOrder);
+    public void addShoeToCart(long userId, ShoeOrder shoeCart) {
+        cartDAO.insertShoeToCart(cartDAO.findByUserId(userId).getId(), shoeCart);
     }
 
-    public void deleteShoeFromCart(long cartId, long shoeId) {
-        cartDAO.deleteShoeFromCart(cartId, shoeId);
+    public void deleteShoeFromCart(long userId, long shoeId) {
+        cartDAO.deleteShoeFromCart(cartDAO.findByUserId(userId).getId(), shoeId);
     }
 
     public List<Shoe> getShoesByUserId(long userId) {
@@ -43,5 +47,4 @@ public class CartService {
         }
         return shoes;
     }
-
 }
