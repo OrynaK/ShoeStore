@@ -1,46 +1,78 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./WorkerOrders.css";
 function WorkerOrders() {
-    const [orders, setOrders] = useState([
-        { client: 'John Doe', order: '1234', status: 'None' },
-        { client: 'Jane Smith', order: '5678', status: 'None' },
-        { client: 'Bob Johnson', order: '9101', status: 'None' },
-    ]);
+    const [orders, setOrders] = useState([]);
+    const role = JSON.parse(localStorage.getItem("user"))?.role;
+    const userId = JSON.parse(localStorage.getItem("user"))?.id;
 
-    const handleStatusChange = (index, newStatus) => {
-        const updatedOrders = [...orders];
-        updatedOrders[index].status = newStatus;
-        setOrders(updatedOrders);
-    };
+    useEffect(() => {
+        if(userId) {
+            fetch(`http://localhost:8080//getOrdersByRole?userRole=${role}`)
+                .then((response) => response.json())
+                .then((data) => setOrders(data))
+                .catch((error) => {
+
+                    console.error("Error:", error);
+                });
+        }
+    }, [userId]);
+    console.log(orders)
+
+    function handleSetWorker(orderId, userId) {
+        const setWorker = {
+            orderId: orderId,
+            userId: userId
+        };
+
+        fetch("http://localhost:8080/changeStatus", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(setWorker),
+        })
+            .then((response) => {
+                if (response.ok) {
+
+                } else {
+                    throw new Error("Помилка при виконанні запиту");
+                }
+            })
+            .catch((error) => {
+                console.error("Помилка:", error);
+            });
+    }
     return (
         <div className="worker-orders">
 
             <table className="worker-orders-table">
                 <thead>
                 <tr>
-                    <th className="worker-orders-table-th">Клієнт</th>
+
                     <th className="worker-orders-table-th">Замовлення</th>
                     <th className="worker-orders-table-th">Статус</th>
+                    <th className="worker-orders-table-th">Прийняти замовлення</th>
                 </tr>
                 </thead>
                 <tbody>
-                {orders.map((order, index) => (
-                    <tr key={index}>
-                        <td className="worker-orders-table-td">{order.client}</td>
-                        <td className="worker-orders-table-td">{order.order}</td>
+                {orders.map((order) => (
+                    <tr key={order.id}>
+
+                        <td className="worker-orders-table-td">{order.id}</td>
                         <td className="worker-orders-table-td">
                             <li>
                                 {order.status}
                             </li>
-                            <ul>
-                                <button className="worker-orders-table-btn-green" onClick={() => handleStatusChange(index, 'Accepted')}>
+                        </td>
+                        <td className="worker-orders-table-td">
+                                <button className="worker-orders-table-btn-green" onClick={() => handleSetWorker(order.id, userId)}>
                                     Прийняти замовлення
                                 </button>
-                                <button className="worker-orders-table-btn-red" onClick={() => handleStatusChange(index, 'Rejected')}>
+                                <button className="worker-orders-table-btn-red" onClick={() => handleSetWorker(order.id, userId)}>
                                     Відхилити замовлення
                                 </button>
-                            </ul>
                         </td>
+
                     </tr>
                 ))}
                 </tbody>

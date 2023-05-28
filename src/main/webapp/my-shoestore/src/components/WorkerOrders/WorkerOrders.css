@@ -24,6 +24,7 @@
     border-radius: 20px;
     margin-right: 10px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .worker-orders-table-btn-red {
@@ -33,5 +34,5 @@
     background-color: #f54545;
     border-radius: 20px;
     margin-top: 10px;
-
+    cursor: pointer;
 }

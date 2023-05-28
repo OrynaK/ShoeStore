@@ -66,7 +66,7 @@ function FilterDropdown({onFilterChange}) {
     return (
 
         <div className="filter-dropdown">
-            <button onClick={handleResetFilter}>Скинути фільтр</button>
+
             <div
                 onClick={toggleDropdown}
             >
@@ -209,6 +209,7 @@ function FilterDropdown({onFilterChange}) {
                         </li>
                     </ul>
                 )}
+                <button className="filter-dropdown-btn" onClick={handleResetFilter}>Скинути фільтр</button>
             </div>
         </div>
     );
