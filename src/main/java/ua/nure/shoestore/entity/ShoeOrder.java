@@ -13,6 +13,7 @@ public class ShoeOrder {
     private int amount;
     private String name;
     private BigDecimal size;
+    private String color;
 
     public ShoeOrder(Long shoeId, BigDecimal price, int amount){
         this.shoeId=shoeId;

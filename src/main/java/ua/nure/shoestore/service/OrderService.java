@@ -42,7 +42,6 @@ public class OrderService {
         List<Order> orders = orderDAO.getOrdersByUserId(userId);
         for (Order order : orders) {
             order.setAddress(addressDAO.getAddressByOrder(order.getId()));
-
         }
         return orders;
     }
