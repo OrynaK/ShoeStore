@@ -169,7 +169,7 @@ public class OrderDAOImpl implements OrderDAO {
             prs.setLong(++l, order.getId());
             try (ResultSet resultSet = prs.executeQuery()) {
                 while (resultSet.next()) {
-                    try (PreparedStatement prst = con.prepareStatement("SELECT name, size FROM shoe WHERE id=?")) {
+                    try (PreparedStatement prst = con.prepareStatement("SELECT name, size, color FROM shoe WHERE id=?")) {
                         int b = 0;
                         prst.setLong(++b,resultSet.getLong("shoe_id"));
                         try (ResultSet rs = prst.executeQuery()) {
@@ -307,6 +307,7 @@ public class OrderDAOImpl implements OrderDAO {
         shoeOrder.setAmount(resultSet.getInt("amount"));
         shoeOrder.setName(rs.getString("name"));
         shoeOrder.setSize(rs.getBigDecimal("size"));
+        shoeOrder.setColor(rs.getString("color"));
         return shoeOrder;
     }
 
