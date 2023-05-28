@@ -1,6 +1,5 @@
 import "./ClientCabinet.css"
-import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import React, {useState} from "react";
 
 function ClientCabinet() {
     const [user, setUser] = useState(() => {
@@ -8,7 +7,7 @@ function ClientCabinet() {
         return storedUser ? JSON.parse(storedUser) : null;
     });
     const [formData, setFormData] = useState({
-        user_id: user && user.user_id,
+        id: user && user.id,
         name: user && user.name,
         surname: user && user.surname,
         phoneNumber: user && user.phoneNumber,
@@ -36,7 +35,7 @@ function ClientCabinet() {
         }
         fetch("http://localhost:8080/updateUserInfo", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify(formData)
         })
             .then((response) => response.json())
@@ -52,7 +51,7 @@ function ClientCabinet() {
     };
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setFormData((formData) => ({
             ...formData,
             [name]: value
@@ -147,7 +146,7 @@ function ClientCabinet() {
                         </button>
                         {error && <div>{error}</div>}
                     </div>
-                    </div>
+                </div>
 
             )}
 
