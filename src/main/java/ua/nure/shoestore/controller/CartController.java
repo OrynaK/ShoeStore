@@ -37,7 +37,7 @@ public class CartController {
                     new ShoeOrder(cartShoeDTO.getShoeId(), cartShoeDTO.getPrice(), cartShoeDTO.getAmount()));
             return ResponseEntity.ok().build();
         } catch (SQLIntegrityConstraintViolationException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"error\": \"Shoe already in the cart.\"}");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"error\": \"The shoes have already been added to the cart.\"}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"An error occurred.\"}");
         }
