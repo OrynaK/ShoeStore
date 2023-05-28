@@ -1,10 +1,7 @@
 package ua.nure.shoestore.service;
 
 import org.springframework.stereotype.Service;
-import ua.nure.shoestore.dao.EntityDAO.AddressDAO;
-import ua.nure.shoestore.dao.EntityDAO.OrderDAO;
-import ua.nure.shoestore.dao.EntityDAO.UserDAO;
-import ua.nure.shoestore.dao.EntityDAO.WorkerDAO;
+import ua.nure.shoestore.dao.EntityDAO.*;
 import ua.nure.shoestore.entity.Order;
 import ua.nure.shoestore.entity.enums.OrderStatus;
 import ua.nure.shoestore.entity.enums.Role;
@@ -17,12 +14,14 @@ public class OrderService {
     private final AddressDAO addressDAO;
     private final WorkerDAO workerDAO;
     private final UserDAO userDAO;
+    private final ShoeDAO shoeDAO;
 
-    public OrderService(OrderDAO orderDAO, AddressDAO addressDAO, WorkerDAO workerDAO, UserDAO userDAO) {
+    public OrderService(OrderDAO orderDAO, AddressDAO addressDAO, WorkerDAO workerDAO, UserDAO userDAO, ShoeDAO shoeDAO) {
         this.orderDAO = orderDAO;
         this.addressDAO = addressDAO;
         this.workerDAO = workerDAO;
         this.userDAO = userDAO;
+        this.shoeDAO=shoeDAO;
     }
 
     public long makeOrder(Order order) {
@@ -43,6 +42,7 @@ public class OrderService {
         List<Order> orders = orderDAO.getOrdersByUserId(userId);
         for (Order order : orders) {
             order.setAddress(addressDAO.getAddressByOrder(order.getId()));
+
         }
         return orders;
     }

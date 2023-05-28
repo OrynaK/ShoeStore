@@ -8,7 +8,16 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShoeOrder {
-    private long shoeId;
+    private Long shoeId;
     private BigDecimal price;
     private int amount;
+    private String name;
+    private BigDecimal size;
+
+    public ShoeOrder(Long shoeId, BigDecimal price, int amount){
+        this.shoeId=shoeId;
+        this.price=price;
+        this.amount=amount;
+    }
+
 }

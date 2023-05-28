@@ -169,7 +169,15 @@ public class OrderDAOImpl implements OrderDAO {
             prs.setLong(++l, order.getId());
             try (ResultSet resultSet = prs.executeQuery()) {
                 while (resultSet.next()) {
-                    order.addShoe(mapShoeOrder(resultSet));
+                    try (PreparedStatement prst = con.prepareStatement("SELECT name, size FROM shoe WHERE id=?")) {
+                        int b = 0;
+                        prst.setLong(++b,resultSet.getLong("shoe_id"));
+                        try (ResultSet rs = prst.executeQuery()) {
+                            while (rs.next()) {
+                                order.addShoe(mapShoeOrder(resultSet, rs));
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -292,12 +300,13 @@ public class OrderDAOImpl implements OrderDAO {
         return o;
     }
 
-    private ShoeOrder mapShoeOrder(ResultSet rs) throws SQLException {
-        ShoeOrder shoeOrders = new ShoeOrder();
+    private ShoeOrder mapShoeOrder(ResultSet resultSet, ResultSet rs) throws SQLException {
         ShoeOrder shoeOrder = new ShoeOrder();
-        shoeOrder.setShoeId(rs.getLong("shoe_id"));
-        shoeOrder.setPrice(rs.getBigDecimal("price"));
-        shoeOrder.setAmount(rs.getInt("amount"));
+        shoeOrder.setShoeId(resultSet.getLong("shoe_id"));
+        shoeOrder.setPrice(resultSet.getBigDecimal("price"));
+        shoeOrder.setAmount(resultSet.getInt("amount"));
+        shoeOrder.setName(rs.getString("name"));
+        shoeOrder.setSize(rs.getBigDecimal("size"));
         return shoeOrder;
     }
 
