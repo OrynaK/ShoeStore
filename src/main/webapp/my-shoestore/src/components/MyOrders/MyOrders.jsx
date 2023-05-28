@@ -1,12 +1,21 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./MyOrders.css";
 function MyOrders() {
-    const [orders, setOrders] = useState([
-        { client: 'John Doe', order: '1234', status: 'None' },
-        { client: 'Jane Smith', order: '5678', status: 'None' },
-        { client: 'Bob Johnson', order: '9101', status: 'None' },
-    ]);
+    const [orders, setOrders] = useState([]);
+    const role = JSON.parse(localStorage.getItem("user"))?.role;
+    const userId = JSON.parse(localStorage.getItem("user"))?.id;
 
+    useEffect(() => {
+        if(userId) {
+            fetch(`http://localhost:8080/myOrders?userId=${userId}`)
+                .then((response) => response.json())
+                .then((data) => setOrders(data))
+                .catch((error) => {
+                    console.log(orders)
+                    console.error("Error:", error);
+                });
+        }
+    }, [userId]);
     const handleStatusChange = (index, newStatus) => {
         const updatedOrders = [...orders];
         updatedOrders[index].status = newStatus;
@@ -18,16 +27,16 @@ function MyOrders() {
             <table className="my-orders-table">
                 <thead>
                 <tr>
-                    <th className="my-orders-table-th">Клієнт</th>
-                    <th className="my-orders-table-th">Замовлення</th>
+                    <th className="my-orders-table-th">ID</th>
+                    <th className="my-orders-table-th">Дата та час</th>
                     <th className="my-orders-table-th">Статус</th>
                 </tr>
                 </thead>
                 <tbody>
                 {orders.map((order, index) => (
                     <tr key={index}>
-                        <td className="my-orders-table-td">{order.client}</td>
-                        <td className="my-orders-table-td">{order.order}</td>
+                        <td className="my-orders-table-td">{order.id}</td>
+                        <td className="my-orders-table-td">{order.date}  {order.time}</td>
                         <td className="my-orders-table-td">
                             <li>
                                 {order.status}

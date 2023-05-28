@@ -3,7 +3,7 @@ package ua.nure.shoestore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.entity.User;
-import ua.nure.shoestore.forms.UpdateForm;
+import ua.nure.shoestore.dto.UpdateDTO;
 import ua.nure.shoestore.service.UserService;
 
 import java.util.List;
@@ -22,9 +22,9 @@ public class UserController {
         return userService.getUsers();
     }
     @GetMapping(value="/updateUserInfo")
-    public User updateInfo(@RequestBody UpdateForm updateForm){
-        if( updateForm!=null){
-            return userService.updateInfo(updateForm);
+    public User updateInfo(@RequestBody UpdateDTO updateDTO){
+        if( updateDTO !=null){
+            return userService.updateInfo(updateDTO);
         }
         return null;
     }

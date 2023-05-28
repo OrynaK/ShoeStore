@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
-import ua.nure.shoestore.forms.UpdateForm;
+import ua.nure.shoestore.dto.UpdateDTO;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public User updateInfo(UpdateForm updateForm) {
-        return userDAO.update(updateForm);
+    public User updateInfo(UpdateDTO updateDTO) {
+        return userDAO.update(updateDTO);
     }
 
     public void updateRole(long userId, Role role) {
