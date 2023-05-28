@@ -24,7 +24,7 @@ public class OrderController {
     public List<Order> showOrdersByRole(@RequestParam("role") Role role) {
         return service.getOrdersByRole(role);
     }
-    @GetMapping(value = "/getOrderByUserId")
+    @GetMapping(value = "/myOrders")
     public List <Order> showOrdersByUserId(@RequestParam("userId") Long userId) {
         return service.getOrderByUserId(userId);
     }

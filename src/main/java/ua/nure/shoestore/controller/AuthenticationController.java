@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.entity.Cart;
 import ua.nure.shoestore.entity.User;
-import ua.nure.shoestore.forms.LoginForm;
+import ua.nure.shoestore.dto.LoginDTO;
 import ua.nure.shoestore.service.AuthenticationService;
 import ua.nure.shoestore.service.CartService;
 
@@ -36,8 +36,8 @@ public class AuthenticationController {
 
 
     @PostMapping(value = "/login")
-    public User loginUser(@RequestBody LoginForm loginForm){
-        User user = service.logIn(loginForm.getEmail(), loginForm.getPassword());
+    public User loginUser(@RequestBody LoginDTO loginDTO){
+        User user = service.logIn(loginDTO.getEmail(), loginDTO.getPassword());
         return Objects.requireNonNullElseGet(user, User::new);
     }
 

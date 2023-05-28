@@ -5,7 +5,7 @@ import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
-import ua.nure.shoestore.forms.UpdateForm;
+import ua.nure.shoestore.dto.UpdateDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -135,19 +135,19 @@ public class UserDAOImpl implements UserDAO {
         throw new UnsupportedOperationException();
     }
 
-    public User update(UpdateForm updateForm) {
+    public User update(UpdateDTO updateDTO) {
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(UPDATE)) {
                 int k = 0;
-                ps.setString(++k, updateForm.getName());
-                ps.setString(++k, updateForm.getSurname());
-                ps.setString(++k, updateForm.getEmail());
-                ps.setString(++k, updateForm.getPassword());
-                ps.setString(++k, updateForm.getPhoneNumber());
-                ps.setLong(++k, updateForm.getId());
+                ps.setString(++k, updateDTO.getName());
+                ps.setString(++k, updateDTO.getSurname());
+                ps.setString(++k, updateDTO.getEmail());
+                ps.setString(++k, updateDTO.getPassword());
+                ps.setString(++k, updateDTO.getPhoneNumber());
+                ps.setLong(++k, updateDTO.getId());
                 ps.executeUpdate();
             }
-            return getUser(updateForm.getEmail(), updateForm.getPassword());
+            return getUser(updateDTO.getEmail(), updateDTO.getPassword());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

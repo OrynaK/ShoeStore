@@ -1,11 +1,11 @@
-package ua.nure.shoestore.forms;
+package ua.nure.shoestore.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginForm {
+public class LoginDTO {
     private String email;
     private String password;
 }
