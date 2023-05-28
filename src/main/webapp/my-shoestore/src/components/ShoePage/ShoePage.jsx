@@ -79,11 +79,16 @@ function ShoePage() {
                         type="number"
                         name={`amount-${shoe.id}`}
                         value={amounts[shoe.id] || '1'}
-                        onChange={event => setAmounts(prevAmounts => ({
-                            ...prevAmounts,
-                            [shoe.id]: event.target.value
-                        }))}
+                        onChange={event => {
+                            const inputAmount = parseInt(event.target.value);
+                            const newAmount = isNaN(inputAmount) || inputAmount < 1 ? 1 : inputAmount;
+                            setAmounts(prevAmounts => ({
+                                ...prevAmounts,
+                                [shoe.id]: newAmount
+                            }));
+                        }}
                     />
+
                     {errors[shoe.id] && (<div>{errors[shoe.id].error}</div>)}
                     <button
                         className="shoe-page-form-btn"
