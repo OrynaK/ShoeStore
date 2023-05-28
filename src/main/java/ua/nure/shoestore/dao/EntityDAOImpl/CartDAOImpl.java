@@ -15,6 +15,8 @@ public class CartDAOImpl implements CartDAO {
     private static final String INSERT_CART_SHOE = "INSERT INTO cart_shoe (cart_id, shoe_id, price, amount) VALUES (?, ?, ?, ?)";
     private static final String GET_CART_BY_CLIENT_ID = "SELECT * FROM cart WHERE client_id = ?";
     private static final String GET_CART_SHOE_BY_USER_ID = "SELECT shoe_id, price, amount FROM cart_shoe WHERE cart_id IN (SELECT id FROM cart WHERE client_id = ?)";
+    private static final String DELETE_ALL_SHOES_FROM_CART = "DELETE FROM cart_shoe WHERE cart_id = ?";
+    private static final String DELETE_SHOE_FROM_CART = "DELETE FROM cart_shoe WHERE cart_id = ? AND shoe_id = ?";
     ConnectionManager connectionManager;
 
     public CartDAOImpl(DAOConfig config) {
@@ -92,8 +94,7 @@ public class CartDAOImpl implements CartDAO {
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new SQLIntegrityConstraintViolationException("Shoe already in cart", e);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -101,9 +102,20 @@ public class CartDAOImpl implements CartDAO {
     @Override
     public void deleteShoeFromCart(long cartId, long shoeId) {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM cart_shoe WHERE cart_id = ? AND shoe_id = ?")) {
+             PreparedStatement statement = connection.prepareStatement(DELETE_SHOE_FROM_CART)) {
             statement.setLong(1, cartId);
             statement.setLong(2, shoeId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteAllShoesFromCart(long cartId) {
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_ALL_SHOES_FROM_CART)) {
+            statement.setLong(1, cartId);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -124,25 +136,6 @@ public class CartDAOImpl implements CartDAO {
         shoeOrder.setAmount(resultSet1.getInt("amount"));
         return shoeOrder;
     }
-
-//    public static void main(String[] args) {
-//        // Test
-//        CartDAOImpl cartDAO = new CartDAOImpl(new DAOConfig("MySQL", "jdbc:mysql://localhost:3306/shoe_store?sslMode=DISABLED&serverTimezone=UTC", "root", "root"));
-//       /* Cart cart = new Cart();
-//        cart.setUserId(9);
-//        ShoeOrder shoeOrder = new ShoeOrder();
-//        shoeOrder.setShoeId(1);
-//        shoeOrder.setPrice(new BigDecimal(1000));
-//        shoeOrder.setAmount(1);
-//        cart.getShoesInCart().add(shoeOrder);
-//        cartDAO.insert(cart);*/
-//        Cart cart = cartDAO.findByUserId(1);
-//        System.out.println(cart);
-//        cartDAO.insertShoeToCart(cart.getId(), new ShoeOrder(3, new BigDecimal(2000), 1));
-//        System.out.println(cartDAO.findByUserId(1));
-////        cartDAO.deleteShoeFromCart(cart.getId(), 2);
-////        System.out.println(cartDAO.findByUserId(9));
-//    }
 
     @Override
     public void update(Cart entity) {

@@ -13,4 +13,6 @@ public interface CartDAO extends CRUDRepository<Cart> {
     void insertShoeToCart(long cartId, ShoeOrder orderShoe) throws SQLIntegrityConstraintViolationException;
 
     void deleteShoeFromCart(long cartId, long shoeId);
+
+    void deleteAllShoesFromCart(long cartId);
 }

@@ -1,16 +1,12 @@
 package ua.nure.shoestore.service;
 
 import org.springframework.stereotype.Service;
-import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.CartDAO;
 import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
-import ua.nure.shoestore.dao.EntityDAOImpl.CartDAOImpl;
-import ua.nure.shoestore.dao.EntityDAOImpl.ShoeDAOImpl;
 import ua.nure.shoestore.entity.Cart;
 import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.ShoeOrder;
 
-import java.math.BigDecimal;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,5 +43,9 @@ public class CartService {
             shoes.add(shoe);
         }
         return shoes;
+    }
+
+    public void clearCart(long userId) {
+        cartDAO.deleteAllShoesFromCart(cartDAO.findByUserId(userId).getId());
     }
 }

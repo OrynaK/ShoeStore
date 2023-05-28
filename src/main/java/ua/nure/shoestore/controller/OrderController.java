@@ -8,8 +8,8 @@ import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.Address;
 import ua.nure.shoestore.entity.Order;
 import ua.nure.shoestore.entity.ShoeOrder;
-import ua.nure.shoestore.entity.UserOrder;
 import ua.nure.shoestore.entity.enums.Role;
+import ua.nure.shoestore.service.CartService;
 import ua.nure.shoestore.service.OrderService;
 
 import java.util.ArrayList;
@@ -19,19 +19,21 @@ import java.util.List;
 @CrossOrigin
 public class OrderController {
     @Autowired
-    private OrderService service;
+    private OrderService orderService;
+    @Autowired
+    private CartService cartService;
 
     @GetMapping(value = "/getOrdersByRole")
     public List<Order> showOrdersByRole(@RequestParam("role") Role role) {
-        return service.getOrdersByRole(role);
+        return orderService.getOrdersByRole(role);
     }
     @GetMapping(value = "/myOrders")
     public List <Order> showOrdersByUserId(@RequestParam("userId") Long userId) {
-        return service.getOrderByUserId(userId);
+        return orderService.getOrderByUserId(userId);
     }
     @PostMapping(value = "setWorker")
     public void setWorker(@RequestParam Long orderId, @RequestParam Long userId){
-        service.setWorker(orderId, userId);
+        orderService.setWorker(orderId, userId);
     }
     @PostMapping(value = "/makeorder")
     public void makeOrder(@RequestBody MakeOrderDTO makeOrderDTO) {
@@ -41,7 +43,8 @@ public class OrderController {
             ShoeOrder shoeOrder = new ShoeOrder(shoeDTO.getId(), shoeDTO.getPrice(), shoeDTO.getAmount());
             shoesInOrder.add(shoeOrder);
         }
-        service.makeOrder(new Order(makeOrderDTO.getUserId(), address, shoesInOrder));
+        orderService.makeOrder(new Order(makeOrderDTO.getUserId(), address, shoesInOrder));
+        cartService.clearCart(makeOrderDTO.getUserId());
     }
 
 }
