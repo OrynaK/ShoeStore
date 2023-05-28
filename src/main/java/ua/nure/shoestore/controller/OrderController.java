@@ -28,11 +28,11 @@ public class OrderController {
     public List <Order> showOrdersByUserId(@RequestParam("userId") Long userId) {
         return service.getOrderByUserId(userId);
     }
-    /*@PostMapping(value = "setWorker")
-    public void setWorker(@RequestParam SetWorkerDTO setWorkerDTO){
-        service.setWorker(setWorkerDTO.getOrderId(), setWorkerDTO.getUserId());
-    }*/
-    @PostMapping(value = "/makeorder")
+    @PostMapping(value = "setWorker")
+    public void setWorker(@RequestParam Long orderId, @RequestParam Long userId){
+        service.setWorker(orderId, userId);
+    }
+    @PostMapping(value = "/makeOrder")
     public void makeOrder(@RequestBody MakeOrderDTO makeOrderDTO) {
         Order order = new Order();
         order.getAddress().setCountry(makeOrderDTO.getCountry());
