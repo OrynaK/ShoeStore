@@ -22,7 +22,7 @@ function NavbarPacker () {
                         <img className="logo" src={logo} alt="logo"/>
                     </NavLink>
                     <ul className="nav-list">
-                        <NavLink to="/packerorders" className="nav-list__item">
+                        <NavLink to="/workerorders" className="nav-list__item">
                             Замовлення
                         </NavLink>
                         <NavLink to="/myOrders" className="nav-list__item">

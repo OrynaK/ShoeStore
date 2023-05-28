@@ -13,34 +13,41 @@ function UsersList() {
             });
     }, []);
     const handleRoleChange = (userId, selectedRole) => {
-        const requestData = {
-            id: userId,
-            role: selectedRole,
-        };
+        const user = users.find((user) => user.id === userId);
+        if (user.role === 'ADMIN') {
+            alert("Ви не можете змінити роль адміністратора");
+
+        } else {
+            const requestData = {
+                id: userId,
+                role: selectedRole,
+            };
 
 
-        fetch("http://localhost:8080/updateUserRole", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestData),
-        })
-            .then((response) => response.text())
-            .then((data) => {
-                setUsers(users.map((user) => {
-                    if (user.id === userId) {
-                        return {
-                            ...user,
-                            role: selectedRole,
-                        };
-                    }
-                    return user;
-                }));
+            fetch("http://localhost:8080/updateUserRole", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestData),
             })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+                .then((response) => response.text())
+                .then((data) => {
+                    setUsers(users.map((user) => {
+                        if (user.id === userId) {
+                            return {
+                                ...user,
+                                role: selectedRole,
+                            };
+                        }
+                        return user;
+                    }));
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+
     };
 
     return (
@@ -59,7 +66,6 @@ function UsersList() {
                 <tbody>
                 {users.map((user) => (
                     <tr key={user.id}>
-                        <td className="users-list-table-td">{user.id}</td>
                         <td className="users-list-table-td">{user.name}</td>
                         <td className="users-list-table-td">{user.surname}</td>
                         <td className="users-list-table-td">{user.email}</td>

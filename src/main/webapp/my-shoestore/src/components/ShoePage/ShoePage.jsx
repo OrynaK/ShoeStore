@@ -6,7 +6,7 @@ function ShoePage() {
     const {id, name, price, imageName} = useLocation().state || {};
     const [shoes, setShoes] = useState([]);
     const [cart, setCart] = useState([]);
-    const [amount, setAmount] = useState('');
+    const [amounts, setAmounts] = useState({});
     const [errors, setErrors] = useState({}); // State to hold errors for each shoe block
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
 
@@ -74,16 +74,20 @@ function ShoePage() {
                     </div>
                     <label className="registration-form-label">
                         Виберіть кількість</label>
-                    <input className="registration-form-input"
-                           type="amount"
-                           name="amount"
-                           value={amount}
-                           onChange={event => setAmount(event.target.value)}
+                    <input
+                        className="registration-form-input"
+                        type="number"
+                        name={`amount-${shoe.id}`}
+                        value={amounts[shoe.id] || '1'}
+                        onChange={event => setAmounts(prevAmounts => ({
+                            ...prevAmounts,
+                            [shoe.id]: event.target.value
+                        }))}
                     />
                     {errors[shoe.id] && (<div>{errors[shoe.id].error}</div>)}
                     <button
                         className="shoe-page-form-btn"
-                        onClick={() => handleSubmit(shoe.id, shoe.price, amount)}
+                        onClick={() => handleSubmit(shoe.id, shoe.price, amounts[shoe.id] || '1')}
                     >
                         Додати до кошика
                     </button>
