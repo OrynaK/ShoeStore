@@ -1,6 +1,8 @@
 package ua.nure.shoestore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.dto.CartShoeDTO;
 import ua.nure.shoestore.entity.Cart;
@@ -8,6 +10,7 @@ import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.ShoeOrder;
 import ua.nure.shoestore.service.CartService;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -16,7 +19,7 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping("/cart")
+    @PostMapping("/cart")
     public List<Shoe> getShoesByUserId(@RequestBody long userId) {
         return cartService.getShoesByUserId(userId);
     }
@@ -27,10 +30,17 @@ public class CartController {
     }
 
     @PostMapping(value = "/addShoeToCart")
-    public void addShoeToCart(@RequestBody CartShoeDTO cartShoeDTO) {
+    public ResponseEntity<String> addShoeToCart(@RequestBody CartShoeDTO cartShoeDTO) {
         long userId = cartShoeDTO.getUserId();
-        cartService.addShoeToCart(userId,
-                new ShoeOrder(cartShoeDTO.getShoeId(), cartShoeDTO.getPrice(), cartShoeDTO.getAmount()));
+        try {
+            cartService.addShoeToCart(userId,
+                    new ShoeOrder(cartShoeDTO.getShoeId(), cartShoeDTO.getPrice(), cartShoeDTO.getAmount()));
+            return ResponseEntity.ok().build();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"error\": \"Shoe already in the cart.\"}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"An error occurred.\"}");
+        }
     }
 
     @PostMapping(value = "/createCart")

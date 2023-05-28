@@ -7,15 +7,15 @@ function ShoePage() {
     const [shoes, setShoes] = useState([]);
     const [cart, setCart] = useState([]);
     const [amount, setAmount] = useState('');
+    const [errors, setErrors] = useState({}); // State to hold errors for each shoe block
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
-    console.log(userId);
+
     const navigate = useNavigate();
     useEffect(() => {
         fetch(`http://localhost:8080/showShoePage?name=${name}`)
             .then((response) => response.json())
             .then((data) => {
                 setShoes(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -27,7 +27,7 @@ function ShoePage() {
             userId: userId,
             shoeId: shoeId,
             price: price,
-            amount: amount
+            amount: amount,
         };
 
         fetch("http://localhost:8080/addShoeToCart", {
@@ -37,11 +37,24 @@ function ShoePage() {
             },
             body: JSON.stringify(shoeCart)
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (response.ok) {
+                    setErrors({}); // Clear errors if the request is successful
+                    navigate("/basket");
+                    return response.json();
+                } else if (response.status === 409) {
+                    // Handle shoe already in cart error
+                    return response.json().then((data) => {
+                        setErrors({[shoeId]: data}); // Set the error for the specific shoe block
+                        throw new Error(JSON.stringify(data));
+                    });
+                } else {
+                    throw new Error("An error occurred.");
+                }
+            })
             .then((data) => {
                 setCart(data);
                 console.log(data);
-                navigate('/basket');
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -60,13 +73,14 @@ function ShoePage() {
                         <span className="shoe-page-form-price"><strong>{shoe.price}$</strong></span>
                     </div>
                     <label className="registration-form-label">
-                       Виберіть кількість</label>
+                        Виберіть кількість</label>
                     <input className="registration-form-input"
                            type="amount"
                            name="amount"
                            value={amount}
                            onChange={event => setAmount(event.target.value)}
                     />
+                    {errors[shoe.id] && (<div>{errors[shoe.id].error}</div>)}
                     <button
                         className="shoe-page-form-btn"
                         onClick={() => handleSubmit(shoe.id, shoe.price, amount)}

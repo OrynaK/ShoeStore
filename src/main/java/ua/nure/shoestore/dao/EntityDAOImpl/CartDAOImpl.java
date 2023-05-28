@@ -85,12 +85,15 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public void insertShoeToCart(long cartId, ShoeOrder orderShoe) {
+    public void insertShoeToCart(long cartId, ShoeOrder orderShoe) throws SQLIntegrityConstraintViolationException {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_CART_SHOE)) {
             setShoeCart(cartId, statement, orderShoe);
             statement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new SQLIntegrityConstraintViolationException("Shoe already in cart", e);
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
