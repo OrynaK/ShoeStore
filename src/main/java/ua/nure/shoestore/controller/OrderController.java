@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.dto.MakeOrderDTO;
 
 import ua.nure.shoestore.dto.ShoeDTO;
+import ua.nure.shoestore.entity.Address;
 import ua.nure.shoestore.entity.Order;
 import ua.nure.shoestore.entity.ShoeOrder;
 import ua.nure.shoestore.entity.UserOrder;
@@ -32,32 +33,15 @@ public class OrderController {
     public void setWorker(@RequestParam Long orderId, @RequestParam Long userId){
         service.setWorker(orderId, userId);
     }
-    @PostMapping(value = "/makeOrder")
+    @PostMapping(value = "/makeorder")
     public void makeOrder(@RequestBody MakeOrderDTO makeOrderDTO) {
-        Order order = new Order();
-        order.getAddress().setCountry(makeOrderDTO.getCountry());
-        order.getAddress().setCity(makeOrderDTO.getCity());
-        order.getAddress().setStreet(makeOrderDTO.getStreet());
-        order.getAddress().setHouseNumber(makeOrderDTO.getHouseNumber());
-        order.getAddress().setEntrance(makeOrderDTO.getEntrance());
-        order.getAddress().setApartmentNumber(makeOrderDTO.getApartmentNumber());
-
-        List<ShoeOrder> shoeOrders = new ArrayList<>();
+        Address address = new Address(makeOrderDTO.getCountry(), makeOrderDTO.getCity(), makeOrderDTO.getStreet(), makeOrderDTO.getHouseNumber(), makeOrderDTO.getEntrance(), makeOrderDTO.getApartmentNumber());
+        List<ShoeOrder> shoesInOrder = new ArrayList<>();
         for (ShoeDTO shoeDTO : makeOrderDTO.getShoeOrder()) {
-            ShoeOrder shoeOrder = new ShoeOrder();
-            shoeOrder.setShoeId(shoeDTO.getId());
-            shoeOrder.setPrice(shoeDTO.getPrice());
-            shoeOrder.setAmount(shoeDTO.getAmount());
-
-            shoeOrders.add(shoeOrder);
+            ShoeOrder shoeOrder = new ShoeOrder(shoeDTO.getId(), shoeDTO.getPrice(), shoeDTO.getAmount());
+            shoesInOrder.add(shoeOrder);
         }
-
-        for (ShoeOrder shoeOrder : shoeOrders) {
-            order.addShoe(shoeOrder);
-        }
-
-        service.makeOrder(order);
+        service.makeOrder(new Order(makeOrderDTO.getUserId(), address, shoesInOrder));
     }
-
 
 }
