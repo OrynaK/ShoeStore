@@ -33,6 +33,7 @@ function ClientCabinet() {
                 password: newPassword
             }));
         }
+        console.log(formData)
         fetch("http://localhost:8080/updateUserInfo", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -40,6 +41,7 @@ function ClientCabinet() {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(data)
                 localStorage.setItem("user", JSON.stringify(data));
                 setUser(data);
                 setIsEditing(false);

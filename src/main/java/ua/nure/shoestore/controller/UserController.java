@@ -21,7 +21,7 @@ public class UserController {
     public List<User> getAll(){
         return userService.getUsers();
     }
-    @GetMapping(value="/updateUserInfo")
+    @PostMapping(value="/updateUserInfo")
     public User updateInfo(@RequestBody UpdateDTO updateDTO){
         if( updateDTO !=null){
             return userService.updateInfo(updateDTO);

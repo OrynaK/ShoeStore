@@ -16,13 +16,8 @@ function NavbarAdmin() {
         <nav className="nav-admin">
             <div className="container">
                 <div className="nav-row-admin">
-                    <NavLink to="/main">
                     <img className="logo" src={logo} alt="logo"/>
-                        </NavLink>
                     <ul className="nav-list">
-                        <NavLink to="/main" className="nav-list__item">
-                            Головна
-                        </NavLink>
                         <NavLink to="/addNewShoe" className="nav-list__item">
                             Додати товар
                         </NavLink>
