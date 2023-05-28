@@ -9,8 +9,9 @@
     box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     margin-bottom: 70px;
-    padding:40px 60px;
+    padding: 40px 60px;
 }
+
 .shoe-page {
     display: flex;
     flex-direction: column;
@@ -26,9 +27,8 @@
     border: none;
     background: #4ff069;
     border-radius: 20px;
-    margin-top: 50px;
+    margin-top: 10px;
     cursor: pointer;
-
 
 
 }
@@ -44,9 +44,11 @@
     background-color: lightgray;
     border-radius: 20px;
 }
+
 .shoe-page-form-size:hover {
     background-color: #cecece;
 }
+
 .shoe-page-form-properties {
     width: 100%;
     display: flex;
@@ -55,6 +57,7 @@
 
 
 }
+
 .shoe-page-form-price {
     font-size: 22px;
 }

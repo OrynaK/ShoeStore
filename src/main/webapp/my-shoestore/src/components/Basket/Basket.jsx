@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 function Basket() {
     const [shoesInCart, setShoesInCart] = useState([]);
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
-    console.log(userId);
     const fetchShoesInCart = async () => {
         const response = await fetch(`http://localhost:8080/cart`, {
             method: 'POST',
@@ -20,7 +19,6 @@ function Basket() {
             console.log('Error while fetching shoes in cart');
         }
     };
-
     useEffect(() => {
         fetchShoesInCart().then(r => console.log('Shoes in cart fetched'));
     }, [userId]);
