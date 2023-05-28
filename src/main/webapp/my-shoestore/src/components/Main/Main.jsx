@@ -4,7 +4,6 @@ import ShoeCard from "../ShoeCard/ShoeCard";
 import FilterDropdown from "../FilterDropdown/FilterDropdown";
 import SearchBox from "../SearchBox/SearchBox";
 import SortBtn from "../SortBtn/SortBtn";
-import ShoePage from "../ShoePage/ShoePage";
 import {useNavigate} from "react-router";
 
 
@@ -27,6 +26,7 @@ function Main() {
         fetch(url)
             .then(response => response.json())
             .then(data => setShoes(data));
+        setSortType('default')
         }, [sortType]);
 
     const toggleDropdown = () => {
@@ -46,7 +46,6 @@ function Main() {
                 <FilterDropdown onFilterChange={handleFilterChange}/>
                 <SortBtn onSortChange={handleSortChange}/>
                 <SearchBox onSearch={handleSearch}/>
-
             </div>
             <div className="main-shoe-cards">
                 {filteredShoes && filteredShoes.length > 0 ? (
