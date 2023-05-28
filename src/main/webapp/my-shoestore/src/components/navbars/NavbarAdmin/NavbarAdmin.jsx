@@ -13,9 +13,9 @@ function NavbarAdmin() {
 
 
     return (
-        <nav className="nav">
+        <nav className="nav-admin">
             <div className="container">
-                <div className="nav-row">
+                <div className="nav-row-admin">
                     <NavLink to="/main">
                     <img className="logo" src={logo} alt="logo"/>
                         </NavLink>

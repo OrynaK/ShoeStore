@@ -1,8 +1,8 @@
-.nav {
+.nav-admin {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1240px;
+    width: 1400px;
 
 }
 
@@ -18,11 +18,11 @@
     justify-content: flex-end;
     align-items: center;
     column-gap: 70px;
-    margin-left: 200px;
+
 }
 
 
-.nav-row {
+.nav-row-admin {
     display: flex;
     justify-content: space-between;
     align-items: center;

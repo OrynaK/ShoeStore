@@ -1,41 +1,37 @@
-.my-orders-table {
+.worker-orders-table {
     width: 100%;
     border-collapse: collapse;
     align-items: center;
     align-content: center;
     gap: 20px;
-    text-align: center;
-
 
 }
 
-.my-orders-table-th, .my-orders-table-td {
+.worker-orders-table-th, .worker-orders-table-td {
     padding: 10px;
-
+    text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
-
-.my-orders-table-th {
+.worker-orders-table-th {
     background-color: #f2f2f2;
 }
-.my-orders-table-btn-green {
-    width: 100px;
+.worker-orders-table-btn-green {
+    width: 150px;
     height: 40px;
     border: transparent;
     background-color: #4ff069;
     border-radius: 20px;
-    cursor: pointer;
+    margin-right: 10px;
     margin-top: 10px;
 }
 
-.my-orders-table-btn-red {
-    width: 100px;
+.worker-orders-table-btn-red {
+    width: 150px;
     height: 40px;
     border: none;
     background-color: #f54545;
     border-radius: 20px;
     margin-top: 10px;
-    margin-right: 10px;
-    cursor: pointer;
+
 }

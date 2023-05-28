@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './MakeOrder.css';
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 function MakeOrder() {
     const [country, setCountry] = useState('');
@@ -11,7 +12,7 @@ function MakeOrder() {
     const [apartmentNumber, setApartmentNumber] = useState('');
     const [shoesInCart, setShoesInCart] = useState([]);
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
-
+    const navigate = useNavigate();
     const fetchShoesInCart = async () => {
         const response = await fetch(`http://localhost:8080/cart`, {
             method: 'POST',
@@ -56,7 +57,8 @@ function MakeOrder() {
             body: JSON.stringify(makeOrderDTO)
         }).then((response) => {
             if (response.ok) {
-                console.log("Order was created successfully");
+                alert("Order was created successfully");
+                navigate('/clientorders');
             }
         });
     };
