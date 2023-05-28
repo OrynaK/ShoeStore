@@ -4,8 +4,9 @@ import {useNavigate} from "react-router";
 import {NavLink} from "react-router-dom";
 import React from "react";
 
-function NavbarCourier () {
+function NavbarCourier() {
     const navigate = useNavigate();
+
     function handleSubmit() {
         localStorage.clear();
 
@@ -18,9 +19,7 @@ function NavbarCourier () {
         <nav className="nav">
             <div className="container">
                 <div className="nav-row">
-                    <NavLink to="/main">
-                        <img className="logo" src={logo} alt="logo"/>
-                    </NavLink>
+                    <img className="logo" src={logo} alt="logo"/>
                     <ul className="nav-list">
                         <NavLink to="/workerorders" className="nav-list__item">
                             Замовлення
@@ -40,4 +39,5 @@ function NavbarCourier () {
     );
 
 }
+
 export default NavbarCourier;

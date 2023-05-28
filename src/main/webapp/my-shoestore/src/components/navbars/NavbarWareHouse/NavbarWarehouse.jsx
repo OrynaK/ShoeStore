@@ -4,8 +4,9 @@ import logo from "../../../assets/logo.png"
 import {useNavigate} from "react-router";
 import {NavLink} from "react-router-dom";
 
-function NavbarWarehouse () {
+function NavbarWarehouse() {
     const navigate = useNavigate();
+
     function handleSubmit() {
         localStorage.clear();
 
@@ -18,9 +19,7 @@ function NavbarWarehouse () {
         <nav className="nav">
             <div className="container">
                 <div className="nav-row">
-                    <NavLink to="/main">
-                        <img className="logo" src={logo} alt="logo"/>
-                    </NavLink>
+                    <img className="logo" src={logo} alt="logo"/>
                     <ul className="nav-list">
                         <NavLink to="/workerorders" className="nav-list__item">
                             Замовлення
@@ -41,4 +40,5 @@ function NavbarWarehouse () {
 
 
 }
+
 export default NavbarWarehouse;

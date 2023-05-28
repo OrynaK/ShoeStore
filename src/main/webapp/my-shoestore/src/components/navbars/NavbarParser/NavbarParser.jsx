@@ -28,8 +28,8 @@ function NavbarParser() {
 
     return (
         <nav className="nav">
-            {(user && user.role) === null && <NavbarDefault />}
-            {(user && user.role) === 'CLIENT' && <NavbarClient />}
+            {(user && user.role) === null && <NavbarDefault/>}
+            {(user && user.role) === 'CLIENT' && <NavbarClient/>}
             {(user && user.role) === 'ADMIN' && <NavbarAdmin/>}
             {(user && user.role) === 'COURIER' && <NavbarCourier/>}
             {(user && user.role) === 'PACKER' && <NavbarPacker/>}

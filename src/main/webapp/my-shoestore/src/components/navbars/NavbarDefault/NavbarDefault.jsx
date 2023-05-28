@@ -2,7 +2,7 @@ import "./NavbarDefault.css"
 import logo from "../../../assets/logo.png"
 import {NavLink} from "react-router-dom";
 
-function NavbarClient () {
+function NavbarClient() {
 
 
     return (
@@ -30,4 +30,5 @@ function NavbarClient () {
     );
 
 }
+
 export default NavbarClient;

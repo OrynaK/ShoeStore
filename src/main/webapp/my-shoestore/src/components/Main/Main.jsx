@@ -27,7 +27,7 @@ function Main() {
             .then(response => response.json())
             .then(data => setShoes(data));
         setSortType('default')
-        }, [sortType]);
+    }, [sortType]);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -50,12 +50,12 @@ function Main() {
             <div className="main-shoe-cards">
                 {filteredShoes && filteredShoes.length > 0 ? (
                     filteredShoes.map(shoe => (
-                        <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} imageName={shoe.imageName} />
+                        <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} imageName={shoe.imageName}/>
                     ))
                 ) : (
                     shoes.length > 0 ? (
                         shoes.map(shoe => (
-                            <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} imageName={shoe.imageName} />
+                            <ShoeCard key={shoe.id} name={shoe.name} price={shoe.price} imageName={shoe.imageName}/>
                         ))
                     ) : (
                         <h1>По вашому запиту нічого не знайдено</h1>
