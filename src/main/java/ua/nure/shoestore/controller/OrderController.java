@@ -2,6 +2,7 @@ package ua.nure.shoestore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ua.nure.shoestore.dto.ChangeStatusDTO;
 import ua.nure.shoestore.dto.MakeOrderDTO;
 
 import ua.nure.shoestore.dto.ShoeDTO;
@@ -34,6 +35,10 @@ public class OrderController {
     @PostMapping(value = "setWorker")
     public void setWorker(@RequestParam Long orderId, @RequestParam Long userId){
         orderService.setWorker(orderId, userId);
+    }
+    @PostMapping(value = "changeStatus")
+    public void changeStatus(@RequestBody ChangeStatusDTO changeStatusDTO){
+        orderService.changeStatus(changeStatusDTO.getOrderId(), changeStatusDTO.getUserId(), changeStatusDTO.getStatus(), changeStatusDTO.getDescription());
     }
     @PostMapping(value = "/makeorder")
     public void makeOrder(@RequestBody MakeOrderDTO makeOrderDTO) {
