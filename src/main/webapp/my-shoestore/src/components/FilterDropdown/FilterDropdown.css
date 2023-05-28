@@ -58,3 +58,13 @@
 .filter-dropdown__sublist:hover .filter-dropdown__sublist-content {
     display: block;
 }
+
+.filter-dropdown-btn {
+    margin-left: 15px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}

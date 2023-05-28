@@ -31,7 +31,7 @@ function NavbarClient () {
                         <NavLink to="/contacts" className="nav-list__item">Контакти</NavLink>
                         <NavLink to="/clientcabinet" className="nav-list__item">Особистий кабінет</NavLink>
                         <NavLink to="/basket" className="nav-list__item">Кошик</NavLink>
-                        <NavLink to="/clientorders" className="nav-list__item">Мої замовлення</NavLink>
+                        <NavLink to="/myorders" className="nav-list__item">Мої замовлення</NavLink>
                         <button className="btn-exit" onClick={handleSubmit}>Вихід</button>
                     </ul>
                 </div>
