@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './СhangeShoesAmount.css';
 
 function ChangeShoesAmount() {
@@ -19,7 +19,7 @@ function ChangeShoesAmount() {
     const handleAmountChange = (shoeId, selectedAmount) => {
         const requestData = {
             id: shoeId,
-            selectedAmount : amount,
+            selectedAmount: amount,
         };
         console.log(requestData);
         fetch("http://localhost:8080/updateShoesAmount", {
@@ -71,27 +71,36 @@ function ChangeShoesAmount() {
                 {shoes.map((shoe) => (
                     <tr key={shoe.id}>
                         <td className="shoes-list-table-td">
-                            <img src={"./images/" + shoe.imageName} alt="shoe" width="150px" height="100px" />
+                            <img src={"./images/" + shoe.imageName} alt="shoe" width="150px" height="100px"/>
                         </td>
                         <td className="shoes-list-table-td">{shoe.name}</td>
                         <td className="shoes-list-table-td">{shoe.size}</td>
                         <td className="shoes-list-table-td">{shoe.color}</td>
                         <td className="shoes-list-table-td">{shoe.amount}</td>
                         <td className="shoes-list-table-td">
-                        <input
-                            className="shoes-list-table-select"
-                            name="amount"
-                            onChange={(event) => setAmount(event.target.value)}
-                        ></input>
-                    </td>
-                    <td className="shoes-list-table-td">
-                    <button
-                    className="shoes-list-table-btn"
-                    onClick={() => handleAmountChange(shoe.id)}
-                    >
-                    Змінити
-                    </button>
-                    </td>
+                            <input
+                                className="shoes-list-table-select"
+                                name="amount"
+                                type="number"
+                                min="0"
+                                step="1"
+                                onKeyDown={(event) => {
+                                    if (!/\d/.test(event.key) && event.key !== "Backspace") {
+                                        event.preventDefault();
+                                    }
+                                }}
+                                onChange={(event) => setAmount(event.target.value)}
+                                required
+                            />
+                        </td>
+                        <td className="shoes-list-table-td">
+                            <button
+                                className="shoes-list-table-btn"
+                                onClick={() => handleAmountChange(shoe.id)}
+                            >
+                                Змінити
+                            </button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>

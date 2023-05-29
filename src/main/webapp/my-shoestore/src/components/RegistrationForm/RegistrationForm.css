@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 35px;
+    margin-bottom: 35px;
 }
 
 
@@ -41,17 +42,19 @@
 
 
 .registration-form-btn {
-    width: 130px;
-    height: 30px;
+    width: 150px;
+    height: 35px;
     border: none;
     background: #4ff069;
     border-radius: 20px;
-    margin-top: 30px;
+    margin-top: 12px;
     cursor: pointer;
-
-
-
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .registration-form-btn:hover {
     background: #42cc55;
 }
