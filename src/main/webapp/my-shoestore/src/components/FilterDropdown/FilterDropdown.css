@@ -1,6 +1,8 @@
 
 .filter-dropdown {
     position: relative;
+    display: flex;
+    flex-direction: row;
 }
 
 .filter-dropdown__toggle {

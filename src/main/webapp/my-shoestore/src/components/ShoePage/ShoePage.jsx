@@ -9,9 +9,12 @@ function ShoePage() {
     const [amounts, setAmounts] = useState({});
     const [errors, setErrors] = useState({}); // State to hold errors for each shoe block
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
+    const role = JSON.parse(localStorage.getItem("user"))?.role;
 
     const navigate = useNavigate();
+
     useEffect(() => {
+
         fetch(`http://localhost:8080/showShoePage?name=${name}`)
             .then((response) => response.json())
             .then((data) => {
@@ -23,42 +26,48 @@ function ShoePage() {
     }, [name]);
 
     const handleSubmit = (shoeId, price, amount) => {
-        const shoeCart = {
-            userId: userId,
-            shoeId: shoeId,
-            price: price,
-            amount: amount,
-        };
 
-        fetch("http://localhost:8080/addShoeToCart", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(shoeCart)
-        })
-            .then((response) => {
-                if (response.ok) {
-                    setErrors({}); // Clear errors if the request is successful
-                    navigate("/basket");
-                    return response.json();
-                } else if (response.status === 409) {
-                    // Handle shoe already in cart error
-                    return response.json().then((data) => {
-                        setErrors({[shoeId]: data}); // Set the error for the specific shoe block
-                        throw new Error(JSON.stringify(data));
-                    });
-                } else {
-                    throw new Error("An error occurred.");
-                }
+        if(role === 'CLIENT') {
+            const shoeCart = {
+                userId: userId,
+                shoeId: shoeId,
+                price: price,
+                amount: amount,
+            };
+
+            fetch("http://localhost:8080/addShoeToCart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(shoeCart)
             })
-            .then((data) => {
-                setCart(data);
-                console.log(data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+                .then((response) => {
+                    if (response.ok) {
+                        setErrors({}); // Clear errors if the request is successful
+                        navigate("/basket");
+                        return response.json();
+                    } else if (response.status === 409) {
+                        // Handle shoe already in cart error
+                        return response.json().then((data) => {
+                            setErrors({[shoeId]: data}); // Set the error for the specific shoe block
+                            throw new Error(JSON.stringify(data));
+                        });
+                    } else {
+                        throw new Error("An error occurred.");
+                    }
+                })
+                .then((data) => {
+                    setCart(data);
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        } else {
+            navigate('/loginform');
+        }
+
     };
 
 

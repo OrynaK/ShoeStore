@@ -27,7 +27,7 @@ function NavbarAdmin() {
                         <NavLink to="/userslist" className="nav-list__item">
                             Список користувачів
                         </NavLink>
-                        <NavLink to="/adminorders" className="nav-list__item">
+                        <NavLink to="/workerorders" className="nav-list__item">
                             Замовлення
                         </NavLink>
                         <NavLink to="/clientcabinet" className="nav-list__item">
