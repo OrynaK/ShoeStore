@@ -57,7 +57,7 @@ public class ShoeDAOImpl implements ShoeDAO {
 
     @Override
     public Shoe findById(long id) {
-        try( Connection connection = connectionManager.getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM shoe WHERE id = ?")) {
                 ps.setLong(1, id);
                 try (ResultSet rs = ps.executeQuery()) {
@@ -204,39 +204,45 @@ public class ShoeDAOImpl implements ShoeDAO {
 
     @Override
     public Long addShoeWithImage(ShoeDTO shoeDTO, String imageName) {
-        
-        try (Connection con = connectionManager.getConnection()) {
-            try (PreparedStatement ps1 = con.prepareStatement("INSERT INTO image (name, path) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS)) {
-                int k = 0;
-                ps1.setString(++k, imageName);
-                ps1.setString(++k, shoeDTO.getImagePath());
-                ps1.executeUpdate();
-                try (ResultSet key1 = ps1.getGeneratedKeys()) {
-                    if (key1.next()) {
-                        Long imageId = key1.getLong(1);
-                        try (PreparedStatement ps2 = con.prepareStatement(ADD_SHOE_WITH_IMAGE, Statement.RETURN_GENERATED_KEYS)) {
-                            int j = 0;
-                            ps2.setString(++j, shoeDTO.getName());
-                            ps2.setBigDecimal(++j, shoeDTO.getSize());
-                            ps2.setString(++k, shoeDTO.getColor());
-                            ps2.setLong(++k, imageId);
-                            ps2.setInt(++k, shoeDTO.getAmount());
-                            ps2.setBigDecimal(++k, shoeDTO.getPrice());
-                            ps2.setString(++k, shoeDTO.getSeason().toString().toUpperCase());
-                            ps2.setString(++k, shoeDTO.getSex().toString().toUpperCase());
-                            ps2.executeUpdate();
-                            try (ResultSet key2 = ps1.getGeneratedKeys()) {
-                                if (key2.next()) {
-                                    return key2.getLong(1);
-                                }
+        Connection con = null;
+        PreparedStatement ps1 = null;
+        try {
+            con = connectionManager.getConnection(false);
+            ps1 = con.prepareStatement("INSERT INTO image (name, path) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
+            int k = 0;
+            ps1.setString(++k, imageName);
+            ps1.setString(++k, shoeDTO.getImagePath());
+            ps1.executeUpdate();
+            try (ResultSet key1 = ps1.getGeneratedKeys()) {
+                if (key1.next()) {
+                    Long imageId = key1.getLong(1);
+                    try (PreparedStatement ps2 = con.prepareStatement(ADD_SHOE_WITH_IMAGE, Statement.RETURN_GENERATED_KEYS)) {
+                        int j = 0;
+                        ps2.setString(++j, shoeDTO.getName());
+                        ps2.setBigDecimal(++j, shoeDTO.getSize());
+                        ps2.setString(++k, shoeDTO.getColor());
+                        ps2.setLong(++k, imageId);
+                        ps2.setInt(++k, shoeDTO.getAmount());
+                        ps2.setBigDecimal(++k, shoeDTO.getPrice());
+                        ps2.setString(++k, shoeDTO.getSeason().toString().toUpperCase());
+                        ps2.setString(++k, shoeDTO.getSex().toString().toUpperCase());
+                        ps2.executeUpdate();
+                        try (ResultSet key2 = ps1.getGeneratedKeys()) {
+                            if (key2.next()) {
+                                con.commit();
+                                return key2.getLong(1);
                             }
                         }
                     }
                 }
-                return null;
             }
-        } catch (SQLException e) {
+            con.commit();
+            return null;
+        } catch (Exception e) {
+            ConnectionManager.rollback(con);
             throw new RuntimeException(e);
+        } finally {
+            ConnectionManager.close(ps1, con);
         }
     }
 
