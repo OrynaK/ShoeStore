@@ -267,10 +267,10 @@ VALUES ('client', 'client', '1234', 'client@gmail.com', '+380950000001', 'client
        ('Elijah', 'Gonzalez', 'password23', 'elijahgonzalez@example.com', '+380111122244', 'client'),
        ('Charlotte', 'Clark', 'password24', 'charlotteclark@example.com', '+380888877700', 'client'),
        ('Lucas', 'Young', 'password25', 'lucasyoung@example.com', '+380444433366', 'client'),
-       ('admin', 'admin', '1234', 'admin@gmail.com', '+380950000000', 'admin'),
-       ('Jennifer', 'Jones', 'password6', 'jenniferjones@example.com', '+380445556666', 'warehouse'),
-       ('David', 'Brown', 'password5', 'davidbrown@example.com', '+380112223333', 'packer'),
-       ('courier', 'courier', '1234', 'courier@gmail.com', '+380950000004', 'courier');
+       ('Megan', 'Coleman', '1234', 'admin@gmail.com', '+380950000000', 'admin'),
+       ('Jennifer', 'Jones', '1234', 'warehouse@gmail.com', '+380445556666', 'warehouse'),
+       ('David', 'Brown', '1234', 'packer@gmail.com', '+380112223333', 'packer'),
+       ('John', 'Snow', '1234', 'courier@gmail.com', '+380950000004', 'courier');
 ;
 
 -- IMAGES------------------------------------------------------------------------
