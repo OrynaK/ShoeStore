@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.nure.shoestore.dto.ShoeDTO;
@@ -24,17 +26,10 @@ public class ShoeController {
     private ShoeService shoeService;
 
     @PostMapping(value = "/addShoe")
-    public void addShoe(@RequestParam("shoeDTO") String shoeDTOJson, @RequestParam("imageData") MultipartFile imageData) throws IOException {
+    public ResponseEntity<String> addShoe(@RequestParam("shoeDTO") String shoeDTOJson, @RequestParam("imageData") MultipartFile imageData) throws IOException {
         ShoeDTO shoeDTO = new ObjectMapper().readValue(shoeDTOJson, ShoeDTO.class);
-
-        String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(imageData.getOriginalFilename());
-
-        File newFile = new File("src/main/webapp/my-shoestore/public/images/" + fileName);
-        FileUtils.writeByteArrayToFile(newFile, imageData.getBytes());
-
-        String fileUrl = "src/main/webapp/my-shoestore/public/images/" + fileName;
-
-        shoeService.addShoeWithImage(shoeDTO, fileUrl, fileName);
+        if( shoeService.addShoeWithImage(shoeDTO, imageData)) return ResponseEntity.ok("Shoe added successfully");
+        else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding shoe");
     }
 
     @GetMapping(value = "/showShoePage")

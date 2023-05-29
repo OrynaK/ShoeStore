@@ -1,5 +1,5 @@
 import "./AddNewShoe.css";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {useNavigate} from "react-router";
 
 function AddNewShoe() {
@@ -11,6 +11,7 @@ function AddNewShoe() {
     const [price, setActualPrice] = useState('')
     const [amount, setAmount] = useState('');
     const [image, setImage] = useState();
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleImageChange = (event) => {
@@ -18,19 +19,34 @@ function AddNewShoe() {
     };
 
     const handleSubmit = event => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append('shoeDTO', JSON.stringify({name, size, color, season, sex, price, amount}));
-        formData.append('imageData', image);
+        if (
+            name === '' ||
+            size === '' ||
+            color === '' ||
+            season === '' ||
+            sex === '' ||
+            price === '' ||
+            amount === '' ||
+            !image
+        ) {
+            setErrorMessage('Будь ласка, заповніть всі поля');
+        } else {
+            event.preventDefault();
+            const formData = new FormData();
+            formData.append('shoeDTO', JSON.stringify({name, size, color, season, sex, price, amount}));
+            formData.append('imageData', image);
 
-        fetch("http://localhost:8080/addShoe", {
-            method: "POST",
-            body: formData
-        }).then((response) => {
-            if (response.ok) {
-                navigate('/main');
-            }
-        });
+            fetch("http://localhost:8080/addShoe", {
+                method: "POST",
+                body: formData
+            }).then((response) => {
+                if (response.ok) {
+                    navigate('/main');
+                } else {
+                    setErrorMessage('Сталася помилка під час відправки форми. Спробуйте пізніше');
+                }
+            });
+        }
     };
 
     return (
@@ -151,6 +167,7 @@ function AddNewShoe() {
                         accept="image/*"
                         onChange={handleImageChange}
                     />
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                     {image && <img src={image} alt="Selected"/>}
 
                     <button className="add-new-shoe-form-btn" onClick={handleSubmit} type="submit">Додати</button>
