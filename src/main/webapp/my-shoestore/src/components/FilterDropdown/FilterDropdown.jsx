@@ -209,8 +209,9 @@ function FilterDropdown({onFilterChange}) {
                         </li>
                     </ul>
                 )}
-                <button className="filter-dropdown-btn" onClick={handleResetFilter}>Скинути фільтр</button>
             </div>
+            <button className="filter-dropdown-btn" onClick={handleResetFilter}>Скинути фільтр</button>
+
         </div>
     );
 }

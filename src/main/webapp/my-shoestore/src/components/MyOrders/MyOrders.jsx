@@ -7,18 +7,19 @@ function MyOrders() {
     const [status, setStatus] = useState('');
     const [description, setDescription] = useState('');
     useEffect(() => {
-        if(userId) {
+        fetchMyOrders(); // Виклик функції при завантаженні компоненту або при зміні userId
+    }, [userId]);
+
+    function fetchMyOrders() {
+        if (userId) {
             fetch(`http://localhost:8080/myOrders?userId=${userId}`)
                 .then((response) => response.json())
                 .then((data) => setOrders(data))
                 .catch((error) => {
-
                     console.error("Error:", error);
                 });
         }
-    }, [userId]);
-    console.log(orders)
-
+    }
     function handleStatusChange(orderId, selectedStatus) {
         const changeStatusDTO = {
             orderId: orderId,
@@ -38,6 +39,8 @@ function MyOrders() {
                 if (response.ok) {
                     // Оновити статус у стані компонента або виконати інші дії
                     setStatus(selectedStatus);
+                    setDescription("");
+                    fetchMyOrders(); // Виклик функції оновлення замовлень після успішного виконання запиту
                 } else {
                     throw new Error("Помилка при виконанні запиту");
                 }
@@ -46,6 +49,7 @@ function MyOrders() {
                 console.error("Помилка:", error);
             });
     }
+
 
 
     return (
@@ -69,7 +73,7 @@ function MyOrders() {
                             <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {new Date(order.date).toLocaleDateString('uk-UA')} {new Date(`1970-01-01T${order.time}`).toLocaleTimeString('uk-UA')}
+                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time}
                                 </td>
                             </td>
                             <td className="my-orders-table-td" colSpan={1}>
@@ -120,7 +124,7 @@ function MyOrders() {
                         <td className="my-orders-table-td">{order.id}</td>
                         <td className="my-orders-table-td">
                             <td className="my-orders-table-td">
-                                {new Date(order.date).toLocaleDateString('uk-UA')} {new Date(`1970-01-01T${order.time}`).toLocaleTimeString('uk-UA')}
+                                {new Date(order.date).toLocaleDateString('uk-UA')} {order.time}
                             </td>
                         </td>
                         <td className="my-orders-table-td">
