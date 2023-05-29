@@ -221,122 +221,480 @@ END;
 DELIMITER ;
 
 -- USERS------------------------------------------------------------------------
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'client', 'client', '1234', 'client@gmail.com', '+380950000001', 'client');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'admin', 'admin', '1234', 'admin@gmail.com', '+380950000000', 'admin');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'warehouse', 'warehouse', '1234', 'warehouse@gmail.com', '+380950000002',
-                                   'warehouse');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'packer', 'packer', '1234', 'packer@gmail.com', '+380950000003', 'packer');
-INSERT INTO shoe_store.user VALUE (DEFAULT, 'courier', 'courier', '1234', 'courier@gmail.com', '+380950000004',
-                                   'courier');
 INSERT INTO user (name, surname, password, email, phone_number, role)
-VALUES ('John', 'Doe', 'password1', 'johndoe@example.com', '+380234567890', 'client'),
+VALUES ('client', 'client', '1234', 'client@gmail.com', '+380950000001', 'client'),
+       ('Іван', 'Петров', 'password1', 'ivan@example.com', '+1234560789', 'client'),
+       ('Марія', 'Сидорова', 'password2', 'maria@example.com', '+9876504321', 'client'),
+       ('Олександр', 'Ковальчук', 'password3', 'oleksandr@example.com', '+1112202333', 'client'),
+       ('Анна', 'Коваленко', 'password4', 'anna@example.com', '+4445055666', 'client'),
+       ('Максим', 'Шевченко', 'password5', 'maxim@example.com', '+7770888999', 'client'),
+       ('Олена', 'Кравченко', 'password6', 'olena@example.com', '+1234567089', 'client'),
+       ('Віталій', 'Семенов', 'password7', 'vitaliy@example.com', '+9876454321', 'client'),
+       ('Юлія', 'Ткачук', 'password8', 'yulia@example.com', '+1112220333', 'client'),
+       ('Андрій', 'Коваль', 'password9', 'andriy@example.com', '+4440555666', 'client'),
+       ('Наталія', 'Лисенко', 'password10', 'natalia@example.com', '+7077888999', 'client'),
+       ('Павло', 'Мельник', 'password11', 'pavlo@example.com', '+1234567809', 'client'),
+       ('Ірина', 'Шевчук', 'password12', 'irina@example.com', '+9876543021', 'client'),
+       ('John', 'Doe', 'password1', 'johndoe@example.com', '+380234567809', 'client'),
        ('Jane', 'Smith', 'password2', 'janesmith@example.com', '+380987654321', 'client'),
-       ('Michael', 'Johnson', 'password3', 'michaeljohnson@example.com', '+380551234567', 'admin'),
        ('Emily', 'Williams', 'password4', 'emilywilliams@example.com', '+380999999999', 'client'),
-       ('David', 'Brown', 'password5', 'davidbrown@example.com', '+380112223333', 'packer'),
-       ('Jennifer', 'Jones', 'password6', 'jenniferjones@example.com', '+380445556666', 'warehouse'),
-       ('Daniel', 'Taylor', 'password7', 'danieltaylor@example.com', '+380778889999', 'courier'),
        ('Sarah', 'Wilson', 'password8', 'sarahwilson@example.com', '+380223334444', 'client'),
        ('Matthew', 'Anderson', 'password9', 'matthewanderson@example.com', '+380887776666', 'client'),
-       ('Olivia', 'Davis', 'password10', 'oliviadavis@example.com', '+380666555444', 'client');
+       ('Olivia', 'Davis', 'password10', 'oliviadavis@example.com', '+380666555444', 'client'),
+       ('Mark', 'Johnson', 'password11', 'markjohnson@example.com', '+380111122233', 'client'),
+       ('Samantha', 'Wilson', 'password12', 'samanthawilson@example.com', '+380444433322', 'client'),
+       ('Emma', 'Thomas', 'password14', 'emmathomas@example.com', '+380777766655', 'client'),
+       ('Isabella', 'Lee', 'password18', 'isabellalee@example.com', '+380888877766', 'client'),
+       ('James', 'Garcia', 'password19', 'jamesgarcia@example.com', '+380444433377', 'client'),
+       ('Ava', 'Scott', 'password20', 'avascott@example.com', '+380999988844', 'client'),
+       ('Benjamin', 'Hernandez', 'password21', 'benjaminhernandez@example.com', '+380222233322', 'client'),
+       ('Mia', 'Lopez', 'password22', 'mialopez@example.com', '+380555544488', 'client'),
+       ('Elijah', 'Gonzalez', 'password23', 'elijahgonzalez@example.com', '+380111122244', 'client'),
+       ('Charlotte', 'Clark', 'password24', 'charlotteclark@example.com', '+380888877700', 'client'),
+       ('Lucas', 'Young', 'password25', 'lucasyoung@example.com', '+380444433366', 'client'),
+       ('admin', 'admin', '1234', 'admin@gmail.com', '+380950000000', 'admin'),
+       ('Jennifer', 'Jones', 'password6', 'jenniferjones@example.com', '+380445556666', 'warehouse'),
+       ('David', 'Brown', 'password5', 'davidbrown@example.com', '+380112223333', 'packer'),
+       ('courier', 'courier', '1234', 'courier@gmail.com', '+380950000004', 'courier');
+;
 
 -- IMAGES------------------------------------------------------------------------
 INSERT INTO image (name, path)
-VALUES ('d636586b-cf5b-4299-94f1-45e6cc2de815.png', 'src/main/webapp/my-shoestore/public/images/d636586b-cf5b-4299-94f1-45e6cc2de815.png'),
-       ('74d49ff0-7732-4563-8c0d-8716db04a0ed.png', 'src/main/webapp/my-shoestore/public/images/74d49ff0-7732-4563-8c0d-8716db04a0ed.png'),
-       ('2fb15150-e71a-478d-b04c-6260261f08f1.png', 'src/main/webapp/my-shoestore/public/images/2fb15150-e71a-478d-b04c-6260261f08f1.png'),
-       ('f77812e0-1f15-46de-ab17-db4686731ab2.png', 'src/main/webapp/my-shoestore/public/images/f77812e0-1f15-46de-ab17-db4686731ab2.png'),
-       ('3d8ae73d-e219-476d-89f9-b4e42e7a5570.png', 'src/main/webapp/my-shoestore/public/images/3d8ae73d-e219-476d-89f9-b4e42e7a5570.png');
+VALUES ('MensWinterBoots.png', 'src/main/webapp/my-shoestore/public/images/MensWinterBoots.png'),
+       ('WomenSandals.png', 'src/main/webapp/my-shoestore/public/images/WomenSandals.png'),
+       ('WomenSneakers.png', 'src/main/webapp/my-shoestore/public/images/WomenSneakers.png'),
+       ('MenFlipFlops.png', 'src/main/webapp/my-shoestore/public/images/MenFlipFlops.png'),
+       ('MensSportsShoes.png', 'src/main/webapp/my-shoestore/public/images/MensSportsShoes.png'),
+       ('WomensWinterBoots.png', 'src/main/webapp/my-shoestore/public/images/WomensWinterBoots.png'),
+       ('WomensHeels.png', 'src/main/webapp/my-shoestore/public/images/WomensHeels.png'),
+       ('WomensFlats.png', 'src/main/webapp/my-shoestore/public/images/WomensFlats.png'),
+       ('MensOxfordsShoes.png', 'src/main/webapp/my-shoestore/public/images/MensOxfordsShoes.png'),
+       ('MensLoafers.png', 'src/main/webapp/my-shoestore/public/images/MensLoafers.png'),
+       ('WomensSneakers.png', 'src/main/webapp/my-shoestore/public/images/WomensSneakers.png'),
+       ('MensClassicalLeatherBoots.png', 'src/main/webapp/my-shoestore/public/images/MensClassicalLeatherBoots.png'),
+       ('MensStylishAnkleBoots.png', 'src/main/webapp/my-shoestore/public/images/MensStylishAnkleBoots.png'),
+       ('MensFormalDressShoes.png', 'src/main/webapp/my-shoestore/public/images/MensFormalDressShoes.png'),
+       ('MensCasualSuedeBoots.png', 'src/main/webapp/my-shoestore/public/images/MensCasualSuedeBoots.png'),
+       ('WomensElegantSandals.png', 'src/main/webapp/my-shoestore/public/images/WomensElegantSandals.png'),
+       ('WomensFashionWedgeSandals.png', 'src/main/webapp/my-shoestore/public/images/WomensFashionWedgeSandals.png'),
+       ('WomensComfortableFlipFlops.png', 'src/main/webapp/my-shoestore/public/images/WomensComfortableFlipFlops.png'),
+       ('WomensCasulaSlip-onSandals.png', 'src/main/webapp/my-shoestore/public/images/WomensCasulaSlip-onSandals.png'),
+       ('WomensLightWeigthSneakers.png', 'src/main/webapp/my-shoestore/public/images/WomensLightWeigthSneakers.png'),
+       ('WomensSportyAthleticShoes.png', 'src/main/webapp/my-shoestore/public/images/WomensSportyAthleticShoes.png'),
+       ('WomensStylishCanvasSneakers.png','src/main/webapp/my-shoestore/public/images/WomensStylishCanvasSneakers.png'),
+       ('WomensRetroHigh-topSneakers.png','src/main/webapp/my-shoestore/public/images/WomensRetroHigh-topSneakers.png'),
+       ('MensComfortableFlipFlops.png', 'src/main/webapp/my-shoestore/public/images/MensComfortableFlipFlops.png'),
+       ('MensLightweightSlideSandals.png','src/main/webapp/my-shoestore/public/images/MensLightweightSlideSandals.png'),
+       ('MensCasualBeachSandals.png', 'src/main/webapp/my-shoestore/public/images/MensCasualBeachSandals.png'),
+       ('MensSportyWaterShoes.png', 'src/main/webapp/my-shoestore/public/images/MensSportyWaterShoes.png'),
+       ('MensOutdoorHikingShoes.png', 'src/main/webapp/my-shoestore/public/images/MensOutdoorHikingShoes.png'),
+       ('MensBreathtakingRunningShoes.png','src/main/webapp/my-shoestore/public/images/MensBreathtakingRunningShoes.png'),
+       ('MensAthletictrainingShoes.png', 'src/main/webapp/my-shoestore/public/images/MensAthletictrainingShoes.png');
+
 
 -- SHOES-------------------------------------------------------------------
 INSERT INTO `shoe` (`size`, `color`, `season`, `sex`, `actual_price`, `name`, `amount`, `image_id`)
-VALUES (33.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
-       (34.0, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
-       (36.5, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
-       (37.0, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
-       (33.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
-       (34.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
-       (36.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
-       (37.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
-       (33.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
-       (34.0, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
-       (36.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
-       (37.0, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
-       (33.5, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
-       (34.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
-       (36.5, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
-       (37.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
-       (33.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
-       (34.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
-       (36.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
-       (39.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5);
+VALUES (41.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
+       (42.0, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
+       (43.5, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
+       (44.0, 'black', 'demi', 'male', 79.99, 'Mens Winter Boots', 10, 1),
+
+       (38.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
+       (38.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
+       (39.0, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
+       (39.5, 'brown', 'summer', 'female', 99.99, 'Womens Sandals', 15, 2),
+
+       (38.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
+       (39.0, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
+       (39.5, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
+       (40.0, 'red', 'demi', 'female', 79.99, 'Womens Sneakers', 5, 3),
+
+       (40.5, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
+       (41.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
+       (42.5, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
+       (43.0, 'blue', 'summer', 'male', 49.99, 'Mens Flip Flops', 20, 4),
+
+       (42.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
+       (43.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
+       (44.0, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
+       (44.5, 'green', 'summer', 'male', 69.99, 'Mens Sports Shoes', 7, 5),
+
+       (38.0, 'black', 'winter', 'female', 89.99, 'Womens Winter Boots', 8, 6),
+       (39.0, 'black', 'winter', 'female', 89.99, 'Womens Winter Boots', 8, 6),
+
+       (38.0, 'brown', 'demi', 'female', 109.99, 'Womens Heels', 12, 7),
+       (39.0, 'brown', 'demi', 'female', 109.99, 'Womens Heels', 12, 7),
+
+       (38.0, 'blue', 'summer', 'female', 79.99, 'Womens Flats', 10, 8),
+       (39.0, 'blue', 'summer', 'female', 79.99, 'Womens Flats', 10, 8),
+
+       (38.0, 'red', 'demi', 'male', 69.99, 'Mens Oxford Shoes', 5, 9),
+       (39.0, 'red', 'demi', 'male', 69.99, 'Mens Oxford Shoes', 5, 9),
+       (39.5, 'red', 'demi', 'male', 69.99, 'Mens Oxford Shoes', 5, 9),
+
+       (38.0, 'gray', 'summer', 'male', 59.99, 'Mens Loafers', 15, 10),
+       (39.0, 'gray', 'summer', 'male', 59.99, 'Mens Loafers', 15, 10),
+       (39.5, 'gray', 'summer', 'male', 59.99, 'Mens Loafers', 15, 10),
+
+       (38.0, 'white', 'summer', 'female', 69.99, 'Womens Sneakers', 10, 11),
+       (39.0, 'white', 'summer', 'female', 69.99, 'Womens Sneakers', 10, 11),
+       (39.5, 'white', 'summer', 'female', 69.99, 'Womens Sneakers', 10, 11),
+
+       (41.0, 'black', 'winter', 'male', 89.99, 'Mens Classic Leather Boots', 10, 12),
+       (42.0, 'black', 'winter', 'male', 89.99, 'Mens Classic Leather Boots', 10, 12),
+       (43.0, 'black', 'winter', 'male', 89.99, 'Mens Classic Leather Boots', 10, 12),
+       (44.0, 'black', 'winter', 'male', 89.99, 'Mens Classic Leather Boots', 10, 12),
+
+       (41.0, 'black', 'winter', 'male', 89.99, 'Mens Stylish Ankle Boots', 10, 13),
+       (42.0, 'black', 'winter', 'male', 89.99, 'Mens Stylish Ankle Boots', 10, 13),
+       (43.0, 'black', 'winter', 'male', 89.99, 'Mens Stylish Ankle Boots', 10, 13),
+       (44.0, 'black', 'winter', 'male', 89.99, 'Mens Stylish Ankle Boots', 10, 13),
+       (45.0, 'black', 'winter', 'male', 89.99, 'Mens Stylish Ankle Boots', 10, 13),
+
+       (42.0, 'black', 'winter', 'male', 89.99, 'Mens Formal Dress Shoes', 10, 14),
+       (43.0, 'black', 'winter', 'male', 89.99, 'Mens Formal Dress Shoes', 10, 14),
+       (44.0, 'black', 'winter', 'male', 89.99, 'Mens Formal Dress Shoes', 10, 14),
+       (44.5, 'black', 'winter', 'male', 89.99, 'Mens Formal Dress Shoes', 10, 14),
+
+       (41.0, 'black', 'winter', 'male', 89.99, 'Mens Casual Suede Boots', 10, 15),
+       (42.0, 'black', 'winter', 'male', 89.99, 'Mens Casual Suede Boots', 10, 15),
+       (43.0, 'black', 'winter', 'male', 89.99, 'Mens Casual Suede Boots', 10, 15),
+       (44.0, 'black', 'winter', 'male', 89.99, 'Mens Casual Suede Boots', 10, 15),
+
+       (38.0, 'brown', 'summer', 'female', 99.99, 'Womens Elegant Sandals', 15, 16),
+       (38.5, 'brown', 'summer', 'female', 99.99, 'Womens Elegant Sandals', 15, 16),
+       (39.0, 'brown', 'summer', 'female', 99.99, 'Womens Elegant Sandals', 15, 16),
+       (39.5, 'brown', 'summer', 'female', 99.99, 'Womens Elegant Sandals', 15, 16),
+       (40.0, 'brown', 'summer', 'female', 99.99, 'Womens Elegant Sandals', 15, 16),
+
+       (38.0, 'brown', 'summer', 'female', 99.99, 'Womens Fashion Wedge Sandals', 15, 17),
+       (39.0, 'brown', 'summer', 'female', 99.99, 'Womens Fashion Wedge Sandals', 15, 17),
+       (39.5, 'brown', 'summer', 'female', 99.99, 'Womens Fashion Wedge Sandals', 15, 17),
+       (40.0, 'brown', 'summer', 'female', 99.99, 'Womens Fashion Wedge Sandals', 15, 17),
+
+       (39.0, 'brown', 'summer', 'female', 99.99, 'Womens Comfortable Flip Flops', 15, 18),
+       (39.5, 'brown', 'summer', 'female', 99.99, 'Womens Comfortable Flip Flops', 15, 18),
+       (40.0, 'brown', 'summer', 'female', 99.99, 'Womens Comfortable Flip Flops', 15, 18),
+       (40.5, 'brown', 'summer', 'female', 99.99, 'Womens Comfortable Flip Flops', 15, 18),
+       (41.0, 'brown', 'summer', 'female', 99.99, 'Womens Comfortable Flip Flops', 15, 18),
+
+       (38.0, 'brown', 'summer', 'female', 99.99, 'Womens Casual Slip-on Sandals', 15, 19),
+       (38.5, 'brown', 'summer', 'female', 99.99, 'Womens Casual Slip-on Sandals', 15, 19),
+       (39.0, 'brown', 'summer', 'female', 99.99, 'Womens Casual Slip-on Sandals', 15, 19),
+       (39.5, 'brown', 'summer', 'female', 99.99, 'Womens Casual Slip-on Sandals', 15, 19),
+
+       (37.0, 'red', 'demi', 'female', 79.99, 'Womens Lightweight Sneakers', 5, 20),
+       (38.0, 'red', 'demi', 'female', 79.99, 'Womens Lightweight Sneakers', 5, 20),
+       (39.0, 'red', 'demi', 'female', 79.99, 'Womens Lightweight Sneakers', 5, 20),
+
+       (37.0, 'red', 'demi', 'female', 79.99, 'Womens Sporty Athletic Shoes', 5, 21),
+       (37.5, 'red', 'demi', 'female', 79.99, 'Womens Sporty Athletic Shoes', 5, 21),
+       (38.0, 'red', 'demi', 'female', 79.99, 'Womens Sporty Athletic Shoes', 5, 21),
+       (38.5, 'red', 'demi', 'female', 79.99, 'Womens Sporty Athletic Shoes', 5, 21),
+       (39.5, 'red', 'demi', 'female', 79.99, 'Womens Sporty Athletic Shoes', 5, 21),
+       (40.0, 'red', 'demi', 'female', 79.99, 'Womens Sporty Athletic Shoes', 5, 21),
+
+       (38.0, 'red', 'demi', 'female', 79.99, 'Womens Stylish Canvas Sneakers', 5, 22),
+       (38.5, 'red', 'demi', 'female', 79.99, 'Womens Stylish Canvas Sneakers', 5, 22),
+       (39.0, 'red', 'demi', 'female', 79.99, 'Womens Stylish Canvas Sneakers', 5, 22),
+       (39.5, 'red', 'demi', 'female', 79.99, 'Womens Stylish Canvas Sneakers', 5, 22),
+       (40.0, 'red', 'demi', 'female', 79.99, 'Womens Stylish Canvas Sneakers', 5, 22),
+
+       (39.0, 'red', 'demi', 'female', 79.99, 'Womens Retro High-top Sneakers', 5, 23),
+       (39.5, 'red', 'demi', 'female', 79.99, 'Womens Retro High-top Sneakers', 5, 23),
+       (40.0, 'red', 'demi', 'female', 79.99, 'Womens Retro High-top Sneakers', 5, 23),
+
+       (40.0, 'blue', 'summer', 'male', 49.99, 'Mens Comfortable Flip Flops', 20, 24),
+       (40.5, 'blue', 'summer', 'male', 49.99, 'Mens Comfortable Flip Flops', 20, 24),
+       (41.0, 'blue', 'summer', 'male', 49.99, 'Mens Comfortable Flip Flops', 20, 24),
+       (41.5, 'blue', 'summer', 'male', 49.99, 'Mens Comfortable Flip Flops', 20, 24),
+       (42.5, 'blue', 'summer', 'male', 49.99, 'Mens Comfortable Flip Flops', 20, 24),
+       (43.5, 'blue', 'summer', 'male', 49.99, 'Mens Comfortable Flip Flops', 20, 24),
+
+       (41.0, 'blue', 'summer', 'male', 49.99, 'Mens Lightweight Slide Sandals', 20, 25),
+       (42.0, 'blue', 'summer', 'male', 49.99, 'Mens Lightweight Slide Sandals', 20, 25),
+       (43.0, 'blue', 'summer', 'male', 49.99, 'Mens Lightweight Slide Sandals', 20, 25),
+       (44.0, 'blue', 'summer', 'male', 49.99, 'Mens Lightweight Slide Sandals', 20, 25),
+
+       (40.0, 'blue', 'summer', 'male', 49.99, 'Mens Casual Beach Sandals', 20, 26),
+       (41.5, 'blue', 'summer', 'male', 49.99, 'Mens Casual Beach Sandals', 20, 26),
+       (42.0, 'blue', 'summer', 'male', 49.99, 'Mens Casual Beach Sandals', 20, 26),
+       (42.5, 'blue', 'summer', 'male', 49.99, 'Mens Casual Beach Sandals', 20, 26),
+       (43.0, 'blue', 'summer', 'male', 49.99, 'Mens Casual Beach Sandals', 20, 26),
+       (44.5, 'blue', 'summer', 'male', 49.99, 'Mens Casual Beach Sandals', 20, 26),
+
+       (43.0, 'blue', 'summer', 'male', 49.99, 'Mens Sporty Water Shoes', 20, 27),
+       (43.5, 'blue', 'summer', 'male', 49.99, 'Mens Sporty Water Shoes', 20, 27),
+       (44.5, 'blue', 'summer', 'male', 49.99, 'Mens Sporty Water Shoes', 20, 27),
+       (44.0, 'blue', 'summer', 'male', 49.99, 'Mens Sporty Water Shoes', 20, 27),
+       (45.0, 'blue', 'summer', 'male', 49.99, 'Mens Sporty Water Shoes', 20, 27),
+
+       (40.0, 'green', 'summer', 'male', 69.99, 'Mens Outdoor Hiking Shoes', 7, 28),
+       (41.0, 'green', 'summer', 'male', 69.99, 'Mens Outdoor Hiking Shoes', 7, 28),
+       (42.0, 'green', 'summer', 'male', 69.99, 'Mens Outdoor Hiking Shoes', 7, 28),
+       (43.0, 'green', 'summer', 'male', 69.99, 'Mens Outdoor Hiking Shoes', 7, 28),
+       (44.0, 'green', 'summer', 'male', 69.99, 'Mens Outdoor Hiking Shoes', 7, 28),
+
+       (41.0, 'green', 'summer', 'male', 69.99, 'Mens Breathable Running Shoes', 7, 29),
+       (42.0, 'green', 'summer', 'male', 69.99, 'Mens Breathable Running Shoes', 7, 29),
+       (43.0, 'green', 'summer', 'male', 69.99, 'Mens Breathable Running Shoes', 7, 29),
+       (44.0, 'green', 'summer', 'male', 69.99, 'Mens Breathable Running Shoes', 7, 29),
+
+       (40.0, 'green', 'summer', 'male', 69.99, 'Mens Athletic Training Shoes', 7, 30),
+       (45.0, 'green', 'summer', 'male', 69.99, 'Mens Athletic Training Shoes', 7, 30),
+       (42.0, 'green', 'summer', 'male', 69.99, 'Mens Athletic Training Shoes', 7, 30),
+       (43.0, 'green', 'summer', 'male', 69.99, 'Mens Athletic Training Shoes', 7, 30);
 
 -- ADDRESS-----------------------------------------------------------------------
-INSERT INTO shoe_store.address VALUE (1, 'Ukraine', 'Kharkiv', 'Tselinogradska', '58', 1, '23');
 INSERT INTO address (country, city, street, house_number, entrance, apartment_number)
-VALUES ('Ukraine', 'Kyiv', 'Main Street', '123', 1, 1),
-       ('Ukraine', 'Lviv', 'Central Avenue', '456', 2, 5),
-       ('Ukraine', 'Kharkiv', 'Freedom Square', '789', NULL, 10),
-       ('Ukraine', 'Odessa', 'Deribasovskaya Street', '321', NULL, NULL),
-       ('Ukraine', 'Dnipro', 'Shevchenko Boulevard', '555', 3, 7),
-       ('Ukraine', 'Zaporizhzhia', 'Central Avenue', '777', 1, 3),
-       ('Ukraine', 'Vinnytsia', 'Soborna Street', '999', NULL, 15),
-       ('Ukraine', 'Kherson', 'Heroes of Ukraine Street', '222', 4, 8),
-       ('Ukraine', 'Poltava', 'Sadova Street', '444', 2, 6),
-       ('Ukraine', 'Lviv', 'Rynok Square', '666', 1, 2);
+VALUES
+    ('Україна', 'Львів', 'вул. Нова', '10', '1', '5'),
+    ('Україна', 'Київ', 'вул. Центральна', '15', '2', '10'),
+    ('Україна', 'Харків', 'вул. Проспектна', '25', '3', '7'),
+    ('Україна', 'Одеса', 'вул. Польова', '8', '4', '3'),
+    ('Україна', 'Дніпро', 'вул. Велика', '12', '1', '2'),
+    ('Україна', 'Запоріжжя', 'вул. Головна', '7', '2', '9'),
+    ('Україна', 'Вінниця', 'вул. Перша', '18', '3', '6'),
+    ('Україна', 'Хмельницький', 'вул. Соборна', '22', '4', '1'),
+    ('Україна', 'Чернівці', 'вул. Лісна', '9', '1', '8'),
+    ('Україна', 'Житомир', 'вул. Степова', '14', '2', '4'),
+    ('Україна', 'Львів', 'вул. Стара', '5', '1', '5'),
+    ('Україна', 'Київ', 'вул. Головна', '10', NULL, NULL),
+    ('Україна', 'Харків', 'вул. Сонячна', '20', '2', '7'),
+    ('Україна', 'Одеса', 'вул. Морська', '15', NULL, NULL),
+    ('Україна', 'Дніпро', 'вул. Центральна', '18', '1', '2'),
+    ('Україна', 'Запоріжжя', 'вул. Першотравнева', '7', NULL, NULL),
+    ('Україна', 'Вінниця', 'вул. Грушевського', '12', '3', '6'),
+    ('Україна', 'Хмельницький', 'вул. Миру', '22', NULL, NULL),
+    ('Україна', 'Чернівці', 'вул. Городоцька', '9', '1', '8'),
+    ('Україна', 'Житомир', 'вул. Київська', '14', NULL, NULL),
+    ('Україна', 'Львів', 'вул. Нова', '10', '2', '4'),
+    ('Україна', 'Київ', 'вул. Шевченка', '15', NULL, NULL),
+    ('Україна', 'Харків', 'вул. Сумська', '25', '3', '7'),
+    ('Україна', 'Одеса', 'вул. Польова', '8', NULL, NULL),
+    ('Україна', 'Дніпро', 'вул. Велика', '12', '1', '2'),
+    ('Україна', 'Запоріжжя', 'вул. Головна', '7', NULL, NULL),
+    ('Україна', 'Вінниця', 'вул. Перша', '18', '2', '6'),
+    ('Україна', 'Хмельницький', 'вул. Соборна', '22', NULL, NULL),
+    ('Україна', 'Чернівці', 'вул. Лісна', '9', '1', '8'),
+    ('Україна', 'Житомир', 'вул. Степова', '14', NULL, NULL),
+    ('Україна', 'Львів', 'вул. Вузька', '5', '2', '4');
 
 -- CART--------------------------------------------------------------------------
 INSERT INTO cart (client_id)
 VALUES (1),
+       (2),
+       (3),
+       (4),
+       (5),
        (6),
        (7),
+       (8),
        (9),
-       (13);
+       (10),
+       (11),
+       (12),
+       (13),
+       (14),
+       (15),
+       (16),
+       (17),
+       (18);
 
--- CART_SHOE---------------------------------------------------------------------
-INSERT INTO cart_shoe (shoe_id, cart_id, price, amount)
-VALUES (1, 1, 79.99, 2),
-       (3, 1, 79.99, 1),
-       (5, 2, 99.99, 1),
-       (7, 2, 99.99, 2),
-       (9, 3, 79.99, 1),
-       (11, 3, 79.99, 3),
-       (13, 4, 49.99, 4),
-       (15, 4, 49.99, 1),
-       (17, 5, 69.99, 2),
-       (19, 5, 69.99, 1);
 
 -- ORDER------------------------------------------------------------------------
 INSERT INTO `order` (address_id, status)
 VALUES (1, 'processing'),
-       (2, 'accepted'),
-       (3, 'compiled'),
-       (4, 'ready_for_sending'),
-       (5, 'delivered');
+       (2, 'processing'),
+       (3, 'processing'),
+       (4, 'processing'),
+       (5, 'processing'),
+       (6, 'processing'),
+       (7, 'processing'),
+       (8, 'accepted'),
+       (9, 'accepted'),
+       (10, 'accepted'),
+       (11, 'accepted'),
+       (12, 'accepted'),
+       (13, 'accepted'),
+       (14, 'accepted'),
+       (15, 'compiled'),
+       (16, 'compiled'),
+       (17, 'compiled'),
+       (18, 'compiled'),
+       (19, 'compiled'),
+       (20, 'compiled'),
+       (21, 'compiled'),
+       (22, 'ready_for_sending'),
+       (23, 'ready_for_sending'),
+       (24, 'ready_for_sending'),
+       (25, 'ready_for_sending'),
+       (26, 'ready_for_sending'),
+       (27, 'ready_for_sending'),
+       (28, 'ready_for_sending'),
+       (29, 'delivered'),
+       (30, 'delivered');
 
 -- SHOE_ORDER------------------------------------------------------------------------
 INSERT INTO shoe_order (order_id, shoe_id, price, amount)
 VALUES (1, 1, 79.99, 2),
-       (1, 3, 79.99, 1),
        (2, 5, 99.99, 1),
-       (2, 7, 99.99, 2),
-       (3, 9, 79.99, 1),
-       (3, 11, 79.99, 3),
-       (4, 13, 49.99, 4),
-       (4, 15, 49.99, 1),
+       (2, 72, 79.99, 2),
+       (3, 91, 49.99, 1),
+       (3, 66, 99.99, 1),
+       (4, 13, 49.99, 1),
+       (4, 90, 49.99, 1),
        (5, 17, 69.99, 2),
-       (5, 19, 69.99, 1);
+       (5, 121, 69.99, 1),
+       (5, 3, 79.99, 1),
+       (6, 19, 69.99, 1),
+       (7, 81, 79.99, 1),
+       (8, 20, 69.99, 1),
+       (9, 24, 109.99, 1),
+       (9, 30, 59.99, 1),
+       (10, 26, 79.99, 1),
+       (11, 25, 79.99, 1),
+       (12, 11, 79.99, 1),
+       (13, 21, 89.99, 1),
+       (14, 29, 69.99, 1),
+       (15, 19, 69.99, 1),
+       (16, 4, 79.99, 1),
+       (17, 29, 69.99, 1),
+       (17, 12, 79.99, 1),
+       (18, 55, 99.99, 1),
+       (19, 28, 69.99, 1),
+       (20, 79, 79.99, 1),
+       (21, 10, 79.99, 1),
+       (22, 6, 99.99, 1),
+       (23, 14, 49.99, 1),
+       (24, 15, 49.99, 1),
+       (25, 114, 69.99, 1),
+       (26, 8, 99.99, 1),
+       (26, 72, 79.99, 1),
+       (27, 26, 79.99, 1),
+       (28, 19, 69.99, 1),
+       (28, 68, 99.99, 1),
+       (29, 24, 109.99, 1),
+       (30, 59, 99.99, 1),
+       (30, 12, 79.99, 1);
 
 -- USER_ORDER------------------------------------------------------------------------
 INSERT INTO user_order (order_id, user_id, description)
-VALUES (1, 1, 'Order for John Doe'),
-       (2, 1, 'Order for John Doe'),
-       (3, 4, 'Order for Jennifer Jones'),
-       (4, 3, 'Order for Michael Johnson'),
-       (5, 4, 'Order for Emily Williams');
+VALUES (1, 1, NULL),
+       (2, 2, NULL),
+       (3, 3, NULL),
+       (4, 4, NULL),
+       (5, 5, NULL),
+       (6, 6, NULL),
+       (7, 7, NULL),
+-- accepted
+       (8, 8, NULL),
+       (8, 31, NULL),
 
-SELECT * FROM `user_order`;
-SELECT * from `order` WHERE status = 'processing';
+       (9, 9, NULL),
+       (9, 31, NULL),
 
-SELECT * from `order` WHERE status='compiled';
+       (10, 10, NULL),
+       (10, 31, NULL),
 
+       (11, 11, NULL),
+       (11, 31, NULL),
+
+       (12, 12, NULL),
+       (12, 31, NULL),
+
+       (13, 13, NULL),
+       (13, 31, NULL),
+
+       (14, 14, NULL),
+       (14, 31, NULL),
+  -- compiled
+       (15, 15, NULL),
+       (15, 31, NULL),
+       (15, 32, NULL),
+
+       (16, 16, NULL),
+       (16, 31, NULL),
+       (16, 32, NULL),
+
+       (17, 17, NULL),
+       (17, 31, NULL),
+       (17, 32, NULL),
+
+       (18, 18, NULL),
+       (18, 31, NULL),
+       (18, 32, NULL),
+
+       (19, 19, NULL),
+       (19, 31, NULL),
+       (19, 32, NULL),
+
+       (20, 20, NULL),
+       (20, 31, NULL),
+       (20, 32, NULL),
+
+       (21, 21, NULL),
+       (21, 31, NULL),
+       (21, 32, NULL),
+  -- readyForSending
+       (22, 22, NULL),
+       (22, 31, NULL),
+       (22, 32, NULL),
+       (22, 33, NULL),
+
+       (23, 23, NULL),
+       (23, 31, NULL),
+       (23, 32, NULL),
+       (23, 33, NULL),
+
+       (24, 24, NULL),
+       (24, 31, NULL),
+       (24, 32, NULL),
+       (24, 33, NULL),
+
+       (25, 25, NULL),
+       (25, 31, NULL),
+       (25, 32, NULL),
+       (25, 33, NULL),
+
+       (26, 26, NULL),
+       (26, 31, NULL),
+       (26, 32, NULL),
+       (26, 33, NULL),
+
+       (27, 27, NULL),
+       (27, 31, NULL),
+       (27, 32, NULL),
+       (27, 33, NULL),
+
+       (28, 28, NULL),
+       (28, 31, NULL),
+       (28, 32, NULL),
+       (28, 33, NULL),
+   -- delivered
+       (29, 29, NULL),
+       (29, 31, NULL),
+       (29, 32, NULL),
+       (29, 33, NULL),
+       (29, 34, NULL),
+
+       (30, 30, NULL),
+       (30, 31, NULL),
+       (30, 32, NULL),
+       (30, 33, NULL),
+       (30, 34, NULL);
+
+
+
+SELECT id,actual_price
+FROM `shoe`;
+SELECT *
+from `order`
+WHERE status = 'compiled';
+
+SELECT *
+from `user`;
+
+SELECT name, size
+FROM shoe
+WHERE id = 1;

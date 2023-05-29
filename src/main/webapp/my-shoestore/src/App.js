@@ -53,7 +53,7 @@ function App() {
                     <Route path="/warehouseorders" element={<WarehouseOrders/>}></Route>
                     <Route path="/packerorders" element={<PackerOrders/>}></Route>
                     <Route path="/courierorders" element={<CourierOrders/>}></Route>
-                    <Route path="/myorders" element={<MyOrders/>}></Route>
+                    <Route path="/myOrders" element={<MyOrders/>}></Route>
                     <Route path="/changeShoesAmount" element={<ChangeShoesAmount/>}></Route>
                     <Route path="/workerorders" element={<WorkerOrders/>}></Route>
                 </Routes>
