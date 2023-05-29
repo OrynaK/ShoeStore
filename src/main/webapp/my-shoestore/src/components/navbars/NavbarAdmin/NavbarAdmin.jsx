@@ -16,8 +16,8 @@ function NavbarAdmin() {
         <nav className="nav-admin">
             <div className="container">
                 <div className="nav-row-admin">
-                    <img className="logo" src={logo} alt="logo"/>
-                    <ul className="nav-list">
+                    <img className="logo-admin" src={logo} alt="logo"/>
+                    <ul className="nav-list-admin">
                         <NavLink to="/addNewShoe" className="nav-list__item">
                             Додати товар
                         </NavLink>
@@ -29,6 +29,9 @@ function NavbarAdmin() {
                         </NavLink>
                         <NavLink to="/workerorders" className="nav-list__item">
                             Замовлення
+                        </NavLink>
+                        <NavLink to="/myorders" className="nav-list__item">
+                            Мої Замовлення
                         </NavLink>
                         <NavLink to="/clientcabinet" className="nav-list__item">
                             Особистий кабінет

@@ -100,7 +100,7 @@ function MyOrders() {
                             </td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {order.status === 'CANCELLED' || order.status === 'COMPILED' || order.status === 'READY_FOR_SENDING' ? (
+                                    {order.status === 'CANCELLED' || (order.status === 'COMPILED' && role === 'WAREHOUSE') || (order.status === 'READY_FOR_SENDING' && role === 'PACKER') ? (
                                         <h4>Cтатус було змінено</h4>
                                     ) : (
                                         <>
@@ -210,7 +210,7 @@ function MyOrders() {
                     </tr>
                 ))}
                 </tbody>
-            </table>) : (
+            </table>) : role === 'CLIENT' ? (
                 <table className="my-orders-table">
 
                     <thead>
@@ -241,6 +241,77 @@ function MyOrders() {
                                 {order.status}
                             </td>
 
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            ) : (
+                <table className="my-orders-table">
+
+                    <thead>
+                    <tr>
+                        <th className="my-orders-table-th">ID</th>
+                        <th className="my-orders-table-th">Дата та час</th>
+                        <th className="my-orders-table-th">Взуття</th>
+                        <th className="my-orders-table-th">Статус</th>
+                        <th className="my-orders-table-th">Змінити статус</th>
+                        <th className="my-orders-table-th">Опис</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {orders.map((order) => (
+                        <tr key={order.id}>
+                            <td className="my-orders-table-td">{order.id}</td>
+                            <td className="my-orders-table-td">
+                                <td className="my-orders-table-td">
+                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + + order.time[2]}
+                                </td>
+                            </td>
+                            <td className="my-orders-table-td" colSpan={1}>
+                                {order.shoesInOrder.map((shoe, index) => (
+                                    <tr >
+                                        <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р - {shoe.amount}шт</td>
+                                    </tr >
+                                ))}
+                            </td>
+                            <td className="my-orders-table-td">
+                                {order.status}
+                            </td>
+                            <td className="my-orders-table-td">
+                                <td className="my-orders-table-td">
+                                    {order.status === 'CANCELLED' || order.status === 'ACCEPTED'  ? (
+                                        <h4>Cтатус було змінено</h4>
+                                    ) : (
+                                        <>
+                                            <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
+
+                                                 <button  onClick={() => handleStatusChange(order.id, 'ACCEPTED')} className="my-orders-table-btn-green">Зібране</button>
+
+                                        </>
+                                    )}
+                                </td>
+
+
+                            </td>
+                            <td className="my-orders-table-td">
+                                {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
+                                    <h4></h4>
+                                ) : (
+                                    <input
+                                        className="registration-form-input"
+                                        type="text"
+                                        name={`description-${order.id}`}
+                                        value={description[order.id] || ''}
+                                        onChange={event => {
+                                            const inputDescription = event.target.value;
+                                            setDescription(prevDescription => ({
+                                                ...prevDescription,
+                                                [order.id]: inputDescription
+                                            }));
+                                        }}
+                                    />
+                                )}
+                            </td>
                         </tr>
                     ))}
                     </tbody>

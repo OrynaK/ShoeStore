@@ -61,12 +61,11 @@ function WorkerOrders() {
                             </li>
                         </td>
                         <td className="worker-orders-table-td">
-                                <button className="worker-orders-table-btn-green" onClick={() => handleSetWorker(order.id, userId)}>
-                                    Прийняти замовлення
-                                </button>
-                                <button className="worker-orders-table-btn-red" onClick={() => handleSetWorker(order.id, userId)}>
-                                    Відхилити замовлення
-                                </button>
+                            {(role === 'ADMIN' && order.status !== 'PROCESSING') ? (<h4></h4>) : ( <button className="worker-orders-table-btn-green" onClick={() => handleSetWorker(order.id, userId)}>
+                                Прийняти замовлення
+                            </button>) }
+
+
                         </td>
 
                     </tr>
