@@ -204,6 +204,7 @@ public class ShoeDAOImpl implements ShoeDAO {
 
     @Override
     public Long addShoeWithImage(ShoeDTO shoeDTO, String imageName) {
+        
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps1 = con.prepareStatement("INSERT INTO image (name, path) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS)) {
                 int k = 0;

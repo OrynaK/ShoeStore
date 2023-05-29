@@ -36,8 +36,11 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getOrdersByRole(Role role) {
         List<Order> orders = new ArrayList<>();
-        try (Connection con = connectionManager.getConnection()) {
-            try (PreparedStatement ps = con.prepareStatement(GET_ORDER_BY_ROLE)) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = connectionManager.getConnection(false);
+            ps = conn.prepareStatement(GET_ORDER_BY_ROLE);
                 int k = 0;
                 if (role == Role.ADMIN) {
                     orders = findAll();
@@ -54,7 +57,7 @@ public class OrderDAOImpl implements OrderDAO {
                     while (rs.next()) {
                         boolean isChosen = false;
                         Order order = mapOrder(rs);
-                        try (PreparedStatement prs = con.prepareStatement(GET_USER_ORDER)) {
+                        try (PreparedStatement prs = conn.prepareStatement(GET_USER_ORDER)) {
                             int l = 0;
                             prs.setLong(++l, order.getId());
                             UserOrder userOrder;
@@ -62,7 +65,7 @@ public class OrderDAOImpl implements OrderDAO {
                                 while (resultSet.next()) {
                                     userOrder = mapUserOrder(resultSet);
                                     Role role1 = null;
-                                    try (PreparedStatement preparedStatement = con.prepareStatement(GET_ROLE)) {
+                                    try (PreparedStatement preparedStatement = conn.prepareStatement(GET_ROLE)) {
                                         int m = 0;
                                         preparedStatement.setLong(++m, userOrder.getUserId());
                                         try (ResultSet resultSet1 = preparedStatement.executeQuery()) {
@@ -80,16 +83,22 @@ public class OrderDAOImpl implements OrderDAO {
                             }
                         }
                         if (!isChosen) {
-                            getShoeOrder(order, con);
+                            getShoeOrder(order, conn);
                             orders.add(order);
                         }
                     }
-                    return orders;
                 }
-            }
-        } catch (SQLException e) {
+
+            conn.commit();
+            return orders;
+        } catch (Exception e) {
+            ConnectionManager.rollback(conn);
             throw new RuntimeException(e);
+        } finally {
+            ConnectionManager.close(ps, conn);
         }
+
+
     }
 
     @Override
@@ -220,7 +229,8 @@ public class OrderDAOImpl implements OrderDAO {
         }
     }
 
-    private static void setShoeOrder(long orderId, ShoeOrder shoeOrder, PreparedStatement st) throws SQLException {
+    private static void setShoeOrder(long orderId, ShoeOrder shoeOrder, PreparedStatement st) throws
+            SQLException {
         int k = 0;
         st.setLong(++k, orderId);
         st.setLong(++k, shoeOrder.getShoeId());

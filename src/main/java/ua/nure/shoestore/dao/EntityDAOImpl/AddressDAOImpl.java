@@ -4,8 +4,10 @@ import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.AddressDAO;
 import ua.nure.shoestore.entity.Address;
+import ua.nure.shoestore.entity.Order;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddressDAOImpl implements AddressDAO {
@@ -15,26 +17,33 @@ public class AddressDAOImpl implements AddressDAO {
     private static final String GET_ADDRESS_BY_ORDER = "SELECT address_id FROM `order` WHERE id=?";
 
     public long insert(Address address) {
-        try (Connection con = connectionManager.getConnection()) {
-            try (PreparedStatement ps = con.prepareStatement(ADD_ADDRESS, Statement.RETURN_GENERATED_KEYS)) {
-                int k = 0;
-                ps.setString(++k, address.getCountry());
-                ps.setString(++k, address.getCity());
-                ps.setString(++k, address.getStreet());
-                ps.setString(++k, address.getHouseNumber());
-                ps.setInt(++k, address.getEntrance());
-                ps.setInt(++k, address.getApartmentNumber());
-                ps.executeUpdate();
-                try (ResultSet keys = ps.getGeneratedKeys()) {
-                    if (keys.next()) {
-                        address.setId(keys.getLong(1));
-                    }
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = connectionManager.getConnection(false);
+            ps = con.prepareStatement(ADD_ADDRESS, Statement.RETURN_GENERATED_KEYS);
+            int k = 0;
+            ps.setString(++k, address.getCountry());
+            ps.setString(++k, address.getCity());
+            ps.setString(++k, address.getStreet());
+            ps.setString(++k, address.getHouseNumber());
+            ps.setInt(++k, address.getEntrance());
+            ps.setInt(++k, address.getApartmentNumber());
+            ps.executeUpdate();
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                if (keys.next()) {
+                    address.setId(keys.getLong(1));
                 }
-                return address.getId();
             }
-        } catch (SQLException e) {
+            con.commit();
+            return address.getId();
+        } catch (Exception e) {
+            ConnectionManager.rollback(con);
             throw new RuntimeException(e);
+        } finally {
+            ConnectionManager.close(ps, con);
         }
+
     }
 
     @Override
