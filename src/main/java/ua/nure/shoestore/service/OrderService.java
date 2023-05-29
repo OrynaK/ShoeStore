@@ -21,7 +21,7 @@ public class OrderService {
         this.addressDAO = addressDAO;
         this.workerDAO = workerDAO;
         this.userDAO = userDAO;
-        this.shoeDAO=shoeDAO;
+        this.shoeDAO = shoeDAO;
     }
 
     public long makeOrder(Order order) {

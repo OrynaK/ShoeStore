@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.dto.ChangeStatusDTO;
 import ua.nure.shoestore.dto.MakeOrderDTO;
-
 import ua.nure.shoestore.dto.ShoeDTO;
 import ua.nure.shoestore.entity.Address;
 import ua.nure.shoestore.entity.Order;
@@ -28,18 +27,22 @@ public class OrderController {
     public List<Order> showOrdersByRole(@RequestParam("role") Role role) {
         return orderService.getOrdersByRole(role);
     }
+
     @GetMapping(value = "/myOrders")
-    public List <Order> showOrdersByUserId(@RequestParam("userId") Long userId) {
+    public List<Order> showOrdersByUserId(@RequestParam("userId") Long userId) {
         return orderService.getOrderByUserId(userId);
     }
+
     @PostMapping(value = "setWorker")
-    public void setWorker(@RequestParam Long orderId, @RequestParam Long userId){
+    public void setWorker(@RequestParam Long orderId, @RequestParam Long userId) {
         orderService.setWorker(orderId, userId);
     }
+
     @PostMapping(value = "changeStatus")
-    public void changeStatus(@RequestBody ChangeStatusDTO changeStatusDTO){
+    public void changeStatus(@RequestBody ChangeStatusDTO changeStatusDTO) {
         orderService.changeStatus(changeStatusDTO.getOrderId(), changeStatusDTO.getUserId(), changeStatusDTO.getStatus(), changeStatusDTO.getDescription());
     }
+
     @PostMapping(value = "/makeorder")
     public void makeOrder(@RequestBody MakeOrderDTO makeOrderDTO) {
         Address address = new Address(makeOrderDTO.getCountry(), makeOrderDTO.getCity(), makeOrderDTO.getStreet(), makeOrderDTO.getHouseNumber(), makeOrderDTO.getEntrance(), makeOrderDTO.getApartmentNumber());

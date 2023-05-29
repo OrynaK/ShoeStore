@@ -21,14 +21,17 @@ public class ConnectionManager {
     }
 
     public Connection getConnection(boolean autoCommit) throws SQLException {
-        Connection con = DriverManager.getConnection(url, dbProps);
-        con.setAutoCommit(autoCommit);
-        return con;
+        Connection connection = DriverManager.getConnection(url, dbProps);
+        connection.setAutoCommit(autoCommit);
+        if (!autoCommit) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        }
+        return connection;
     }
 
-    public static void rollback(Connection conn) {
+    public static void rollback(Connection connection) {
         try {
-            Objects.requireNonNull(conn).rollback();
+            Objects.requireNonNull(connection).rollback();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage(), e);

@@ -3,9 +3,9 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
+import ua.nure.shoestore.dto.UpdateDTO;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
-import ua.nure.shoestore.dto.UpdateDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
