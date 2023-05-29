@@ -12,8 +12,7 @@ public class AddressDAOImpl implements AddressDAO {
     ConnectionManager connectionManager;
     private static final String ADD_ADDRESS = "INSERT INTO address (country, city, street, house_number, entrance, apartment_number) values (?, ?, ?, ?, ?, ?)";
     private static final String GET_ADDRESS_BY_ID = "SELECT * FROM address WHERE id=?";
-
-    private static final String GET_ADDRESS_BY_ORDER="SELECT address_id FROM `order` WHERE id=?";
+    private static final String GET_ADDRESS_BY_ORDER = "SELECT address_id FROM `order` WHERE id=?";
 
     public long insert(Address address) {
         try (Connection con = connectionManager.getConnection()) {

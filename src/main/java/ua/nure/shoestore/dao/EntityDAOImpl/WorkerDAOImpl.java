@@ -3,10 +3,6 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.WorkerDAO;
-import ua.nure.shoestore.entity.Address;
-import ua.nure.shoestore.entity.Order;
-import ua.nure.shoestore.entity.enums.OrderStatus;
-import ua.nure.shoestore.entity.enums.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkerDAOImpl implements WorkerDAO {
-    private final String INSERT_USER_ORDER = "INSERT INTO user_order (order_id, user_id) VALUES (?, ?)";
-    private final String GET_USER_ORDER = "SELECT user_id FROM user_order WHERE order_id=?";
-    private final String SET_DESCRIPTION = "UPDATE user_order SET description=? WHERE order_id=? and user_id=?";
+    private static final String INSERT_USER_ORDER = "INSERT INTO user_order (order_id, user_id) VALUES (?, ?)";
+    private static final String GET_USER_ORDER = "SELECT user_id FROM user_order WHERE order_id=?";
+    private static final String SET_DESCRIPTION = "UPDATE user_order SET description=? WHERE order_id=? and user_id=?";
     private final ConnectionManager connectionManager;
 
     public WorkerDAOImpl(DAOConfig config) {
@@ -38,9 +34,10 @@ public class WorkerDAOImpl implements WorkerDAO {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public List<Long> getIdFromUserOrder(Long orderId) {
-        List<Long> ids=new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(GET_USER_ORDER)) {
                 int k = 0;

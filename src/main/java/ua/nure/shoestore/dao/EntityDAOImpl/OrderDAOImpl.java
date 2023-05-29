@@ -3,13 +3,16 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
 import ua.nure.shoestore.dao.EntityDAO.OrderDAO;
-import ua.nure.shoestore.entity.*;
+import ua.nure.shoestore.entity.Order;
+import ua.nure.shoestore.entity.ShoeOrder;
+import ua.nure.shoestore.entity.UserOrder;
 import ua.nure.shoestore.entity.enums.OrderStatus;
 import ua.nure.shoestore.entity.enums.Role;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
     private static final String INSERT_ORDER = "INSERT INTO `order` (address_id, datetime, status) VALUES (?, DEFAULT, DEFAULT)";
@@ -171,7 +174,7 @@ public class OrderDAOImpl implements OrderDAO {
                 while (resultSet.next()) {
                     try (PreparedStatement prst = con.prepareStatement("SELECT name, size, color FROM shoe WHERE id=?")) {
                         int b = 0;
-                        prst.setLong(++b,resultSet.getLong("shoe_id"));
+                        prst.setLong(++b, resultSet.getLong("shoe_id"));
                         try (ResultSet rs = prst.executeQuery()) {
                             while (rs.next()) {
                                 order.addShoe(mapShoeOrder(resultSet, rs));
