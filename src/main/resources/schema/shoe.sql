@@ -547,8 +547,8 @@ VALUES (1, 'processing'),
        (26, 'ready_for_sending'),
        (27, 'ready_for_sending'),
        (28, 'ready_for_sending'),
-       (29, 'delivered'),
-       (30, 'delivered');
+       (29, 'ready_for_sending'),
+       (30, 'ready_for_sending');
 
 -- SHOE_ORDER------------------------------------------------------------------------
 INSERT INTO shoe_order (order_id, shoe_id, price, amount)
@@ -676,17 +676,20 @@ VALUES (1, 1, NULL),
        (26, 31, NULL),
        (26, 32, NULL),
        (26, 33, NULL),
+       (26, 34, NULL),
 
        (27, 27, NULL),
        (27, 31, NULL),
        (27, 32, NULL),
        (27, 33, NULL),
+       (27, 34, NULL),
 
        (28, 28, NULL),
        (28, 31, NULL),
        (28, 32, NULL),
        (28, 33, NULL),
-   -- delivered
+       (28, 34, NULL),
+
        (29, 29, NULL),
        (29, 31, NULL),
        (29, 32, NULL),
@@ -704,8 +707,7 @@ VALUES (1, 1, NULL),
 SELECT id,actual_price
 FROM `shoe`;
 SELECT *
-from `order`
-WHERE status = 'compiled';
+from `user_order` WHERE order_id=1;
 
 SELECT *
 from `user`;
