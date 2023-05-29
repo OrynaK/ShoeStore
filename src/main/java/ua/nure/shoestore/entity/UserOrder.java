@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -13,8 +14,7 @@ import java.time.LocalTime;
 public class UserOrder {
     private long userId;
     private String description;
-    private LocalDate date;
-    private LocalTime time;
+    private LocalDateTime dateTime;
 
     public UserOrder(long userId) {
         this.userId = userId;
