@@ -192,7 +192,7 @@ ALTER TABLE user_order
     ADD FOREIGN KEY fk_user_order_user_id (user_id) REFERENCES user (id);
 
 
--- Trigger to update total cost of order after inserting new shoe_order
+-- Trigger to update total cost of order after inserting new shoe_order ------------------------------------------------
 DELIMITER |
 CREATE TRIGGER shoe_order_after_insert
     AFTER INSERT
@@ -206,7 +206,7 @@ END;
 |
 DELIMITER ;
 
--- Trigger to update total cost of order after updating shoe_order
+-- Trigger to update total cost of order after updating shoe_order -----------------------------------------------------
 DELIMITER |
 CREATE TRIGGER shoe_order_after_update
     AFTER UPDATE
@@ -219,6 +219,21 @@ BEGIN
 END;
 |
 DELIMITER ;
+
+-- Trigger to update shoe amount after inserting new shoe_order --------------------------------------------------------
+DELIMITER |
+CREATE TRIGGER subtract_shoe_amount
+    AFTER INSERT
+    ON shoe_order
+    FOR EACH ROW
+BEGIN
+    UPDATE shoe
+    SET amount = amount - NEW.amount
+    WHERE id = NEW.shoe_id;
+END;
+|
+DELIMITER ;
+
 
 -- USERS------------------------------------------------------------------------
 INSERT INTO user (name, surname, password, email, phone_number, role)
