@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from "react";
 import "./WorkerOrders.css";
+import {useNavigate} from "react-router";
 function WorkerOrders() {
     const [orders, setOrders] = useState([]);
     const role = JSON.parse(localStorage.getItem("user"))?.role;
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
-
+    const navigate = useNavigate();
     useEffect(() => {
         if(userId) {
-            fetch(`http://localhost:8080//getOrdersByRole?userRole=${role}`)
+            fetch(`http://localhost:8080/getOrdersByRole?role=${role}`)
+
                 .then((response) => response.json())
                 .then((data) => setOrders(data))
                 .catch((error) => {
@@ -19,21 +21,15 @@ function WorkerOrders() {
     console.log(orders)
 
     function handleSetWorker(orderId, userId) {
-        const setWorker = {
-            orderId: orderId,
-            userId: userId
-        };
-
-        fetch("http://localhost:8080/changeStatus", {
+        fetch(`http://localhost:8080/setWorker?orderId=${orderId}&userId=${userId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(setWorker),
         })
             .then((response) => {
                 if (response.ok) {
-
+                    navigate('/myorders');
                 } else {
                     throw new Error("Помилка при виконанні запиту");
                 }
@@ -42,6 +38,7 @@ function WorkerOrders() {
                 console.error("Помилка:", error);
             });
     }
+
     return (
         <div className="worker-orders">
 
@@ -55,7 +52,7 @@ function WorkerOrders() {
                 </tr>
                 </thead>
                 <tbody>
-                {orders.map((order) => (
+                {orders.length > 0 ? (orders.map((order) => (
                     <tr key={order.id}>
 
                         <td className="worker-orders-table-td">{order.id}</td>
@@ -74,7 +71,7 @@ function WorkerOrders() {
                         </td>
 
                     </tr>
-                ))}
+                ))) : (<h2 className="worker-orders-table-header">Замовлень нема</h2>)}
                 </tbody>
             </table>
 

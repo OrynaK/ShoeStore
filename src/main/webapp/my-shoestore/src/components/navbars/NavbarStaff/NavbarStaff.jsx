@@ -1,10 +1,10 @@
-import "./NavbarPacker.css"
+import "./NavbarStaff.css"
 import logo from "../../../assets/logo.png"
 import {useNavigate} from "react-router";
 import {NavLink} from "react-router-dom";
 import React from "react";
 
-function NavbarPacker() {
+function NavbarStaff() {
     const navigate = useNavigate();
 
     function handleSubmit() {
@@ -40,4 +40,4 @@ function NavbarPacker() {
 
 }
 
-export default NavbarPacker;
+export default NavbarStaff;

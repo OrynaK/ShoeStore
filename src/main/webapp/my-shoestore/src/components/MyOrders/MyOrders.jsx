@@ -5,7 +5,7 @@ function MyOrders() {
     const role = JSON.parse(localStorage.getItem("user"))?.role;
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
     const [status, setStatus] = useState('');
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState({});
     useEffect(() => {
         fetchMyOrders(); // Виклик функції при завантаженні компоненту або при зміні userId
     }, [userId]);
@@ -25,11 +25,12 @@ function MyOrders() {
         }
     }
     function handleStatusChange(orderId, selectedStatus) {
+        const orderDescription = description[orderId]; // Отримати опис для вказаного замовлення
         const changeStatusDTO = {
             orderId: orderId,
             userId: userId,
             status: selectedStatus,
-            description: description
+            description: orderDescription // Використовувати опис для вказаного замовлення
         };
 
         fetch("http://localhost:8080/changeStatus", {
@@ -43,7 +44,7 @@ function MyOrders() {
                 if (response.ok) {
                     // Оновити статус у стані компонента або виконати інші дії
                     setStatus(selectedStatus);
-                    setDescription("");
+                    setDescription(""); // Очистити опис після успішної зміни статусу
                     fetchMyOrders(); // Виклик функції оновлення замовлень після успішного виконання запиту
                 } else {
                     throw new Error("Помилка при виконанні запиту");
@@ -53,6 +54,7 @@ function MyOrders() {
                 console.error("Помилка:", error);
             });
     }
+
 
 
 
@@ -99,11 +101,18 @@ function MyOrders() {
 
                             </td>
                             <td className="my-orders-table-td">
-                                <input className="registration-form-input"
-                                       type="text"
-                                       name="description"
-                                       value={description}
-                                       onChange={event => setDescription(event.target.value)}
+                                <input
+                                    className="registration-form-input"
+                                    type="text"
+                                    name={`description-${order.id}`}
+                                    value={description[order.id] || ''}
+                                    onChange={event => {
+                                        const inputDescription = event.target.value;
+                                        setDescription(prevDescription => ({
+                                            ...prevDescription,
+                                            [order.id]: inputDescription
+                                        }));
+                                    }}
                                 />
                             </td>
                         </tr>
@@ -147,14 +156,21 @@ function MyOrders() {
                         </td>
                         <td className="my-orders-table-td">
                             <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
-                            <button onClick={() => handleStatusChange(order.id, 'DELIVERED')} className="my-orders-table-btn-green">Зібране</button>
+                            <button onClick={() => handleStatusChange(order.id, 'DELIVERED')} className="my-orders-table-btn-green">Доставлене</button>
                         </td>
                         <td className="my-orders-table-td">
-                            <input className="registration-form-input"
-                                   type="text"
-                                   name="description"
-                                   value={description}
-                                   onChange={event => setDescription(event.target.value)}
+                            <input
+                                className="registration-form-input"
+                                type="text"
+                                name={`description-${order.id}`}
+                                value={description[order.id] || ''}
+                                onChange={event => {
+                                    const inputDescription = event.target.value;
+                                    setDescription(prevDescription => ({
+                                        ...prevDescription,
+                                        [order.id]: inputDescription
+                                    }));
+                                }}
                             />
                         </td>
                     </tr>
