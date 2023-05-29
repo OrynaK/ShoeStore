@@ -18,7 +18,6 @@ function WorkerOrders() {
                 });
         }
     }, [userId]);
-    console.log(orders)
 
     function handleSetWorker(orderId, userId) {
         fetch(`http://localhost:8080/setWorker?orderId=${orderId}&userId=${userId}`, {

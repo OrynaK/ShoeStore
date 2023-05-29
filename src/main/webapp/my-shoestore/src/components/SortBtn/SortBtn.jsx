@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import "./SortBtn.css";
 import UpArrow from "./../../assets/up-arrow.png"
 import DownArrow from "./../../assets/down-arrow.png"
-import ShoeCard from "../ShoeCard/ShoeCard";
 function SortBtn({onSortChange}) {
     const [sortBy, setSortBy] = useState('asc');
 

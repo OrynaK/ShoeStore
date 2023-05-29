@@ -8,8 +8,6 @@ import {useNavigate} from "react-router";
 
 
 function Main() {
-    const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(false);
     const [shoes, setShoes] = useState([]);
     const [filteredShoes, setFilteredShoes] = useState([]);
     const [sortType, setSortType] = useState('default');
@@ -26,12 +24,8 @@ function Main() {
         fetch(url)
             .then(response => response.json())
             .then(data => setShoes(data));
-        setSortType('default')
     }, [sortType]);
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    };
     const handleFilterChange = (filteredData) => {
         setFilteredShoes(filteredData);
         setShoes([]);
