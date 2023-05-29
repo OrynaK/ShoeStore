@@ -45,7 +45,7 @@ function LoginForm() {
 
                 <form className="login-form--form">
                     <label className="login-form-label">
-                        Email:</label>
+                        Email</label>
                     <input className="login-form-input"
                         type="email"
                         name="email"
@@ -54,7 +54,7 @@ function LoginForm() {
                     />
 
                     <label className="login-form-label">
-                        Password:</label>
+                        Пароль</label>
                     <input className="login-form-input"
                         type="password"
                         name="password"
@@ -63,7 +63,7 @@ function LoginForm() {
                     />
                     {error && <div>{error}</div>}
 
-                    <button className="btn-login" onClick={handleSubmit} type="submit">Log in</button>
+                    <button className="btn-login" onClick={handleSubmit} type="submit">Увійти</button>
                 </form>
             </div>
         </div>

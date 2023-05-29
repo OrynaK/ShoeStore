@@ -5,12 +5,14 @@ import ua.nure.shoestore.dao.EntityDAO.CartDAO;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
 import ua.nure.shoestore.entity.Cart;
 import ua.nure.shoestore.entity.User;
+import ua.nure.shoestore.entity.enums.Role;
 
 
 @Service
 public class AuthenticationService {
     private final UserDAO userDAO;
     private final CartDAO cartDAO;
+
     public AuthenticationService(UserDAO userDAO, CartDAO cartDAO) {
         this.userDAO = userDAO;
         this.cartDAO = cartDAO;
@@ -18,7 +20,9 @@ public class AuthenticationService {
 
     public User addUser(User user) {
         long userId = userDAO.insert(user);
-        cartDAO.insert(new Cart(userId));
+        if (user.getRole().equals(Role.CLIENT)) {
+            cartDAO.insert(new Cart(userId));
+        }
         user.setId(userId);
         return user;
     }

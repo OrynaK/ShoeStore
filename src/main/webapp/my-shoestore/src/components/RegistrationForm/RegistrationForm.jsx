@@ -40,7 +40,7 @@ function RegistrationForm() {
 
                 <form className="registration-form--form" onSubmit={handleSubmit}>
                     <label className="registration-form-label">
-                        First Name:</label>
+                        Ім'я</label>
                     <input className="registration-form-input"
                            type="text"
                            name="name"
@@ -49,7 +49,7 @@ function RegistrationForm() {
                     />
 
                     <label className="registration-form-label">
-                        Last Name:</label>
+                        Прізвище</label>
                     <input className="registration-form-input"
                            type="text"
                            name="surname"
@@ -58,7 +58,7 @@ function RegistrationForm() {
                     />
 
                     <label className="registration-form-label">
-                        Email:</label>
+                        Електронна пошта</label>
                     <input className="registration-form-input"
                            type="email"
                            name="email"
@@ -67,7 +67,7 @@ function RegistrationForm() {
                     />
 
                     <label className="registration-form-label">
-                        Phone Number:</label>
+                        Номер телефону</label>
                     <input className="registration-form-input"
                            type="tel"
                            name="phoneNumber"
@@ -76,7 +76,7 @@ function RegistrationForm() {
                     />
 
                     <label className="registration-form-label">
-                        Password:</label>
+                        Пароль</label>
                     <input className="registration-form-input"
                            type="password"
                            name="password"
@@ -84,7 +84,8 @@ function RegistrationForm() {
                            onChange={event => setPassword(event.target.value)}
                     />
 
-                    <button className="registration-form-btn" onClick={handleSubmit} type="submit">Submit</button>
+                    <button className="registration-form-btn" onClick={handleSubmit} type="submit">Зареєструватись
+                    </button>
                 </form>
             </div>
         </div>

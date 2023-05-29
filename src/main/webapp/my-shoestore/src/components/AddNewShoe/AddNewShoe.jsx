@@ -20,7 +20,7 @@ function AddNewShoe() {
     const handleSubmit = event => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append('shoeDTO', JSON.stringify({ name, size, color, season, sex, price, amount }));
+        formData.append('shoeDTO', JSON.stringify({name, size, color, season, sex, price, amount}));
         formData.append('imageData', image);
 
         fetch("http://localhost:8080/addShoe", {
@@ -40,7 +40,7 @@ function AddNewShoe() {
 
                 <form className="add-new-shoe-form--form">
                     <label className="add-new-shoe-form-label">
-                        Name:</label>
+                        Назва</label>
                     <input className="add-new-shoe-form-input"
                            type="text"
                            name="name"
@@ -49,13 +49,13 @@ function AddNewShoe() {
                     />
 
                     <label className="add-new-shoe-form-label">
-                        Size:</label>
+                        Розмір</label>
                     <select className="add-new-shoe-form-input"
                             name="size"
                             value={size}
                             onChange={event => setSize(event.target.value)}
                     >
-                        <option value="" disabled>Select size</option>
+                        <option value="" disabled>Виберіть розмір</option>
                         <option value="30">30</option>
                         <option value="31">31</option>
                         <option value="32">32</option>
@@ -71,62 +71,79 @@ function AddNewShoe() {
                         <option value="42">42</option>
                     </select>
                     <label className="add-new-shoe-form-label">
-                        Color</label>
+                        Колір</label>
                     <select className="add-new-shoe-form-input"
                             name="color"
                             value={color}
                             onChange={event => setColor(event.target.value)}
                     >
-                        <option value="" disabled>Select color</option>
-                        <option value="BLACK">Black</option>
-                        <option value="WHITE">White</option>
-                        <option value="RED">Red</option>
-                        <option value="BLUE">Blue</option>
-                        <option value="GREEN">Green</option>
+                        <option value="" disabled>Виберіть колір</option>
+                        <option value="BLACK">Чорний</option>
+                        <option value="WHITE">Білий</option>
+                        <option value="RED">Червоний</option>
+                        <option value="BLUE">Синій</option>
+                        <option value="GREEN">Зелений</option>
                     </select>
                     <label className="add-new-shoe-form-label">
-                        Season: </label>
+                        Сезон</label>
                     <select className="add-new-shoe-form-input"
                             name="season"
                             value={season}
                             onChange={event => setSeason(event.target.value)}
                     >
-                        <option value="" disabled>Select season</option>
-                        <option value="DEMI">Demi</option>
-                        <option value="SUMMER">Summer</option>
-                        <option value="WINTER">Winter</option>
+                        <option value="" disabled>Виберіть сезон</option>
+                        <option value="DEMI">Демі</option>
+                        <option value="SUMMER">Літо</option>
+                        <option value="WINTER">Зима</option>
                     </select>
 
                     <label className="add-new-shoe-form-label">
-                        Sex:</label>
+                        Стать</label>
                     <select className="add-new-shoe-form-input"
                             name="sex"
                             value={sex}
                             onChange={event => setSex(event.target.value)}
                     >
-                        <option value="" disabled>Select sex</option>
-                        <option value="MALE">Male</option>
-                        <option value="FEMALE">Female</option>
+                        <option value="" disabled>Виберіть стать</option>
+                        <option value="MALE">Чоловіча</option>
+                        <option value="FEMALE">Жіноча</option>
                     </select>
 
                     <label className="add-new-shoe-form-label">
-                        Price</label>
+                        Ціна</label>
                     <input className="add-new-shoe-form-input"
-                           type="text"
+                           type="number"
                            name="price"
                            value={price}
-                           onChange={event => setActualPrice(event.target.value)}
+                           step="0.01"
+                           min="0"
+                           max="9999999.99"
+                           onChange={event => {
+                               const inputValue = event.target.value;
+                               const regex = /^\d{0,9}(\.\d{0,2})?$/;
+                               if (regex.test(inputValue)) {
+                                   setActualPrice(inputValue);
+                               }
+                           }}
                     />
+
                     <label className="add-new-shoe-form-label">
-                        Amount</label>
+                        Кількість</label>
                     <input className="add-new-shoe-form-input"
-                           type="text"
+                           type="number"
                            name="amount"
                            value={amount}
+                           min="0"
+                           step="1"
+                           onKeyDown={(event) => {
+                               if (!/\d/.test(event.key) && event.key !== "Backspace") {
+                                   event.preventDefault();
+                               }
+                           }}
                            onChange={event => setAmount(event.target.value)}
                     />
                     <label className="add-new-shoe-form-label">
-                        Image
+                        Зображення
                     </label>
                     <input
                         className="add-new-shoe-form-input"
