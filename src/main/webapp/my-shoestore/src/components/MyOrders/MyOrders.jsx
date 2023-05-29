@@ -93,27 +93,40 @@ function MyOrders() {
                                     {order.status}
                             </td>
                             <td className="my-orders-table-td">
-                                <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
-                                {role === 'WAREHOUSE' ?
-                                    ( <button  onClick={() => handleStatusChange(order.id, 'COMPILED')} className="my-orders-table-btn-green">Зібране</button>
-                                    )
-                                    : (<button onClick={() => handleStatusChange(order.id, 'READY_FOR_SENDING')} className="my-orders-table-btn-green">Упаковане</button>)}
+                                <td className="my-orders-table-td">
+                                    {order.status === 'CANCELLED' || order.status === 'COMPILED' || order.status === 'READY_FOR_SENDING' ? (
+                                        <h4>Cтатус було змінено</h4>
+                                    ) : (
+                                        <>
+                                            <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
+                                            {role === 'WAREHOUSE' ?
+                                                ( <button  onClick={() => handleStatusChange(order.id, 'COMPILED')} className="my-orders-table-btn-green">Зібране</button>
+                                                )
+                                                : (<button onClick={() => handleStatusChange(order.id, 'READY_FOR_SENDING')} className="my-orders-table-btn-green">Упаковане</button>)}
+                                        </>
+                                    )}
+                                </td>
+
 
                             </td>
                             <td className="my-orders-table-td">
-                                <input
-                                    className="registration-form-input"
-                                    type="text"
-                                    name={`description-${order.id}`}
-                                    value={description[order.id] || ''}
-                                    onChange={event => {
-                                        const inputDescription = event.target.value;
-                                        setDescription(prevDescription => ({
-                                            ...prevDescription,
-                                            [order.id]: inputDescription
-                                        }));
-                                    }}
-                                />
+                                {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
+                                    <h4></h4>
+                                ) : (
+                                    <input
+                                        className="registration-form-input"
+                                        type="text"
+                                        name={`description-${order.id}`}
+                                        value={description[order.id] || ''}
+                                        onChange={event => {
+                                            const inputDescription = event.target.value;
+                                            setDescription(prevDescription => ({
+                                                ...prevDescription,
+                                                [order.id]: inputDescription
+                                            }));
+                                        }}
+                                    />
+                                )}
                             </td>
                         </tr>
                     ))}
@@ -141,13 +154,11 @@ function MyOrders() {
                             </td>
                         </td>
                         <td className="my-orders-table-td">
-                            <li>{order.shoesInOrder.map((shoe, index) => (
+
                                 <tr >
                                     <td key={index}>{order.address.country}, м.{order.address.city}, вул.{order.address.street}, буд.{order.address.houseNumber}, п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
                                 </tr >
-                            ))}
 
-                            </li>
                         </td>
                         <td className="my-orders-table-td">
                             <li>
@@ -155,10 +166,20 @@ function MyOrders() {
                             </li>
                         </td>
                         <td className="my-orders-table-td">
-                            <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
-                            <button onClick={() => handleStatusChange(order.id, 'DELIVERED')} className="my-orders-table-btn-green">Доставлене</button>
+                            {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
+                                <h4>Cтатус було змінено</h4>
+                            ) : (
+                                <>
+                                    <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
+                                    <button onClick={() => handleStatusChange(order.id, 'DELIVERED')} className="my-orders-table-btn-green">Доставлене</button>
+                                </>
+                            )}
                         </td>
+
                         <td className="my-orders-table-td">
+                            {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
+                                <h4></h4>
+                            ) : (
                             <input
                                 className="registration-form-input"
                                 type="text"
@@ -172,6 +193,7 @@ function MyOrders() {
                                     }));
                                 }}
                             />
+                            )}
                         </td>
                     </tr>
                 ))}
