@@ -74,7 +74,13 @@ function MyOrders() {
                     </tr>
                     </thead>
                     <tbody>
-                    {orders.map((order) => (
+                    {orders
+                        .sort((a, b) => {
+                            if (a.status === 'ACCEPTED') return -1;
+                            if (b.status === 'ACCEPTED') return 1;
+                            return 0;
+                        })
+                        .map((order, index) => (
                         <tr key={order.id}>
                             <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
@@ -145,7 +151,13 @@ function MyOrders() {
                 </tr>
                 </thead>
                 <tbody>
-                {orders.map((order, index) => (
+                {orders
+                    .sort((a, b) => {
+                        if (a.status === 'READY_FOR_SENDING') return -1;
+                        if (b.status === 'READY_FOR_SENDING') return 1;
+                        return 0;
+                    })
+                    .map((order, index) => (
                     <tr key={index}>
                         <td className="my-orders-table-td">{order.id}</td>
                         <td className="my-orders-table-td">
