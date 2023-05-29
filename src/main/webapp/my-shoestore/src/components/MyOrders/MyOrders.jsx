@@ -14,7 +14,11 @@ function MyOrders() {
         if (userId) {
             fetch(`http://localhost:8080/myOrders?userId=${userId}`)
                 .then((response) => response.json())
-                .then((data) => setOrders(data))
+                .then((data) => {
+                    setOrders(data)
+                }
+
+                )
                 .catch((error) => {
                     console.error("Error:", error);
                 });
@@ -73,7 +77,7 @@ function MyOrders() {
                             <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time}
+                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + + order.time[2]}
                                 </td>
                             </td>
                             <td className="my-orders-table-td" colSpan={1}>
@@ -124,7 +128,7 @@ function MyOrders() {
                         <td className="my-orders-table-td">{order.id}</td>
                         <td className="my-orders-table-td">
                             <td className="my-orders-table-td">
-                                {new Date(order.date).toLocaleDateString('uk-UA')} {order.time}
+                                {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + + order.time[2]}
                             </td>
                         </td>
                         <td className="my-orders-table-td">
@@ -173,7 +177,7 @@ function MyOrders() {
                             <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {new Date(order.date).toLocaleDateString('uk-UA')} {new Date(`1970-01-01T${order.time}`).toLocaleTimeString('uk-UA')}
+                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + + order.time[2]}
                                 </td>
                             </td>
                             <td className="my-orders-table-td" colSpan={1}>

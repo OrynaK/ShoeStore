@@ -315,10 +315,7 @@ public class OrderDAOImpl implements OrderDAO {
         UserOrder userOrder = new UserOrder();
         userOrder.setUserId(rs.getLong("user_id"));
         userOrder.setDescription(rs.getString("description"));
-        LocalDateTime dateTime = rs.getTimestamp("datetime").toLocalDateTime();
-        userOrder.setDate(dateTime.toLocalDate());
-        userOrder.setTime(dateTime.toLocalTime());
-
+        userOrder.setDateTime(rs.getTimestamp("datetime").toLocalDateTime());
         return userOrder;
     }
 
