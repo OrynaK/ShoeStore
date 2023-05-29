@@ -12,7 +12,9 @@ function AddNewShoe() {
     const [amount, setAmount] = useState('');
     const [image, setImage] = useState();
     const [errorMessage, setErrorMessage] = useState('');
+
     const navigate = useNavigate();
+
 
     const handleImageChange = (event) => {
         setImage(event.target.files[0]);
@@ -29,7 +31,7 @@ function AddNewShoe() {
             amount === '' ||
             !image
         ) {
-            setErrorMessage('Будь ласка, заповніть всі поля');
+           alert('Будь ласка, заповніть всі поля');
         } else {
             event.preventDefault();
             const formData = new FormData();
@@ -43,7 +45,7 @@ function AddNewShoe() {
                 if (response.ok) {
                     navigate('/main');
                 } else {
-                    setErrorMessage('Сталася помилка під час відправки форми. Спробуйте пізніше');
+                    alert('Сталася помилка під час відправки форми. Спробуйте пізніше');
                 }
             });
         }

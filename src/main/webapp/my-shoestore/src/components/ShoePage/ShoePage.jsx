@@ -79,9 +79,10 @@ function ShoePage() {
                     <img src={"./../images/" + imageName} alt="shoe" width="350px" height="250px"/>
                     <div className="shoe-page-form-properties">
                         <span className="shoe-page-form-size">{shoe.size}</span>
+                        <span className="shoe-page-form-price"><strong>{shoe.color}</strong></span>
                         <span className="shoe-page-form-price"><strong>{shoe.price}$</strong></span>
                     </div>
-                    <label className="registration-form-label">
+                    <label className="shoe-page-form-label">
                         Виберіть кількість</label>
                     <input
                         className="registration-form-input"

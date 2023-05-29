@@ -3,9 +3,9 @@ import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import NavbarClient from "../NavbarClient/NavbarClient";
 import NavbarDefault from "../NavbarDefault/NavbarDefault";
 import {useEffect, useState} from "react";
-import NavbarCourier from "../NavbarCourier/NavbarCourier";
-import NavbarPacker from "../NavbarPacker/NavbarPacker";
-import NavbarWarehouse from "../NavbarWareHouse/NavbarWarehouse";
+
+import NavbarStaff from "../NavbarStaff/NavbarStaff";
+
 
 
 function NavbarParser() {
@@ -31,9 +31,9 @@ function NavbarParser() {
             {(user && user.role) === null && <NavbarDefault/>}
             {(user && user.role) === 'CLIENT' && <NavbarClient/>}
             {(user && user.role) === 'ADMIN' && <NavbarAdmin/>}
-            {(user && user.role) === 'COURIER' && <NavbarCourier/>}
-            {(user && user.role) === 'PACKER' && <NavbarPacker/>}
-            {(user && user.role) === 'WAREHOUSE' && <NavbarWarehouse/>}
+            {(user && user.role) === 'COURIER' && <NavbarStaff/>}
+            {(user && user.role) === 'PACKER' && <NavbarStaff/>}
+            {(user && user.role) === 'WAREHOUSE' && <NavbarStaff/>}
         </nav>
 
     );
