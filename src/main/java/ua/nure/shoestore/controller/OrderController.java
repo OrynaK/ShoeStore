@@ -43,7 +43,7 @@ public class OrderController {
         orderService.setWorker(orderId, userId);
     }
 
-    @GetMapping(value = "/neZnau")
+    @GetMapping(value = "/isSetAdmin")
     public boolean isSetAdmin(@RequestParam("orderId") Long orderId) {
         return orderService.isSetAdmin(orderId);
     }
