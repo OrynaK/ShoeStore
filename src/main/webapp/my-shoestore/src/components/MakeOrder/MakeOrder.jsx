@@ -10,7 +10,7 @@ function MakeOrder() {
     const [entrance, setEntrance] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
     const [shoesInCart, setShoesInCart] = useState([]);
-    const [fieldErrors, setFieldErrors] = useState({});
+    const [inputErrors, setInputErrors] = useState({});
 
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
     const navigate = useNavigate();
@@ -60,9 +60,9 @@ function MakeOrder() {
             if (response.ok) {
                 alert("Order was created successfully");
                 navigate('/clientorders');
-            } else {
+            } else if (response.status === 400) {
                 response.json().then(data => {
-                    setFieldErrors(data);
+                    setInputErrors(data);
                 });
             }
         });
@@ -104,6 +104,11 @@ function MakeOrder() {
                 <input className="make-order-form-input"
                        type="text"
                        name="card"
+                       onKeyDown={(event) => {
+                           if (!/\d/.test(event.key) && event.key !== "Backspace") {
+                               event.preventDefault();
+                           }
+                       }}
                 />
                 <label className="make-order-form-label">
                     Країна</label>
@@ -114,7 +119,7 @@ function MakeOrder() {
                        onChange={event => setCountry(event.target.value)}
                 />
                 <div>
-                    {fieldErrors.country && <p className="input-error">{fieldErrors.country}</p>}
+                    {inputErrors.country && <p className="input-error">{inputErrors.country}</p>}
                 </div>
                 <label className="make-order-form-label">
                     Місто</label>
@@ -125,7 +130,7 @@ function MakeOrder() {
                        onChange={event => setCity(event.target.value)}
                 />
                 <div>
-                    {fieldErrors.city && <p className="input-error">{fieldErrors.city}</p>}
+                    {inputErrors.city && <p className="input-error">{inputErrors.city}</p>}
                 </div>
                 <label className="make-order-form-label">
                     Вулиця</label>
@@ -136,7 +141,7 @@ function MakeOrder() {
                        onChange={event => setStreet(event.target.value)}
                 />
                 <div>
-                    {fieldErrors.street && <p className="input-error">{fieldErrors.street}</p>}
+                    {inputErrors.street && <p className="input-error">{inputErrors.street}</p>}
                 </div>
                 <label className="make-order-form-label">
                     Номер будинку</label>
@@ -147,8 +152,8 @@ function MakeOrder() {
                        onChange={event => setHouseNumber(event.target.value)}
                 />
                 <div>
-                    {fieldErrors.houseNumber && (
-                        <p className="input-error">{fieldErrors.houseNumber}</p>
+                    {inputErrors.houseNumber && (
+                        <p className="input-error">{inputErrors.houseNumber}</p>
                     )}
                 </div>
                 <label className="make-order-form-label">
@@ -167,8 +172,8 @@ function MakeOrder() {
                        onChange={event => setEntrance(event.target.value)}
                 />
                 <div>
-                    {fieldErrors.entrance && (
-                        <p className="input-error">{fieldErrors.entrance}</p>
+                    {inputErrors.entrance && (
+                        <p className="input-error">{inputErrors.entrance}</p>
                     )}
                 </div>
                 <label className="make-order-form-label">
@@ -187,8 +192,8 @@ function MakeOrder() {
                        onChange={event => setApartmentNumber(event.target.value)}
                 />
                 <div>
-                    {fieldErrors.apartmentNumber && (
-                        <p className="input-error">{fieldErrors.apartmentNumber}</p>
+                    {inputErrors.apartmentNumber && (
+                        <p className="input-error">{inputErrors.apartmentNumber}</p>
                     )}
                 </div>
                 <button className="make-order-form-btn" type="submit" onClick={handleSubmit}>Оплатити</button>

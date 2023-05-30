@@ -1,15 +1,16 @@
-
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./LoginForm.css";
 import {useNavigate} from 'react-router';
 
 function LoginForm() {
-    const[email, setEmail]=useState('')
-    const[password, setPassword]=useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [error, setError] = useState('');
+    const [inputErrors, setInputErrors] = useState({});
 
 
     const navigate = useNavigate();
+
     function handleSubmit(event) {
         event.preventDefault();
         const param = {email, password};
@@ -20,23 +21,36 @@ function LoginForm() {
         }).then((response) => {
             if (response.ok) {
                 return response.json();
-            }
-            setError("Network response was not ok.");
-        }).then((data) => {
-            const emailValue = data.email ? data.email.trim() : '';
-            const passwordValue = data.password ? data.password.trim() : '';
-            if (!emailValue || !passwordValue) {
-                setError('Wrong password or login. Try again');
+            } else if (response.status === 400) {
+                return response.json().then(data => {
+                    setInputErrors(data);
+                });
             } else {
-                localStorage.setItem('user', JSON.stringify(data));
-                window.dispatchEvent(new Event('storage'));
-               navigate('/clientcabinet');
+                throw new Error("Network response was not ok.");
             }
-        }).catch((error) => {
-            console.error("There was a problem with the fetch operation:", error);
-        });
+        })
+            .then((data) => {
+                const emailValue = data.email ? data.email.trim() : '';
+                const passwordValue = data.password ? data.password.trim() : '';
+
+                if (!emailValue || !passwordValue) {
+                    setError('Невірний логін або пароль');
+                } else {
+                    localStorage.setItem('user', JSON.stringify(data));
+                    window.dispatchEvent(new Event('storage'));
+                    navigate('/clientcabinet');
+                }
+            })
+            .catch((error) => {
+                console.error("There was a problem with the fetch operation:", error);
+            });
+
     }
 
+    useEffect(() => {
+        setInputErrors(''); // Забрати помилку, коли вона не потрібна
+        setError('');
+    }, [email, password]);
 
     return (
         <div className="login">
@@ -47,21 +61,26 @@ function LoginForm() {
                     <label className="login-form-label">
                         Email</label>
                     <input className="login-form-input"
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={event => setEmail(event.target.value)}
+                           type="email"
+                           name="email"
+                           value={email}
+                           onChange={event => setEmail(event.target.value)}
                     />
-
+                    <div>
+                        {inputErrors.email && <p className="input-error">{inputErrors.email}</p>}
+                    </div>
                     <label className="login-form-label">
                         Пароль</label>
                     <input className="login-form-input"
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={event => setPassword(event.target.value)}
+                           type="password"
+                           name="password"
+                           value={password}
+                           onChange={event => setPassword(event.target.value)}
                     />
-                    {error && <div>{error}</div>}
+                    <div>
+                        {inputErrors.password && <p className="input-error">{inputErrors.password}</p>}
+                    </div>
+                    {error && <p className="input-error">{error}</p>}
 
                     <button className="btn-login" onClick={handleSubmit} type="submit">Увійти</button>
                 </form>
