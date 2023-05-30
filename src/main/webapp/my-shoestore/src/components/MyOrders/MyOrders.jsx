@@ -354,7 +354,9 @@ function MyOrders() {
                             </td>
                             <td className="my-orders-table-td">
                                 {order.status !== 'PROCESSING' ? (
-                                    <h4></h4>
+                                    <tr>
+                                        <td>{order.usersInOrder.ADMIN.description}</td>
+                                    </tr>
                                 ) : (
                                     <input
                                         className="registration-form-input"
