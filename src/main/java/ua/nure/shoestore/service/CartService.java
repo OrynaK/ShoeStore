@@ -9,6 +9,7 @@ import ua.nure.shoestore.entity.Cart;
 import ua.nure.shoestore.entity.Shoe;
 import ua.nure.shoestore.entity.ShoeOrder;
 
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class CartService {
         this.cartDAO = cartDAO;
     }
 
-    public void addShoeToCart(long userId, ShoeOrder shoeCart) throws SQLIntegrityConstraintViolationException {
+    public void addShoeToCart(long userId, ShoeOrder shoeCart) throws SQLException {
         cartDAO.insertShoeToCart(cartDAO.findByUserId(userId).getId(), shoeCart);
     }
 

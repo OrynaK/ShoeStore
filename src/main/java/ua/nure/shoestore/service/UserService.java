@@ -1,6 +1,7 @@
 package ua.nure.shoestore.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dao.EntityDAO.CartDAO;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
@@ -9,9 +10,11 @@ import ua.nure.shoestore.entity.Cart;
 import ua.nure.shoestore.entity.User;
 import ua.nure.shoestore.entity.enums.Role;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor = SQLException.class)
 public class UserService {
     private final UserDAO userDAO;
     private final CartDAO cartDAO;
@@ -21,6 +24,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
+    @Transactional(rollbackFor = DBException.class)
     public User addUser(User user) throws DBException {
         try {
             long userId = userDAO.insert(user);
@@ -29,7 +33,7 @@ public class UserService {
             }
             user.setId(userId);
             return user;
-        }catch (DBException e){
+        } catch (DBException e) {
             throw new DBException("Unable to commit changes in the DB", e);
         }
     }
