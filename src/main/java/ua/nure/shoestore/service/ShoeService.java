@@ -130,10 +130,13 @@ public class ShoeService {
     public boolean addShoeWithImage(ShoeDTO shoeDTO, MultipartFile imageData) throws IOException {
         String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(imageData.getOriginalFilename());
         String fileUrl = "src/main/webapp/my-shoestore/public/images/" + fileName;
-        File newFile = new File(fileUrl);
-        FileUtils.writeByteArrayToFile(newFile, imageData.getBytes());
         shoeDTO.setImagePath(fileUrl);
-        return shoeDAO.addShoeWithImage(shoeDTO, fileName) != null;
+        if (shoeDAO.addShoeWithImage(shoeDTO, fileName) != null) {
+            File newFile = new File(fileUrl);
+            FileUtils.writeByteArrayToFile(newFile, imageData.getBytes());
+            shoeDTO.setImagePath(fileUrl);
+            return true;
+        } else return false;
     }
 
     public List<ShoeDTO> showShoeAmount() {

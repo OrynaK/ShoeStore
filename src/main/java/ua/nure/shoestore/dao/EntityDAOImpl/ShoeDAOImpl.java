@@ -32,6 +32,7 @@ public class ShoeDAOImpl implements ShoeDAO {
     private static final String ADD_SHOE = "INSERT INTO shoe (size, color, season, sex, actual_price, name, amount) VALUES(?,?,?,?,?,?,?)";
     private static final String ADD_SHOE_WITH_IMAGE = "INSERT INTO shoe (name, size, color, image_id, amount, actual_price, season, sex) VALUES(?,?,?,?,?,?,?,?)";
 
+    private static final String ADD_IMAGE = "INSERT INTO image (name, path) VALUES(?,?)";
     private final ConnectionManager connectionManager;
 
     public ShoeDAOImpl(DAOConfig config) {
@@ -208,7 +209,7 @@ public class ShoeDAOImpl implements ShoeDAO {
         PreparedStatement ps1 = null;
         try {
             con = connectionManager.getConnection(false);
-            ps1 = con.prepareStatement("INSERT INTO image (name, path) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps1 = con.prepareStatement(ADD_IMAGE, Statement.RETURN_GENERATED_KEYS);
             int k = 0;
             ps1.setString(++k, imageName);
             ps1.setString(++k, shoeDTO.getImagePath());
