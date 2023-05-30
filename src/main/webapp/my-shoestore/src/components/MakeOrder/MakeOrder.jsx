@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import './MakeOrder.css';
-import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
 
 function MakeOrder() {
@@ -11,6 +10,8 @@ function MakeOrder() {
     const [entrance, setEntrance] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
     const [shoesInCart, setShoesInCart] = useState([]);
+    const [fieldErrors, setFieldErrors] = useState({});
+
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
     const navigate = useNavigate();
     const fetchShoesInCart = async () => {
@@ -51,7 +52,7 @@ function MakeOrder() {
             }))
         };
 
-        fetch("http://localhost:8080/makeorder", {
+        fetch("http://localhost:8080/makeOrder", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(makeOrderDTO)
@@ -59,6 +60,10 @@ function MakeOrder() {
             if (response.ok) {
                 alert("Order was created successfully");
                 navigate('/clientorders');
+            } else {
+                response.json().then(data => {
+                    setFieldErrors(data);
+                });
             }
         });
     };
@@ -95,59 +100,97 @@ function MakeOrder() {
                 </div>
                 <form className="make-order-form--form"></form>
                 <label className="make-order-form-label">
-                    Номер картки:</label>
+                    Номер картки</label>
                 <input className="make-order-form-input"
                        type="text"
                        name="card"
                 />
                 <label className="make-order-form-label">
-                    Країна:</label>
+                    Країна</label>
                 <input className="make-order-form-input"
                        type="text"
                        name="city"
                        value={country}
                        onChange={event => setCountry(event.target.value)}
                 />
+                <div>
+                    {fieldErrors.country && <p className="input-error">{fieldErrors.country}</p>}
+                </div>
                 <label className="make-order-form-label">
-                   Місто:</label>
+                    Місто</label>
                 <input className="make-order-form-input"
                        type="text"
                        name="city"
                        value={city}
                        onChange={event => setCity(event.target.value)}
                 />
+                <div>
+                    {fieldErrors.city && <p className="input-error">{fieldErrors.city}</p>}
+                </div>
                 <label className="make-order-form-label">
-                    Вулиця:</label>
+                    Вулиця</label>
                 <input className="make-order-form-input"
                        type="text"
                        name="street"
                        value={street}
                        onChange={event => setStreet(event.target.value)}
                 />
+                <div>
+                    {fieldErrors.street && <p className="input-error">{fieldErrors.street}</p>}
+                </div>
                 <label className="make-order-form-label">
-                    Номер будинку:</label>
+                    Номер будинку</label>
                 <input className="make-order-form-input"
                        type="text"
                        name="house number"
                        value={houseNumber}
                        onChange={event => setHouseNumber(event.target.value)}
                 />
+                <div>
+                    {fieldErrors.houseNumber && (
+                        <p className="input-error">{fieldErrors.houseNumber}</p>
+                    )}
+                </div>
                 <label className="make-order-form-label">
-                    Під'їзд:</label>
+                    Під'їзд</label>
                 <input className="make-order-form-input"
-                       type="text"
+                       type="number"
                        name="entrance"
                        value={entrance}
+                       min="1"
+                       step="1"
+                       onKeyDown={(event) => {
+                           if (!/\d/.test(event.key) && event.key !== "Backspace") {
+                               event.preventDefault();
+                           }
+                       }}
                        onChange={event => setEntrance(event.target.value)}
                 />
+                <div>
+                    {fieldErrors.entrance && (
+                        <p className="input-error">{fieldErrors.entrance}</p>
+                    )}
+                </div>
                 <label className="make-order-form-label">
-                    Квартира:</label>
+                    Квартира</label>
                 <input className="make-order-form-input"
-                       type="text"
+                       type="number"
                        name="apartment number"
                        value={apartmentNumber}
+                       min="1"
+                       step="1"
+                       onKeyDown={(event) => {
+                           if (!/\d/.test(event.key) && event.key !== "Backspace") {
+                               event.preventDefault();
+                           }
+                       }}
                        onChange={event => setApartmentNumber(event.target.value)}
                 />
+                <div>
+                    {fieldErrors.apartmentNumber && (
+                        <p className="input-error">{fieldErrors.apartmentNumber}</p>
+                    )}
+                </div>
                 <button className="make-order-form-btn" type="submit" onClick={handleSubmit}>Оплатити</button>
             </div>
         </div>

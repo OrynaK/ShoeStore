@@ -1,6 +1,11 @@
 package ua.nure.shoestore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.dto.ChangeStatusDTO;
 import ua.nure.shoestore.dto.MakeOrderDTO;
@@ -13,7 +18,9 @@ import ua.nure.shoestore.service.CartService;
 import ua.nure.shoestore.service.OrderService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -43,8 +50,16 @@ public class OrderController {
         orderService.changeStatus(changeStatusDTO.getOrderId(), changeStatusDTO.getUserId(), changeStatusDTO.getStatus(), changeStatusDTO.getDescription());
     }
 
-    @PostMapping(value = "/makeorder")
-    public void makeOrder(@RequestBody MakeOrderDTO makeOrderDTO) {
+    @PostMapping(value = "/makeOrder")
+    public ResponseEntity<Object> makeOrder(@RequestBody @Validated MakeOrderDTO makeOrderDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>(); // If there are validation errors, return a response with the field errors
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+        }
+
         Address address = new Address(makeOrderDTO.getCountry(), makeOrderDTO.getCity(), makeOrderDTO.getStreet(), makeOrderDTO.getHouseNumber(), makeOrderDTO.getEntrance(), makeOrderDTO.getApartmentNumber());
         List<ShoeOrder> shoesInOrder = new ArrayList<>();
         for (ShoeDTO shoeDTO : makeOrderDTO.getShoeOrder()) {
@@ -53,6 +68,7 @@ public class OrderController {
         }
         orderService.makeOrder(new Order(makeOrderDTO.getUserId(), address, shoesInOrder));
         cartService.clearCart(makeOrderDTO.getUserId());
+        return ResponseEntity.ok().build();
     }
 
 }
