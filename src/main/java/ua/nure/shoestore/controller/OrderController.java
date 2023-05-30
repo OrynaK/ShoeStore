@@ -15,11 +15,10 @@ import ua.nure.shoestore.entity.ShoeOrder;
 import ua.nure.shoestore.entity.enums.Role;
 import ua.nure.shoestore.service.CartService;
 import ua.nure.shoestore.service.OrderService;
+import ua.nure.shoestore.utils.ErrorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static ua.nure.shoestore.controller.UserController.getErrorsResponseEntity;
 
 @RestController
 @CrossOrigin
@@ -57,7 +56,7 @@ public class OrderController {
     @PostMapping(value = "/makeOrder")
     public ResponseEntity<Object> makeOrder
             (@RequestBody @Validated MakeOrderDTO makeOrderDTO, BindingResult bindingResult) throws DBException {
-        ResponseEntity<Object> errors = getErrorsResponseEntity(bindingResult);
+        ResponseEntity<Object> errors = ErrorUtil.getErrorsResponseEntity(bindingResult);
         if (errors != null) return errors;
 
         Address address = new Address(makeOrderDTO.getCountry(), makeOrderDTO.getCity(), makeOrderDTO.getStreet(), makeOrderDTO.getHouseNumber(), makeOrderDTO.getEntrance(), makeOrderDTO.getApartmentNumber());
