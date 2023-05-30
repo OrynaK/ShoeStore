@@ -60,7 +60,7 @@ function MyOrders() {
 
     return (
         <div className="my-orders">
-            {role === 'WAREHOUSE' || role === 'PACKER'  ? (
+            {(role === 'WAREHOUSE' || role === 'PACKER') ? (
                 <table className="my-orders-table">
 
                     <thead>
@@ -74,13 +74,26 @@ function MyOrders() {
                     </tr>
                     </thead>
                     <tbody>
-                    {orders
+
+                    {
+                        orders
                         .sort((a, b) => {
-                            if (a.status === 'ACCEPTED') return -1;
-                            if (b.status === 'ACCEPTED') return 1;
+                            if ((a.status === 'ACCEPTED' && role === 'WAREHOUSE') || (a.status === 'COMPILED' && role === 'PACKER')) return -1;
+                            if ((b.status === 'ACCEPTED' && role === 'WAREHOUSE') || (a.status === 'COMPILED' && role === 'PACKER')) return 1;
                             return 0;
                         })
+                        .filter((order) => {
+                        if (role === 'PACKER' && (order.status === 'COMPILED' || order.status === 'READY_FOR_SENDING')) {
+                        return true;
+                    }
+                        if (role === 'WAREHOUSE' && (order.status === 'ACCEPTED' || order.status === 'COMPILED')) {
+                        return true;
+                    }
+
+                        return false;
+                    })
                         .map((order, index) => (
+
                         <tr key={order.id}>
                             <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
@@ -100,23 +113,26 @@ function MyOrders() {
                             </td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {order.status === 'CANCELLED' || (order.status === 'COMPILED' && role === 'WAREHOUSE') || (order.status === 'READY_FOR_SENDING' && role === 'PACKER') ? (
-                                        <h4>Cтатус було змінено</h4>
-                                    ) : (
+                                    {(role === 'WAREHOUSE' && order.status === 'ACCEPTED') || (role === 'PACKER' && order.status === 'COMPILED') ? (
                                         <>
                                             <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
-                                            {role === 'WAREHOUSE' ?
-                                                ( <button  onClick={() => handleStatusChange(order.id, 'COMPILED')} className="my-orders-table-btn-green">Зібране</button>
-                                                )
-                                                : (<button onClick={() => handleStatusChange(order.id, 'READY_FOR_SENDING')} className="my-orders-table-btn-green">Упаковане</button>)}
+                                            {role === 'WAREHOUSE' ? (
+                                                <button onClick={() => handleStatusChange(order.id, 'COMPILED')} className="my-orders-table-btn-green">Зібране</button>
+                                            ) : (
+                                                <button onClick={() => handleStatusChange(order.id, 'READY_FOR_SENDING')} className="my-orders-table-btn-green">Упаковане</button>
+                                            )}
                                         </>
+                                    ) : (
+                                        <h4>Cтатус було змінено</h4>
+
                                     )}
                                 </td>
 
 
+
                             </td>
                             <td className="my-orders-table-td">
-                                {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
+                                {(order.status === 'CANCELLED') || (order.status === 'COMPILED' && role === 'WAREHOUSE') || (order.status === 'READY_FOR_SENDING' && role === 'PACKER') ? (
                                     <h4></h4>
                                 ) : (
                                     <input
@@ -156,6 +172,13 @@ function MyOrders() {
                         if (a.status === 'READY_FOR_SENDING') return -1;
                         if (b.status === 'READY_FOR_SENDING') return 1;
                         return 0;
+                    })
+                    .filter((order) => {
+                        if (role === 'COURIER' && (order.status === 'READY_FOR_SENDING' || order.status === 'DELIVERED')) {
+                            return true;
+                        }
+
+                        return false;
                     })
                     .map((order, index) => (
                     <tr key={index}>
@@ -279,13 +302,13 @@ function MyOrders() {
                             </td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {order.status === 'CANCELLED' || order.status === 'ACCEPTED'  ? (
+                                    {order.status !== 'PROCESSING'   ? (
                                         <h4>Cтатус було змінено</h4>
                                     ) : (
                                         <>
                                             <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
 
-                                                 <button  onClick={() => handleStatusChange(order.id, 'ACCEPTED')} className="my-orders-table-btn-green">Зібране</button>
+                                                 <button  onClick={() => handleStatusChange(order.id, 'ACCEPTED')} className="my-orders-table-btn-green">Прийняте</button>
 
                                         </>
                                     )}
@@ -294,7 +317,7 @@ function MyOrders() {
 
                             </td>
                             <td className="my-orders-table-td">
-                                {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
+                                {order.status !== 'PROCESSING'  ? (
                                     <h4></h4>
                                 ) : (
                                     <input
