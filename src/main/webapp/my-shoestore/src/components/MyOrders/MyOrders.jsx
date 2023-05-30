@@ -22,6 +22,7 @@ function MyOrders() {
                 .catch((error) => {
                     console.error("Error:", error);
                 });
+            console.log(orders)
         }
     }
 
@@ -138,7 +139,15 @@ function MyOrders() {
                                     </td>
                                     <td className="my-orders-table-td">
                                         {(order.status === 'CANCELLED') || (order.status === 'COMPILED' && role === 'WAREHOUSE') || (order.status === 'READY_FOR_SENDING' && role === 'PACKER') ? (
-                                            <h4></h4>
+                                            role === 'WAREHOUSE' ? (
+                                                <tr key={index}>
+                                                    <td>{order.usersInOrder.WAREHOUSE.description}</td>
+                                                </tr>
+                                            ) : (
+                                                <tr key={index}>
+                                                    <td>{order.usersInOrder.PACKER.description}</td>
+                                                </tr>
+                                            )
                                         ) : (
                                             <input
                                                 className="registration-form-input"
@@ -155,11 +164,7 @@ function MyOrders() {
                                             />
                                         )}
                                     </td>
-                                    <td className="my-orders-table-td">
-                                        <li>
-                                            {order.description}
-                                        </li>
-                                    </td>
+
                                 </tr>
                             ))}
                     </tbody>
@@ -214,7 +219,7 @@ function MyOrders() {
                                 </td>
                                 <td className="my-orders-table-td">
                                     {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
-                                        <h4>Cтатус було змінено</h4>
+                                        <h4>Статус було змінено</h4>
                                     ) : (
                                         <>
                                             <button onClick={() => handleStatusChange(order.id, 'CANCELLED')}
@@ -229,7 +234,9 @@ function MyOrders() {
 
                                 <td className="my-orders-table-td">
                                     {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
-                                        <h4></h4>
+                                        <tr key={index}>
+                                            <td>{order.usersInOrder.COURIER.description}</td>
+                                        </tr>
                                     ) : (
                                         <input
                                             className="registration-form-input"
