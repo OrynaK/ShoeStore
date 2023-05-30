@@ -1,6 +1,8 @@
 package ua.nure.shoestore.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dao.EntityDAO.CartDAO;
 import ua.nure.shoestore.dao.EntityDAO.ShoeDAO;
 import ua.nure.shoestore.entity.Cart;
@@ -19,10 +21,6 @@ public class CartService {
     public CartService(CartDAO cartDAO, ShoeDAO shoeDAO) {
         this.shoeDAO = shoeDAO;
         this.cartDAO = cartDAO;
-    }
-
-    public long createCart(Cart cart) {
-        return cartDAO.insert(cart);
     }
 
     public void addShoeToCart(long userId, ShoeOrder shoeCart) throws SQLIntegrityConstraintViolationException {

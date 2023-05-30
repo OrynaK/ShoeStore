@@ -2,6 +2,7 @@ package ua.nure.shoestore.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ua.nure.shoestore.dao.EntityDAO.*;
 import ua.nure.shoestore.dao.EntityDAOImpl.*;
 

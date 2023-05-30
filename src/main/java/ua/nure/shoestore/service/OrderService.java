@@ -1,14 +1,18 @@
 package ua.nure.shoestore.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dao.EntityDAO.*;
 import ua.nure.shoestore.entity.Order;
 import ua.nure.shoestore.entity.enums.OrderStatus;
 import ua.nure.shoestore.entity.enums.Role;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor = SQLException.class)
 public class OrderService {
     private final OrderDAO orderDAO;
     private final AddressDAO addressDAO;
@@ -24,10 +28,15 @@ public class OrderService {
         this.shoeDAO = shoeDAO;
     }
 
-    public long makeOrder(Order order) {
-        long addressId = addressDAO.insert(order.getAddress());
-        order.getAddress().setId(addressId);
-        return orderDAO.insert(order);
+    @Transactional(rollbackFor = DBException.class)
+    public long makeOrder(Order order) throws DBException {
+        try {
+            long addressId = addressDAO.insert(order.getAddress());
+            order.getAddress().setId(addressId);
+            return orderDAO.insert(order);
+        } catch (DBException e) {
+            throw new DBException("Unable to commit changes in the DB", e);
+        }
     }
 
     public List<Order> getOrdersByRole(Role role) {
@@ -61,8 +70,13 @@ public class OrderService {
         return isChosen;
     }
 
-    public void changeStatus(Long orderId, Long userId, OrderStatus status, String description) {
-        orderDAO.changeStatus(orderId, status);
-        workerDAO.setDescription(orderId, userId, description);
+    @Transactional(rollbackFor = DBException.class)
+    public void changeStatus(Long orderId, Long userId, OrderStatus status, String description) throws DBException {
+        try {
+            orderDAO.changeStatus(orderId, status);
+            workerDAO.setDescription(orderId, userId, description);
+        }catch (DBException e){
+            throw new DBException("Unable to commit changes in the DB", e);
+        }
     }
 }

@@ -43,9 +43,5 @@ public class CartController {
         }
     }
 
-    @PostMapping(value = "/createCart")
-    public void createCart(@RequestParam("cart") Cart cart) {
-        cartService.createCart(cart);
-    }
 
 }

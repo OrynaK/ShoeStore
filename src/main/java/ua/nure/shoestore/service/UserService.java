@@ -1,6 +1,7 @@
 package ua.nure.shoestore.service;
 
 import org.springframework.stereotype.Service;
+import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dao.EntityDAO.CartDAO;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
 import ua.nure.shoestore.dto.UpdateDTO;
@@ -20,13 +21,17 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public User addUser(User user) {
-        long userId = userDAO.insert(user);
-        if (user.getRole().equals(Role.CLIENT)) {
-            cartDAO.insert(new Cart(userId));
+    public User addUser(User user) throws DBException {
+        try {
+            long userId = userDAO.insert(user);
+            if (user.getRole().equals(Role.CLIENT)) {
+                cartDAO.insert(new Cart(userId));
+            }
+            user.setId(userId);
+            return user;
+        }catch (DBException e){
+            throw new DBException("Unable to commit changes in the DB", e);
         }
-        user.setId(userId);
-        return user;
     }
 
     public User logIn(String email, String password) {
