@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dto.LoginDTO;
 import ua.nure.shoestore.dto.UpdateDTO;
 import ua.nure.shoestore.dto.UpdateRoleDTO;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping(value = {"/registration"})
-    public User registration(@RequestBody User user) {
+    public User registration(@RequestBody User user) throws DBException {
         if (user != null) {
             return userService.addUser(user);
         } else return null;

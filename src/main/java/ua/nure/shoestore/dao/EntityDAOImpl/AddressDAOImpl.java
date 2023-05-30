@@ -2,6 +2,7 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 
 import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
+import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dao.EntityDAO.AddressDAO;
 import ua.nure.shoestore.entity.Address;
 import ua.nure.shoestore.entity.Order;
@@ -16,7 +17,7 @@ public class AddressDAOImpl implements AddressDAO {
     private static final String GET_ADDRESS_BY_ID = "SELECT * FROM address WHERE id=?";
     private static final String GET_ADDRESS_BY_ORDER = "SELECT address_id FROM `order` WHERE id=?";
 
-    public long insert(Address address) {
+    public long insert(Address address) throws DBException {
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -39,7 +40,7 @@ public class AddressDAOImpl implements AddressDAO {
             return address.getId();
         } catch (Exception e) {
             ConnectionManager.rollback(con);
-            throw new RuntimeException(e);
+            throw new DBException(e);
         } finally {
             ConnectionManager.close(ps, con);
         }

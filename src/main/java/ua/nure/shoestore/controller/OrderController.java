@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dto.ChangeStatusDTO;
 import ua.nure.shoestore.dto.MakeOrderDTO;
 import ua.nure.shoestore.dto.ShoeDTO;
@@ -44,12 +45,13 @@ public class OrderController {
     }
 
     @PostMapping(value = "changeStatus")
-    public void changeStatus(@RequestBody ChangeStatusDTO changeStatusDTO) {
+    public void changeStatus(@RequestBody ChangeStatusDTO changeStatusDTO) throws DBException {
         orderService.changeStatus(changeStatusDTO.getOrderId(), changeStatusDTO.getUserId(), changeStatusDTO.getStatus(), changeStatusDTO.getDescription());
     }
 
     @PostMapping(value = "/makeOrder")
-    public ResponseEntity<Object> makeOrder(@RequestBody @Validated MakeOrderDTO makeOrderDTO, BindingResult bindingResult) {
+    public ResponseEntity<Object> makeOrder
+            (@RequestBody @Validated MakeOrderDTO makeOrderDTO, BindingResult bindingResult) throws DBException {
         ResponseEntity<Object> errors = getErrorsResponseEntity(bindingResult);
         if (errors != null) return errors;
 

@@ -2,6 +2,7 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 
 import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
+import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dao.EntityDAO.WorkerDAO;
 
 import java.sql.Connection;
@@ -55,7 +56,7 @@ public class WorkerDAOImpl implements WorkerDAO {
     }
 
     @Override
-    public void setDescription(Long orderId, Long userId, String description) {
+    public void setDescription(Long orderId, Long userId, String description) throws DBException {
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(SET_DESCRIPTION)) {
                 int k = 0;
@@ -65,7 +66,7 @@ public class WorkerDAOImpl implements WorkerDAO {
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
     }
 

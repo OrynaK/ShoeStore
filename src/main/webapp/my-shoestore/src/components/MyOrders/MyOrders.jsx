@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./MyOrders.css";
+
 function MyOrders() {
     const [orders, setOrders] = useState([]);
     const role = JSON.parse(localStorage.getItem("user"))?.role;
@@ -15,15 +16,15 @@ function MyOrders() {
             fetch(`http://localhost:8080/myOrders?userId=${userId}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    setOrders(data)
-                }
-
+                        setOrders(data)
+                    }
                 )
                 .catch((error) => {
                     console.error("Error:", error);
                 });
         }
     }
+
     function handleStatusChange(orderId, selectedStatus) {
         const orderDescription = description[orderId]; // Отримати опис для вказаного замовлення
         const changeStatusDTO = {
@@ -56,8 +57,6 @@ function MyOrders() {
     }
 
 
-
-
     return (
         <div className="my-orders">
             {(role === 'WAREHOUSE' || role === 'PACKER') ? (
@@ -77,163 +76,185 @@ function MyOrders() {
 
                     {
                         orders
-                        .sort((a, b) => {
-                            if ((a.status === 'ACCEPTED' && role === 'WAREHOUSE') || (a.status === 'COMPILED' && role === 'PACKER')) return -1;
-                            if ((b.status === 'ACCEPTED' && role === 'WAREHOUSE') || (a.status === 'COMPILED' && role === 'PACKER')) return 1;
-                            return 0;
-                        })
-                        .filter((order) => {
-                        if (role === 'PACKER' && (order.status === 'COMPILED' || order.status === 'READY_FOR_SENDING')) {
-                        return true;
-                    }
-                        if (role === 'WAREHOUSE' && (order.status === 'ACCEPTED' || order.status === 'COMPILED')) {
-                        return true;
-                    }
+                            .sort((a, b) => {
+                                if ((a.status === 'ACCEPTED' && role === 'WAREHOUSE') || (a.status === 'COMPILED' && role === 'PACKER')) return -1;
+                                if ((b.status === 'ACCEPTED' && role === 'WAREHOUSE') || (a.status === 'COMPILED' && role === 'PACKER')) return 1;
+                                return 0;
+                            })
+                            .filter((order) => {
+                                if (role === 'PACKER' && (order.status === 'COMPILED' || order.status === 'READY_FOR_SENDING')) {
+                                    return true;
+                                }
+                                if (role === 'WAREHOUSE' && (order.status === 'ACCEPTED' || order.status === 'COMPILED')) {
+                                    return true;
+                                }
 
-                        return false;
-                    })
-                        .map((order, index) => (
+                                return false;
+                            })
+                            .map((order, index) => (
 
-                        <tr key={order.id}>
-                            <td className="my-orders-table-td">{order.id}</td>
-                            <td className="my-orders-table-td">
-                                <td className="my-orders-table-td">
-                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + + order.time[2]}
-                                </td>
-                            </td>
-                            <td className="my-orders-table-td" colSpan={1}>
-                                {order.shoesInOrder.map((shoe, index) => (
-                                    <tr >
-                                    <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р - {shoe.amount}шт</td>
-                                        </tr >
-                                ))}
-                            </td>
-                            <td className="my-orders-table-td">
-                                    {order.status}
-                            </td>
-                            <td className="my-orders-table-td">
-                                <td className="my-orders-table-td">
-                                    {(role === 'WAREHOUSE' && order.status === 'ACCEPTED') || (role === 'PACKER' && order.status === 'COMPILED') ? (
-                                        <>
-                                            <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
-                                            {role === 'WAREHOUSE' ? (
-                                                <button onClick={() => handleStatusChange(order.id, 'COMPILED')} className="my-orders-table-btn-green">Зібране</button>
+                                <tr key={order.id}>
+                                    <td className="my-orders-table-td">{order.id}</td>
+                                    <td className="my-orders-table-td">
+                                        <td className="my-orders-table-td">
+                                            {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
+                                        </td>
+                                    </td>
+                                    <td className="my-orders-table-td" colSpan={1}>
+                                        {order.shoesInOrder.map((shoe, index) => (
+                                            <tr>
+                                                <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+                                                    - {shoe.amount}шт
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </td>
+                                    <td className="my-orders-table-td">
+                                        {order.status}
+                                    </td>
+                                    <td className="my-orders-table-td">
+                                        <td className="my-orders-table-td">
+                                            {(role === 'WAREHOUSE' && order.status === 'ACCEPTED') || (role === 'PACKER' && order.status === 'COMPILED') ? (
+                                                <>
+                                                    <button onClick={() => handleStatusChange(order.id, 'CANCELLED')}
+                                                            className="my-orders-table-btn-red">Відхилине
+                                                    </button>
+                                                    {role === 'WAREHOUSE' ? (
+                                                        <button onClick={() => handleStatusChange(order.id, 'COMPILED')}
+                                                                className="my-orders-table-btn-green">Зібране</button>
+                                                    ) : (
+                                                        <button
+                                                            onClick={() => handleStatusChange(order.id, 'READY_FOR_SENDING')}
+                                                            className="my-orders-table-btn-green">Упаковане</button>
+                                                    )}
+                                                </>
                                             ) : (
-                                                <button onClick={() => handleStatusChange(order.id, 'READY_FOR_SENDING')} className="my-orders-table-btn-green">Упаковане</button>
+                                                <h4>Cтатус було змінено</h4>
+
                                             )}
-                                        </>
-                                    ) : (
-                                        <h4>Cтатус було змінено</h4>
-
-                                    )}
-                                </td>
+                                        </td>
 
 
-
-                            </td>
-                            <td className="my-orders-table-td">
-                                {(order.status === 'CANCELLED') || (order.status === 'COMPILED' && role === 'WAREHOUSE') || (order.status === 'READY_FOR_SENDING' && role === 'PACKER') ? (
-                                    <h4></h4>
-                                ) : (
-                                    <input
-                                        className="registration-form-input"
-                                        type="text"
-                                        name={`description-${order.id}`}
-                                        value={description[order.id] || ''}
-                                        onChange={event => {
-                                            const inputDescription = event.target.value;
-                                            setDescription(prevDescription => ({
-                                                ...prevDescription,
-                                                [order.id]: inputDescription
-                                            }));
-                                        }}
-                                    />
-                                )}
-                            </td>
-                        </tr>
-                    ))}
+                                    </td>
+                                    <td className="my-orders-table-td">
+                                        {(order.status === 'CANCELLED') || (order.status === 'COMPILED' && role === 'WAREHOUSE') || (order.status === 'READY_FOR_SENDING' && role === 'PACKER') ? (
+                                            <h4></h4>
+                                        ) : (
+                                            <input
+                                                className="registration-form-input"
+                                                type="text"
+                                                name={`description-${order.id}`}
+                                                value={description[order.id] || ''}
+                                                onChange={event => {
+                                                    const inputDescription = event.target.value;
+                                                    setDescription(prevDescription => ({
+                                                        ...prevDescription,
+                                                        [order.id]: inputDescription
+                                                    }));
+                                                }}
+                                            />
+                                        )}
+                                    </td>
+                                    <td className="my-orders-table-td">
+                                        <li>
+                                            {order.description}
+                                        </li>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             ) : role === 'COURIER' ? (
                 <table className="my-orders-table">
-                <thead>
-                <tr>
-                    <th className="my-orders-table-th">ID</th>
-                    <th className="my-orders-table-th">Дата та час</th>
-                    <th className="my-orders-table-th">Адреса</th>
-                    <th className="my-orders-table-th">Статус</th>
-                    <th className="my-orders-table-th">Змінити статус</th>
-                    <th className="my-orders-table-th">Опис</th>
-                </tr>
-                </thead>
-                <tbody>
-                {orders
-                    .sort((a, b) => {
-                        if (a.status === 'READY_FOR_SENDING') return -1;
-                        if (b.status === 'READY_FOR_SENDING') return 1;
-                        return 0;
-                    })
-                    .filter((order) => {
-                        if (role === 'COURIER' && (order.status === 'READY_FOR_SENDING' || order.status === 'DELIVERED')) {
-                            return true;
-                        }
-
-                        return false;
-                    })
-                    .map((order, index) => (
-                    <tr key={index}>
-                        <td className="my-orders-table-td">{order.id}</td>
-                        <td className="my-orders-table-td">
-                            <td className="my-orders-table-td">
-                                {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + + order.time[2]}
-                            </td>
-                        </td>
-                        <td className="my-orders-table-td">
-
-                                <tr >
-                                    <td key={index}>{order.address.country}, м.{order.address.city}, вул.{order.address.street}, буд.{order.address.houseNumber}, п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
-                                </tr >
-
-                        </td>
-                        <td className="my-orders-table-td">
-                            <li>
-                                {order.status}
-                            </li>
-                        </td>
-                        <td className="my-orders-table-td">
-                            {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
-                                <h4>Cтатус було змінено</h4>
-                            ) : (
-                                <>
-                                    <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
-                                    <button onClick={() => handleStatusChange(order.id, 'DELIVERED')} className="my-orders-table-btn-green">Доставлене</button>
-                                </>
-                            )}
-                        </td>
-
-                        <td className="my-orders-table-td">
-                            {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
-                                <h4></h4>
-                            ) : (
-                            <input
-                                className="registration-form-input"
-                                type="text"
-                                name={`description-${order.id}`}
-                                value={description[order.id] || ''}
-                                onChange={event => {
-                                    const inputDescription = event.target.value;
-                                    setDescription(prevDescription => ({
-                                        ...prevDescription,
-                                        [order.id]: inputDescription
-                                    }));
-                                }}
-                            />
-                            )}
-                        </td>
+                    <thead>
+                    <tr>
+                        <th className="my-orders-table-th">ID</th>
+                        <th className="my-orders-table-th">Дата та час</th>
+                        <th className="my-orders-table-th">Адреса</th>
+                        <th className="my-orders-table-th">Статус</th>
+                        <th className="my-orders-table-th">Змінити статус</th>
+                        <th className="my-orders-table-th">Опис</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>) : role === 'CLIENT' ? (
+                    </thead>
+                    <tbody>
+                    {orders
+                        .sort((a, b) => {
+                            if (a.status === 'READY_FOR_SENDING') return -1;
+                            if (b.status === 'READY_FOR_SENDING') return 1;
+                            return 0;
+                        })
+                        .filter((order) => {
+                            if (role === 'COURIER' && (order.status === 'READY_FOR_SENDING' || order.status === 'DELIVERED')) {
+                                return true;
+                            }
+
+                            return false;
+                        })
+                        .map((order, index) => (
+                            <tr key={index}>
+                                <td className="my-orders-table-td">{order.id}</td>
+                                <td className="my-orders-table-td">
+                                    <td className="my-orders-table-td">
+                                        {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
+                                    </td>
+                                </td>
+                                <td className="my-orders-table-td">
+
+                                    <tr>
+                                        <td key={index}>{order.address.country}, м.{order.address.city},
+                                            вул.{order.address.street}, буд.{order.address.houseNumber},
+                                            п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
+                                    </tr>
+
+                                </td>
+                                <td className="my-orders-table-td">
+                                    <li>
+                                        {order.status}
+                                    </li>
+                                </td>
+                                <td className="my-orders-table-td">
+                                    {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
+                                        <h4>Cтатус було змінено</h4>
+                                    ) : (
+                                        <>
+                                            <button onClick={() => handleStatusChange(order.id, 'CANCELLED')}
+                                                    className="my-orders-table-btn-red">Відхилине
+                                            </button>
+                                            <button onClick={() => handleStatusChange(order.id, 'DELIVERED')}
+                                                    className="my-orders-table-btn-green">Доставлене
+                                            </button>
+                                        </>
+                                    )}
+                                </td>
+
+                                <td className="my-orders-table-td">
+                                    {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
+                                        <h4></h4>
+                                    ) : (
+                                        <input
+                                            className="registration-form-input"
+                                            type="text"
+                                            name={`description-${order.id}`}
+                                            value={description[order.id] || ''}
+                                            onChange={event => {
+                                                const inputDescription = event.target.value;
+                                                setDescription(prevDescription => ({
+                                                    ...prevDescription,
+                                                    [order.id]: inputDescription
+                                                }));
+                                            }}
+                                        />
+                                    )}
+                                </td>
+                                <td className="my-orders-table-td">
+                                    <li>
+                                        {order.description}
+                                    </li>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>) : role === 'CLIENT' ? (
                 <table className="my-orders-table">
 
                     <thead>
@@ -250,14 +271,16 @@ function MyOrders() {
                             <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + + order.time[2]}
+                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
                                 </td>
                             </td>
                             <td className="my-orders-table-td" colSpan={1}>
                                 {order.shoesInOrder.map((shoe, index) => (
-                                    <tr >
-                                        <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р - {shoe.amount}шт</td>
-                                    </tr >
+                                    <tr>
+                                        <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+                                            - {shoe.amount}шт
+                                        </td>
+                                    </tr>
                                 ))}
                             </td>
                             <td className="my-orders-table-td">
@@ -287,14 +310,16 @@ function MyOrders() {
                             <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + + order.time[2]}
+                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
                                 </td>
                             </td>
                             <td className="my-orders-table-td" colSpan={1}>
                                 {order.shoesInOrder.map((shoe, index) => (
-                                    <tr >
-                                        <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р - {shoe.amount}шт</td>
-                                    </tr >
+                                    <tr>
+                                        <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+                                            - {shoe.amount}шт
+                                        </td>
+                                    </tr>
                                 ))}
                             </td>
                             <td className="my-orders-table-td">
@@ -302,13 +327,17 @@ function MyOrders() {
                             </td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
-                                    {order.status !== 'PROCESSING'   ? (
+                                    {order.status !== 'PROCESSING' ? (
                                         <h4>Cтатус було змінено</h4>
                                     ) : (
                                         <>
-                                            <button onClick={() => handleStatusChange(order.id, 'CANCELLED')} className="my-orders-table-btn-red">Відхилине</button>
+                                            <button onClick={() => handleStatusChange(order.id, 'CANCELLED')}
+                                                    className="my-orders-table-btn-red">Відхилине
+                                            </button>
 
-                                                 <button  onClick={() => handleStatusChange(order.id, 'ACCEPTED')} className="my-orders-table-btn-green">Прийняте</button>
+                                            <button onClick={() => handleStatusChange(order.id, 'ACCEPTED')}
+                                                    className="my-orders-table-btn-green">Прийняте
+                                            </button>
 
                                         </>
                                     )}
@@ -317,7 +346,7 @@ function MyOrders() {
 
                             </td>
                             <td className="my-orders-table-td">
-                                {order.status !== 'PROCESSING'  ? (
+                                {order.status !== 'PROCESSING' ? (
                                     <h4></h4>
                                 ) : (
                                     <input
@@ -335,6 +364,11 @@ function MyOrders() {
                                     />
                                 )}
                             </td>
+                            <td className="my-orders-table-td">
+                                <li>
+                                    {order.description}
+                                </li>
+                            </td>
                         </tr>
                     ))}
                     </tbody>
@@ -347,4 +381,5 @@ function MyOrders() {
         </div>
     )
 }
+
 export default MyOrders;

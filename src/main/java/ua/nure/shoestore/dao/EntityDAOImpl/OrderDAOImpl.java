@@ -2,6 +2,7 @@ package ua.nure.shoestore.dao.EntityDAOImpl;
 
 import ua.nure.shoestore.dao.ConnectionManager;
 import ua.nure.shoestore.dao.DAOConfig;
+import ua.nure.shoestore.dao.DBException;
 import ua.nure.shoestore.dao.EntityDAO.OrderDAO;
 import ua.nure.shoestore.entity.Order;
 import ua.nure.shoestore.entity.ShoeOrder;
@@ -121,7 +122,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void changeStatus(Long orderId, OrderStatus status) {
+    public void changeStatus(Long orderId, OrderStatus status) throws DBException {
         try (Connection con = connectionManager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(UPDATE_STATUS)) {
                 int k = 0;
@@ -130,7 +131,7 @@ public class OrderDAOImpl implements OrderDAO {
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
     }
 

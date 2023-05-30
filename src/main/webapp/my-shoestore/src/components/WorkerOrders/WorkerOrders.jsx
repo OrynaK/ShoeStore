@@ -47,7 +47,7 @@ function WorkerOrders() {
 
                     <th className="worker-orders-table-th">Замовлення</th>
                     <th className="worker-orders-table-th">Статус</th>
-                    <th className="worker-orders-table-th">Прийняти замовлення</th>
+                    <th className="worker-orders-table-th">Взяти замовлення</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,7 +62,7 @@ function WorkerOrders() {
                         </td>
                         <td className="worker-orders-table-td">
                             {(role === 'ADMIN' && order.status !== 'PROCESSING') ? (<h4></h4>) : ( <button className="worker-orders-table-btn-green" onClick={() => handleSetWorker(order.id, userId)}>
-                                Прийняти замовлення
+                                Взяти замовлення
                             </button>) }
 
 
