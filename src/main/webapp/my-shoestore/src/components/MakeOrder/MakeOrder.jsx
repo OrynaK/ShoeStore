@@ -59,7 +59,7 @@ function MakeOrder() {
         }).then((response) => {
             if (response.ok) {
                 alert("Order was created successfully");
-                navigate('/clientorders');
+                navigate('/myorders');
             } else if (response.status === 400) {
                 response.json().then(data => {
                     setInputErrors(data);
