@@ -48,10 +48,7 @@ public class OrderController {
         orderService.setWorker(orderId, userId);
     }
 
-    @GetMapping(value = "/isSetAdmin")
-    public boolean isSetAdmin(@RequestParam("orderId") Long orderId) {
-        return orderService.isSetAdmin(orderId);
-    }
+
 
     @PostMapping(value = "changeStatus")
     public void changeStatus(@RequestBody ChangeStatusDTO changeStatusDTO) throws DBException {
