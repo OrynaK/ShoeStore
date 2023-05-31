@@ -311,81 +311,87 @@ function MyOrders() {
                     </tr>
                     </thead>
                     <tbody>
-                    {orders.map((order) => (
-                        <tr key={order.id}>
-                            <td className="my-orders-table-td">{order.id}</td>
-                            <td className="my-orders-table-td">
+                    {orders
+                        .sort((a, b) => {
+                            if (a.status === 'PROCESSING') return -1;
+                            if (b.status === 'PROCESSING') return 1;
+                            return 0;
+                        })
+                        .map((order) => (
+                            <tr key={order.id}>
+                                <td className="my-orders-table-td">{order.id}</td>
                                 <td className="my-orders-table-td">
-                                    {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
+                                    <td className="my-orders-table-td">
+                                        {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
+                                    </td>
                                 </td>
-                            </td>
-                            <td className="my-orders-table-td" colSpan={1}>
-                                {order.shoesInOrder.map((shoe) => (
+                                <td className="my-orders-table-td" colSpan={1}>
+                                    {order.shoesInOrder.map((shoe) => (
+                                        <tr>
+                                            <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+                                                - {shoe.amount}шт
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </td>
+                                <td className="my-orders-table-td">
                                     <tr>
-                                        <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
-                                            - {shoe.amount}шт
-                                        </td>
+                                        <td key={order.id}>{order.address.country}, м.{order.address.city},
+                                            вул.{order.address.street}, буд.{order.address.houseNumber},
+                                            п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
                                     </tr>
-                                ))}
-                            </td>
-                            <td className="my-orders-table-td">
-                                <tr>
-                                    <td key={order.id}>{order.address.country}, м.{order.address.city},
-                                        вул.{order.address.street}, буд.{order.address.houseNumber},
-                                        п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
-                                </tr>
-                            </td>
-                            <td className="my-orders-table-td">
-                                {order.status}
-                            </td>
-                            <td className="my-orders-table-td">
+                                </td>
+                                <td className="my-orders-table-td">
+                                    {order.status}
+                                </td>
+                                <td className="my-orders-table-td">
+                                    <td className="my-orders-table-td">
+                                        {order.status !== 'PROCESSING' ? (
+                                            <h4>Cтатус було змінено</h4>
+                                        ) : (
+                                            <>
+                                                <button onClick={() => handleStatusChange(order.id, 'CANCELLED')}
+                                                        className="my-orders-table-btn-red">Відхилине
+                                                </button>
+
+                                                <button onClick={() => handleStatusChange(order.id, 'ACCEPTED')}
+                                                        className="my-orders-table-btn-green">Прийняте
+                                                </button>
+
+                                            </>
+                                        )}
+                                    </td>
+
+
+                                </td>
                                 <td className="my-orders-table-td">
                                     {order.status !== 'PROCESSING' ? (
-                                        <h4>Cтатус було змінено</h4>
+                                        <tr>
+                                            <td>{order.usersInOrder.ADMIN.description}</td>
+                                        </tr>
                                     ) : (
-                                        <>
-                                            <button onClick={() => handleStatusChange(order.id, 'CANCELLED')}
-                                                    className="my-orders-table-btn-red">Відхилине
-                                            </button>
-
-                                            <button onClick={() => handleStatusChange(order.id, 'ACCEPTED')}
-                                                    className="my-orders-table-btn-green">Прийняте
-                                            </button>
-
-                                        </>
+                                        <input
+                                            className="registration-form-input"
+                                            type="text"
+                                            name={`description-${order.id}`}
+                                            value={description[order.id] || ''}
+                                            onChange={event => {
+                                                const inputDescription = event.target.value;
+                                                setDescription(prevDescription => ({
+                                                    ...prevDescription,
+                                                    [order.id]: inputDescription
+                                                }));
+                                            }}
+                                        />
                                     )}
                                 </td>
-
-
-                            </td>
-                            <td className="my-orders-table-td">
-                                {order.status !== 'PROCESSING' ? (
-                                    <tr>
-                                        <td>{order.usersInOrder.ADMIN.description}</td>
-                                    </tr>
-                                ) : (
-                                    <input
-                                        className="registration-form-input"
-                                        type="text"
-                                        name={`description-${order.id}`}
-                                        value={description[order.id] || ''}
-                                        onChange={event => {
-                                            const inputDescription = event.target.value;
-                                            setDescription(prevDescription => ({
-                                                ...prevDescription,
-                                                [order.id]: inputDescription
-                                            }));
-                                        }}
-                                    />
-                                )}
-                            </td>
-                            <td className="my-orders-table-td">
-                                <li>
-                                    {order.description}
-                                </li>
-                            </td>
-                        </tr>
-                    ))}
+                                <td className="my-orders-table-td">
+                                    <li>
+                                        {order.description}
+                                    </li>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             )
