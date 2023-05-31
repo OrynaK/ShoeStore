@@ -102,9 +102,9 @@ function MyOrders() {
                                         </td>
                                     </td>
                                     <td className="my-orders-table-td" colSpan={1}>
-                                        {order.shoesInOrder.map((shoe, index) => (
+                                        {order.shoesInOrder.map((shoe) => (
                                             <tr>
-                                                <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+                                                <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
                                                     - {shoe.amount}шт
                                                 </td>
                                             </tr>
@@ -140,11 +140,11 @@ function MyOrders() {
                                     <td className="my-orders-table-td">
                                         {(order.status === 'CANCELLED') || (order.status === 'COMPILED' && role === 'WAREHOUSE') || (order.status === 'READY_FOR_SENDING' && role === 'PACKER') ? (
                                             role === 'WAREHOUSE' ? (
-                                                <tr key={index}>
+                                                <tr>
                                                     <td>{order.usersInOrder.WAREHOUSE.description}</td>
                                                 </tr>
                                             ) : (
-                                                <tr key={index}>
+                                                <tr>
                                                     <td>{order.usersInOrder.PACKER.description}</td>
                                                 </tr>
                                             )
@@ -196,7 +196,7 @@ function MyOrders() {
                             return false;
                         })
                         .map((order, index) => (
-                            <tr key={index}>
+                            <tr>
                                 <td className="my-orders-table-td">{order.id}</td>
                                 <td className="my-orders-table-td">
                                     <td className="my-orders-table-td">
@@ -232,7 +232,7 @@ function MyOrders() {
 
                                 <td className="my-orders-table-td">
                                     {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
-                                        <tr key={index}>
+                                        <tr>
                                             <td>{order.usersInOrder.COURIER.description}</td>
                                         </tr>
                                     ) : (
@@ -271,8 +271,8 @@ function MyOrders() {
                     </tr>
                     </thead>
                     <tbody>
-                    {orders.map((order, index) => (
-                        <tr key={index}>
+                    {orders.map((order) => (
+                        <tr key={order.id}>
                             <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
                                 <td className="my-orders-table-td">
@@ -280,9 +280,9 @@ function MyOrders() {
                                 </td>
                             </td>
                             <td className="my-orders-table-td" colSpan={1}>
-                                {order.shoesInOrder.map((shoe, index) => (
+                                {order.shoesInOrder.map((shoe) => (
                                     <tr>
-                                        <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+                                        <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
                                             - {shoe.amount}шт
                                         </td>
                                     </tr>
@@ -320,9 +320,9 @@ function MyOrders() {
                                 </td>
                             </td>
                             <td className="my-orders-table-td" colSpan={1}>
-                                {order.shoesInOrder.map((shoe, index) => (
+                                {order.shoesInOrder.map((shoe) => (
                                     <tr>
-                                        <td key={index}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+                                        <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
                                             - {shoe.amount}шт
                                         </td>
                                     </tr>
