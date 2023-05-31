@@ -42,53 +42,50 @@ public class OrderDAOImpl implements OrderDAO {
         try {
             conn = connectionManager.getConnection(false);
             ps = conn.prepareStatement(GET_ORDER_BY_ROLE);
-            int k = 0;
-            if (role == Role.ADMIN) {
-                orders = findAll();
-                return orders;
-            }
-            String status = switch (role) {
-                case WAREHOUSE -> "accepted";
-                case PACKER -> "compiled";
-                case COURIER -> "ready_for_sending";
-                default -> null;
-            };
-            ps.setString(++k, status);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    boolean isChosen = false;
-                    Order order = mapOrder(rs);
-                    try (PreparedStatement prs = conn.prepareStatement(GET_USER_ORDER)) {
-                        int l = 0;
-                        prs.setLong(++l, order.getId());
-                        UserOrder userOrder;
-                        try (ResultSet resultSet = prs.executeQuery()) {
-                            while (resultSet.next()) {
-                                userOrder = mapUserOrder(resultSet);
-                                Role role1 = null;
-                                try (PreparedStatement preparedStatement = conn.prepareStatement(GET_ROLE)) {
-                                    int m = 0;
-                                    preparedStatement.setLong(++m, userOrder.getUserId());
-                                    try (ResultSet resultSet1 = preparedStatement.executeQuery()) {
-                                        while (resultSet1.next()) {
-                                            role1 = getRole(userOrder.getUserId());
-                                            if (role1 == role) {
-                                                isChosen = true;
-                                                break;
+                int k = 0;
+                String status = switch (role) {
+                    case ADMIN -> "processing";
+                    case WAREHOUSE -> "accepted";
+                    case PACKER -> "compiled";
+                    case COURIER -> "ready_for_sending";
+                    default -> null;
+                };
+                ps.setString(++k, status);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        boolean isChosen = false;
+                        Order order = mapOrder(rs);
+                        try (PreparedStatement prs = conn.prepareStatement(GET_USER_ORDER)) {
+                            int l = 0;
+                            prs.setLong(++l, order.getId());
+                            UserOrder userOrder;
+                            try (ResultSet resultSet = prs.executeQuery()) {
+                                while (resultSet.next()) {
+                                    userOrder = mapUserOrder(resultSet);
+                                    Role role1 = null;
+                                    try (PreparedStatement preparedStatement = conn.prepareStatement(GET_ROLE)) {
+                                        int m = 0;
+                                        preparedStatement.setLong(++m, userOrder.getUserId());
+                                        try (ResultSet resultSet1 = preparedStatement.executeQuery()) {
+                                            while (resultSet1.next()) {
+                                                role1 = getRole(userOrder.getUserId());
+                                                if (role1 == role) {
+                                                    isChosen = true;
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
+                                    order.putUser(role1, userOrder);
                                 }
-                                order.putUser(role1, userOrder);
                             }
                         }
-                    }
-                    if (!isChosen) {
-                        getShoeOrder(order, conn);
-                        orders.add(order);
+                        if (!isChosen) {
+                            getShoeOrder(order, conn);
+                            orders.add(order);
+                        }
                     }
                 }
-            }
 
             conn.commit();
             return orders;

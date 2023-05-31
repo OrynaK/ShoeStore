@@ -7,19 +7,8 @@ function WorkerOrders() {
     const role = JSON.parse(localStorage.getItem("user"))?.role;
     const userId = JSON.parse(localStorage.getItem("user"))?.id;
     const navigate = useNavigate();
-    const [isAdmin, setIsAdmin] = useState(false);
-    function checkAdmin() {
-        orders.forEach((order) => {
-            fetch('http://localhost:8080/isSetAdmin?orderId=${order.id}')
-        .then((response) => response.json())
-                .then((data) => {
-                    setIsAdmin(data);
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-        });
-    }
+
+
     useEffect(() => {
         if (userId) {
             fetch(`http://localhost:8080/getOrdersByRole?role=${role}`)
@@ -84,16 +73,14 @@ function WorkerOrders() {
                                 <li>{order.status}</li>
                             </td>
                             <td className="worker-orders-table-td">
-                                {(role === "ADMIN" && order.status !== "PROCESSING") || (role === "ADMIN" && isAdmin) ? (
-                                    <h4></h4>
-                                ) : (
+
                                     <button
                                         className="worker-orders-table-btn-green"
                                         onClick={() => handleSetWorker(order.id, userId)}
                                     >
                                         Взяти замовлення
                                     </button>
-                                )}
+
                             </td>
                         </tr>
                     ))
