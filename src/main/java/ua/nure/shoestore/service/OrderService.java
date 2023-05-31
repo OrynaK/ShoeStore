@@ -79,15 +79,7 @@ public class OrderService {
         return isChosen;
     }
 
-    public boolean isSetAdmin(Long orderId) {
-        List<Long> ids = workerDAO.getIdFromUserOrder(orderId);
-        for (Long id : ids) {
-            if (userDAO.findById(id).getRole() == Role.ADMIN) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     @Transactional(rollbackFor = DBException.class)
     public void changeStatus(Long orderId, Long userId, OrderStatus status, String description) throws DBException {
