@@ -64,7 +64,10 @@ public class OrderController {
         ResponseEntity<Object> errors = ErrorUtil.getErrorsResponseEntity(bindingResult);
         if (errors != null) return errors;
 
-        Address address = new Address(makeOrderDTO.getCountry(), makeOrderDTO.getCity(), makeOrderDTO.getStreet(), makeOrderDTO.getHouseNumber(), makeOrderDTO.getEntrance(), makeOrderDTO.getApartmentNumber());
+        Address address = new Address(makeOrderDTO.getCountry(), makeOrderDTO.getCity(), makeOrderDTO.getStreet(), makeOrderDTO.getHouseNumber());
+        if (makeOrderDTO.getEntrance() != null) address.setEntrance(makeOrderDTO.getEntrance());
+        if (makeOrderDTO.getApartmentNumber() != null) address.setApartmentNumber(makeOrderDTO.getApartmentNumber());
+
         List<ShoeOrder> shoesInOrder = new ArrayList<>();
         for (ShoeDTO shoeDTO : makeOrderDTO.getShoeOrder()) {
             ShoeOrder shoeOrder = new ShoeOrder(shoeDTO.getId(), shoeDTO.getPrice(), shoeDTO.getAmount());
