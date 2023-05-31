@@ -204,13 +204,11 @@ function MyOrders() {
                                     </td>
                                 </td>
                                 <td className="my-orders-table-td">
-
                                     <tr>
                                         <td key={index}>{order.address.country}, м.{order.address.city},
                                             вул.{order.address.street}, буд.{order.address.houseNumber},
                                             п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
                                     </tr>
-
                                 </td>
                                 <td className="my-orders-table-td">
                                     <li>
@@ -306,6 +304,7 @@ function MyOrders() {
                         <th className="my-orders-table-th">ID</th>
                         <th className="my-orders-table-th">Дата та час</th>
                         <th className="my-orders-table-th">Взуття</th>
+                        <th className="my-orders-table-th">Адреса</th>
                         <th className="my-orders-table-th">Статус</th>
                         <th className="my-orders-table-th">Змінити статус</th>
                         <th className="my-orders-table-th">Опис</th>
@@ -328,6 +327,13 @@ function MyOrders() {
                                         </td>
                                     </tr>
                                 ))}
+                            </td>
+                            <td className="my-orders-table-td">
+                                <tr>
+                                    <td key={order.id}>{order.address.country}, м.{order.address.city},
+                                        вул.{order.address.street}, буд.{order.address.houseNumber},
+                                        п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
+                                </tr>
                             </td>
                             <td className="my-orders-table-td">
                                 {order.status}

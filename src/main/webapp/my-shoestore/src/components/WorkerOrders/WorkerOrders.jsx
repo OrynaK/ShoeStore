@@ -48,7 +48,7 @@ function WorkerOrders() {
                 <thead>
                 <tr>
                     <th className="worker-orders-table-th">Замовлення</th>
-                    {role === "COURIER" && (
+                    {role === "COURIER" &&(
                         <th className="worker-orders-table-th">Адреса доставки</th>
                     )}
                     <th className="worker-orders-table-th">Статус</th>
