@@ -2,8 +2,18 @@ import "./NavbarAdmin.css"
 import logo from "../../../assets/logo.png";
 import {NavLink} from "react-router-dom";
 import {useNavigate} from "react-router";
+import {useState} from "react";
 function NavbarAdmin() {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const handleItemClick = () => {
+        setIsOpen(false);
+    };
     function handleSubmit() {
         localStorage.clear();
 
@@ -27,12 +37,24 @@ function NavbarAdmin() {
                         <NavLink to="/userslist" className="nav-list__item">
                             Список користувачів
                         </NavLink>
-                        <NavLink to="/workerorders" className="nav-list__item">
-                            Замовлення
-                        </NavLink>
-                        <NavLink to="/myorders" className="nav-list__item">
-                            Мої Замовлення
-                        </NavLink>
+                        <div className="dropdown">
+                            <button className="dropdown-toggle" onClick={toggleMenu}>
+                                Замовлення
+                            </button>
+                            {isOpen && (
+                                <div className="dropdown-menu">
+                                    <NavLink to="/accountorders" onClick={handleItemClick}>
+                                        Облік замовлень
+                                    </NavLink>
+                                    <NavLink to="/workerorders" onClick={handleItemClick}>
+                                        Доступні Замовлення
+                                    </NavLink>
+                                    <NavLink to="/myorders" onClick={handleItemClick}>
+                                        Мої замовлення
+                                    </NavLink>
+                                </div>
+                            )}
+                        </div>
                         <NavLink to="/clientcabinet" className="nav-list__item">
                             Особистий кабінет
                         </NavLink>

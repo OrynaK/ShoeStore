@@ -20,6 +20,7 @@ import ClientOrders from "./components/ClientOrders/ClientOrders";
 import MyOrders from "./components/MyOrders/MyOrders";
 import ChangeShoesAmount from "./components/ChangeShoesAmount/СhangeShoesAmount";
 import WorkerOrders from "./components/WorkerOrders/WorkerOrders";
+import AccountOrders from "./components/AccountOrders/AccountOrders";
 function App() {
     //localStorage.clear();
   return (
@@ -48,6 +49,7 @@ function App() {
                     <Route path="/myorders" element={<MyOrders/>}></Route>
                     <Route path="/changeShoesAmount" element={<ChangeShoesAmount/>}></Route>
                     <Route path="/workerorders" element={<WorkerOrders/>}></Route>
+                    <Route path="/accountorders" element={<AccountOrders/>}></Route>
                 </Routes>
                 }
 
