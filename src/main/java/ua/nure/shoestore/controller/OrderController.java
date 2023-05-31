@@ -43,18 +43,6 @@ public class OrderController {
         return orderService.getOrderByUserId(userId);
     }
 
-    @PostMapping(value = "setWorker")
-    public void setWorker(@RequestParam Long orderId, @RequestParam Long userId) {
-        orderService.setWorker(orderId, userId);
-    }
-
-
-
-    @PostMapping(value = "changeStatus")
-    public void changeStatus(@RequestBody ChangeStatusDTO changeStatusDTO) throws DBException {
-        orderService.changeStatus(changeStatusDTO.getOrderId(), changeStatusDTO.getUserId(), changeStatusDTO.getStatus(), changeStatusDTO.getDescription());
-    }
-
     @PostMapping(value = "/makeOrder")
     public ResponseEntity<Object> makeOrder
             (@RequestBody @Validated MakeOrderDTO makeOrderDTO, BindingResult bindingResult) throws DBException {

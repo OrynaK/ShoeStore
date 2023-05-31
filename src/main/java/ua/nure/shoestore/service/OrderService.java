@@ -19,14 +19,11 @@ import java.util.List;
 public class OrderService {
     private final OrderDAO orderDAO;
     private final AddressDAO addressDAO;
-    private final WorkerDAO workerDAO;
-    private final UserDAO userDAO;
+
 
     public OrderService(OrderDAO orderDAO, AddressDAO addressDAO, WorkerDAO workerDAO, UserDAO userDAO) {
         this.orderDAO = orderDAO;
         this.addressDAO = addressDAO;
-        this.workerDAO = workerDAO;
-        this.userDAO = userDAO;
     }
 
     @Transactional(rollbackFor = DBException.class)
@@ -64,30 +61,4 @@ public class OrderService {
         return orders;
     }
 
-    public boolean setWorker(Long orderId, Long userId) {
-        List<Long> ids = workerDAO.getIdFromUserOrder(orderId);
-        Role role = userDAO.findById(userId).getRole();
-        boolean isChosen = false;
-        for (Long id : ids) {
-            if (role == userDAO.findById(id).getRole()) {
-                isChosen = true;
-            }
-        }
-        if (!isChosen) {
-            workerDAO.setWorker(orderId, userId);
-        }
-        return isChosen;
-    }
-
-
-
-    @Transactional(rollbackFor = DBException.class)
-    public void changeStatus(Long orderId, Long userId, OrderStatus status, String description) throws DBException {
-        try {
-            orderDAO.changeStatus(orderId, status);
-            workerDAO.setDescription(orderId, userId, description);
-        } catch (DBException e) {
-            throw new DBException("Unable to commit changes in the DB", e);
-        }
-    }
 }
