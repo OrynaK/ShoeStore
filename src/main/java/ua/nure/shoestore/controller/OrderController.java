@@ -28,6 +28,11 @@ public class OrderController {
     @Autowired
     private CartService cartService;
 
+    @GetMapping("/getAllOrders")
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
+    }
+
     @GetMapping(value = "/getOrdersByRole")
     public List<Order> showOrdersByRole(@RequestParam("role") Role role) {
         return orderService.getOrdersByRole(role);
