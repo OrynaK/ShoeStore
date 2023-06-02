@@ -54,12 +54,12 @@ function Basket() {
                 <tbody>
                 {shoesInCart.map((shoe, index) => (
                     <tr key={index}>
-                        <td className="admin-orders-table-td">{shoe.name}</td>
-                        <td className="admin-orders-table-td">{shoe.color}</td>
-                        <td className="admin-orders-table-td">{shoe.size}</td>
-                        <td className="admin-orders-table-td">{shoe.amount}</td>
-                        <td className="admin-orders-table-td">{shoe.price}</td>
-                        <td className="admin-orders-table-td">
+                        <td className="basket-table-td">{shoe.name}</td>
+                        <td className="basket-table-td">{shoe.color}</td>
+                        <td className="basket-table-td">{shoe.size}</td>
+                        <td className="basket-table-td">{shoe.amount}</td>
+                        <td className="basket-table-td">{shoe.price}</td>
+                        <td className="basket-table-td">
                             <button className="basket-table-btn-red" onClick={() => deleteShoeFromCart(shoe.id)}>
                                 Видалити
                             </button>
@@ -67,11 +67,12 @@ function Basket() {
                     </tr>
                 ))}
                 </tbody>
-                {shoesInCart.length > 0 ? (<Link to={`/makeorder`}>
-                    <button className="basket-table-btn-green">Оформити замовлення</button>
-                </Link>) : (<h2>Кошик пустий</h2>)}
+
 
             </table>
+            {shoesInCart.length > 0 ? (<Link to={`/makeorder`}>
+                <button className="basket-table-btn-green">Оформити замовлення</button>
+            </Link>) : (<h2 className="basket-header">Кошик пустий</h2>)}
         </div>
     );
 }

@@ -25,7 +25,7 @@ public class RegistrationDTO {
     private String email;
 
     @NotBlank(message = "Поле обов'язкове для заповнення")
-    @Size(max = 10, message = "Номер телефону повинен містити до 10 символів")
+    @Size(max = 13, message = "Номер телефону повинен містити до 13 символів")
     private String phoneNumber;
 
     @NotBlank(message = "Поле обов'язкове для заповнення")

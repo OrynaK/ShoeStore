@@ -62,15 +62,15 @@ function WorkerOrders() {
                             <td className="worker-orders-table-td">{order.id}</td>
                             {role === "COURIER" && (
                                 <td className="my-orders-table-td">
-                                    <tr>
-                                        <td>{order.address.country}, м.{order.address.city},
+
+                                        {order.address.country}, м.{order.address.city},
                                             вул.{order.address.street}, буд.{order.address.houseNumber},
-                                            п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
-                                    </tr>
+                                            п.{order.address.entrance}, кв. {order.address.apartmentNumber}
+
                                 </td>
                             )}
                             <td className="worker-orders-table-td">
-                                <li>{order.status}</li>
+                                {order.status}
                             </td>
                             <td className="worker-orders-table-td">
 

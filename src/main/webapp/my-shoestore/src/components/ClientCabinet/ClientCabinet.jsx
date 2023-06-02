@@ -128,16 +128,16 @@ function ClientCabinet() {
             ) : (
                 <div className="cabinet-form">
                     <div className="cabinet-form--form">
-                        <p className="cabinet-form-input">
+                        <p className="cabinet-form-data">
                             Ім'я: {user && user.name}
                         </p>
-                        <p className="cabinet-form-input">
+                        <p className="cabinet-form-data">
                             Прізвище: {user && user.surname}
                         </p>
-                        <p className="cabinet-form-input">
+                        <p className="cabinet-form-data">
                             Номер телефону: {user && user.phoneNumber}
                         </p>
-                        <p className="cabinet-form-input">
+                        <p className="cabinet-form-data">
                             Email: {user && user.email}
                         </p>
                         <button
