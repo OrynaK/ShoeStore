@@ -56,6 +56,7 @@ function UsersList() {
             <table className="users-list-table">
                 <thead>
                 <tr>
+                    <th className="users-list-table-th">ID</th>
                     <th className="users-list-table-th">Ім'я</th>
                     <th className="users-list-table-th">Прізвище</th>
                     <th className="users-list-table-th">Пошта</th>
@@ -66,6 +67,7 @@ function UsersList() {
                 <tbody>
                 {users.map((user) => (
                     <tr key={user.id}>
+                        <td className="users-list-table-td">{user.id}</td>
                         <td className="users-list-table-td">{user.name}</td>
                         <td className="users-list-table-td">{user.surname}</td>
                         <td className="users-list-table-td">{user.email}</td>

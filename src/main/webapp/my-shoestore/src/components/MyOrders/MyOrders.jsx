@@ -97,24 +97,23 @@ function MyOrders() {
                                 <tr key={order.id}>
                                     <td className="my-orders-table-td">{order.id}</td>
                                     <td className="my-orders-table-td">
-                                        <td className="my-orders-table-td">
+
                                             {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
-                                        </td>
+
                                     </td>
                                     <td className="my-orders-table-td" colSpan={1}>
                                         {order.shoesInOrder.map((shoe) => (
                                             <tr>
-                                                <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
-                                                    - {shoe.amount}шт
-                                                </td>
+                                                №{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р - {shoe.amount}шт
                                             </tr>
                                         ))}
                                     </td>
+
                                     <td className="my-orders-table-td">
                                         {order.status}
                                     </td>
                                     <td className="my-orders-table-td">
-                                        <td className="my-orders-table-td">
+
                                             {(role === 'WAREHOUSE' && order.status === 'ACCEPTED') || (role === 'PACKER' && order.status === 'COMPILED') ? (
                                                 <>
                                                     <button onClick={() => handleStatusChange(order.id, 'CANCELLED')}
@@ -133,20 +132,20 @@ function MyOrders() {
                                                 <h4>Cтатус було змінено</h4>
 
                                             )}
-                                        </td>
+
 
 
                                     </td>
-                                    <td className="my-orders-table-td">
+
                                         {(order.status === 'CANCELLED') || (order.status === 'COMPILED' && role === 'WAREHOUSE') || (order.status === 'READY_FOR_SENDING' && role === 'PACKER') ? (
                                             role === 'WAREHOUSE' ? (
-                                                <tr>
-                                                    <td>{order.usersInOrder.WAREHOUSE.description}</td>
-                                                </tr>
+
+                                                    <td className="my-orders-table-td">{order.usersInOrder.WAREHOUSE.description}</td>
+
                                             ) : (
-                                                <tr>
-                                                    <td>{order.usersInOrder.PACKER.description}</td>
-                                                </tr>
+
+                                                    <td className="my-orders-table-td">{order.usersInOrder.PACKER.description}</td>
+
                                             )
                                         ) : (
                                             <input
@@ -163,7 +162,7 @@ function MyOrders() {
                                                 }}
                                             />
                                         )}
-                                    </td>
+
 
                                 </tr>
                             ))}
@@ -199,21 +198,19 @@ function MyOrders() {
                             <tr>
                                 <td className="my-orders-table-td">{order.id}</td>
                                 <td className="my-orders-table-td">
-                                    <td className="my-orders-table-td">
+
                                         {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
-                                    </td>
+
                                 </td>
-                                <td className="my-orders-table-td">
-                                    <tr>
-                                        <td key={index}>{order.address.country}, м.{order.address.city},
+
+                                        <td className="my-orders-table-td">{order.address.country}, м.{order.address.city},
                                             вул.{order.address.street}, буд.{order.address.houseNumber},
                                             п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
-                                    </tr>
-                                </td>
+
                                 <td className="my-orders-table-td">
-                                    <li>
+
                                         {order.status}
-                                    </li>
+
                                 </td>
                                 <td className="my-orders-table-td">
                                     {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
@@ -230,11 +227,10 @@ function MyOrders() {
                                     )}
                                 </td>
 
-                                <td className="my-orders-table-td">
+
                                     {order.status === 'CANCELLED' || order.status === 'DELIVERED' ? (
-                                        <tr>
-                                            <td>{order.usersInOrder.COURIER.description}</td>
-                                        </tr>
+                                        <td className="my-orders-table-td">{order.usersInOrder.COURIER.description}</td>
+
                                     ) : (
                                         <input
                                             className="registration-form-input"
@@ -250,11 +246,11 @@ function MyOrders() {
                                             }}
                                         />
                                     )}
-                                </td>
+
                                 <td className="my-orders-table-td">
-                                    <li>
+
                                         {order.description}
-                                    </li>
+
                                 </td>
                             </tr>
                         ))}
@@ -264,7 +260,7 @@ function MyOrders() {
 
                     <thead>
                     <tr>
-                        <th className="my-orders-table-th">ID</th>
+
                         <th className="my-orders-table-th">Дата та час</th>
                         <th className="my-orders-table-th">Взуття</th>
                         <th className="my-orders-table-th">Статус</th>
@@ -273,21 +269,20 @@ function MyOrders() {
                     <tbody>
                     {orders.map((order) => (
                         <tr key={order.id}>
-                            <td className="my-orders-table-td">{order.id}</td>
                             <td className="my-orders-table-td">
-                                <td className="my-orders-table-td">
                                     {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
-                                </td>
                             </td>
-                            <td className="my-orders-table-td" colSpan={1}>
+
                                 {order.shoesInOrder.map((shoe) => (
-                                    <tr>
-                                        <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
-                                            - {shoe.amount}шт
-                                        </td>
-                                    </tr>
+                                    <td className="my-orders-table-td" colSpan={1}>
+                                        {shoe.name} {shoe.color} {shoe.size}р
+                                        - {shoe.amount}шт
+
+                                    </td>
+
+
                                 ))}
-                            </td>
+
                             <td className="my-orders-table-td">
                                 {order.status}
                             </td>
@@ -321,31 +316,29 @@ function MyOrders() {
                             <tr key={order.id}>
                                 <td className="my-orders-table-td">{order.id}</td>
                                 <td className="my-orders-table-td">
-                                    <td className="my-orders-table-td">
+
                                         {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
-                                    </td>
+
                                 </td>
-                                <td className="my-orders-table-td" colSpan={1}>
+
                                     {order.shoesInOrder.map((shoe) => (
-                                        <tr>
-                                            <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+
+                                            <td className="my-orders-table-td" colSpan={1}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
                                                 - {shoe.amount}шт
                                             </td>
-                                        </tr>
+
                                     ))}
-                                </td>
-                                <td className="my-orders-table-td">
-                                    <tr>
-                                        <td key={order.id}>{order.address.country}, м.{order.address.city},
+
+
+
+                                        <td className="my-orders-table-td">{order.address.country}, м.{order.address.city},
                                             вул.{order.address.street}, буд.{order.address.houseNumber},
                                             п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
-                                    </tr>
-                                </td>
+
                                 <td className="my-orders-table-td">
                                     {order.status}
                                 </td>
                                 <td className="my-orders-table-td">
-                                    <td className="my-orders-table-td">
                                         {order.status !== 'PROCESSING' ? (
                                             <h4>Cтатус було змінено</h4>
                                         ) : (
@@ -360,15 +353,15 @@ function MyOrders() {
 
                                             </>
                                         )}
-                                    </td>
+
 
 
                                 </td>
-                                <td className="my-orders-table-td">
+
                                     {order.status !== 'PROCESSING' ? (
-                                        <tr>
-                                            <td>{order.usersInOrder.ADMIN.description}</td>
-                                        </tr>
+
+                                        <td className="my-orders-table-td">{order.usersInOrder.ADMIN.description}</td>
+
                                     ) : (
                                         <input
                                             className="registration-form-input"
@@ -384,11 +377,11 @@ function MyOrders() {
                                             }}
                                         />
                                     )}
-                                </td>
+
                                 <td className="my-orders-table-td">
-                                    <li>
+
                                         {order.description}
-                                    </li>
+
                                 </td>
                             </tr>
                         ))}

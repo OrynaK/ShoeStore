@@ -9,6 +9,7 @@ function MakeOrder() {
     const [houseNumber, setHouseNumber] = useState('');
     const [entrance, setEntrance] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
+
     const [shoesInCart, setShoesInCart] = useState([]);
     const [inputErrors, setInputErrors] = useState({});
 
