@@ -104,7 +104,7 @@ function MyOrders() {
                                     <td className="my-orders-table-td" colSpan={1}>
                                         {order.shoesInOrder.map((shoe) => (
                                             <tr>
-                                                №{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р - {shoe.amount}шт
+                                               <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р - {shoe.amount}шт</td>
                                             </tr>
                                         ))}
                                     </td>
@@ -149,7 +149,7 @@ function MyOrders() {
                                             )
                                         ) : (
                                             <input
-                                                className="registration-form-input"
+                                                className="my-orders-form-input"
                                                 type="text"
                                                 name={`description-${order.id}`}
                                                 value={description[order.id] || ''}
@@ -233,7 +233,7 @@ function MyOrders() {
 
                                     ) : (
                                         <input
-                                            className="registration-form-input"
+                                            className="my-orders-form-input"
                                             type="text"
                                             name={`description-${order.id}`}
                                             value={description[order.id] || ''}
@@ -320,15 +320,17 @@ function MyOrders() {
                                         {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
 
                                 </td>
-
+                                <td className="my-orders-table-td" colSpan={1}>
                                     {order.shoesInOrder.map((shoe) => (
-
-                                            <td className="my-orders-table-td" colSpan={1}>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
+                                        <tr>
+                                            <td>№{shoe.shoeId} {shoe.name} {shoe.color} {shoe.size}р
                                                 - {shoe.amount}шт
                                             </td>
+                                        </tr>
+
 
                                     ))}
-
+                                </td>
 
 
                                         <td className="my-orders-table-td">{order.address.country}, м.{order.address.city},
@@ -364,7 +366,7 @@ function MyOrders() {
 
                                     ) : (
                                         <input
-                                            className="registration-form-input"
+                                            className="my-orders-form-input"
                                             type="text"
                                             name={`description-${order.id}`}
                                             value={description[order.id] || ''}
@@ -379,8 +381,8 @@ function MyOrders() {
                                     )}
 
                                 <td className="my-orders-table-td">
+                                    <li>{order.description}</li>
 
-                                        {order.description}
 
                                 </td>
                             </tr>
