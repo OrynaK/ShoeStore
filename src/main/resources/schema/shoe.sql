@@ -234,6 +234,28 @@ END;
 |
 DELIMITER ;
 
+-- -------------------------------
+DELIMITER //
+
+CREATE TRIGGER return_shoe_amount AFTER UPDATE ON `order`
+    FOR EACH ROW
+BEGIN
+    IF NEW.status = 'cancelled' THEN
+        UPDATE shoe
+        SET amount = amount + (
+            SELECT amount FROM shoe_order WHERE order_id = NEW.id
+        )
+        WHERE id IN (
+            SELECT shoe_id FROM shoe_order WHERE order_id = NEW.id
+        );
+    END IF;
+END//
+
+DELIMITER ;
+
+
+
+
 
 -- USERS------------------------------------------------------------------------
 INSERT INTO user (name, surname, password, email, phone_number, role)
@@ -702,16 +724,3 @@ VALUES (1, 1, NULL),
        (30, 33, NULL),
        (30, 34, NULL);
 
-
-
-SELECT id,actual_price
-FROM `shoe`;
-SELECT *
-from `user_order` WHERE order_id=1;
-
-SELECT *
-from `user`;
-
-SELECT name, size
-FROM shoe
-WHERE id = 1;
