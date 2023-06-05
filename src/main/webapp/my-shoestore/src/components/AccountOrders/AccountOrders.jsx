@@ -37,11 +37,10 @@ function AccountOrders() {
                                 {new Date(order.date).toLocaleDateString('uk-UA')} {order.time[0] + ":" + order.time[1] + ":" + +order.time[2]}
                             </td>
                             <td className="my-orders-table-td">
-                                <tr>
-                                    <td>{order.address.country}, м.{order.address.city},
+                                {order.address.country}, м.{order.address.city},
                                          {order.address.street}, буд.{order.address.houseNumber},
-                                        п.{order.address.entrance}, кв. {order.address.apartmentNumber}</td>
-                                </tr>
+                                        п.{order.address.entrance}, кв. {order.address.apartmentNumber}
+
                             </td>
                             <td className="worker-orders-table-td">{order.totalCost}</td>
                             <td className="worker-orders-table-td">
