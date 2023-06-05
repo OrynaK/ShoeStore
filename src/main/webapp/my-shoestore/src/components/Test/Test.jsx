@@ -1,9 +1,9 @@
-/*import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 function Test() {
     const [tests, setTests] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:8080/shoto")
+        fetch("http://localhost:8080/getUsers")
             .then((response) => response.json())
             .then((data) => setTests(data))
             .catch((error) => {
@@ -39,4 +39,4 @@ function Test() {
     );
 }
 
-export default Test;*/
+export default Test;
