@@ -57,3 +57,8 @@
 .basket {
     align-items: center;
 }
+
+.basket-header-empty {
+    text-align: center;
+    margin-top: 200px;
+}

@@ -40,41 +40,50 @@ function Basket() {
     return (
         <div className="basket">
             <h2 className="basket-header">Кошик</h2>
-            <table className="basket-table">
-                <thead>
-                <tr>
-                    <th className="basket-table-th">Назва</th>
-                    <th className="basket-table-th">Колір</th>
-                    <th className="basket-table-th">Розмір</th>
-                    <th className="basket-table-th">Кількість</th>
-                    <th className="basket-table-th">Ціна</th>
-                    <th className="basket-table-th"></th>
-                </tr>
-                </thead>
-                <tbody>
-                {shoesInCart.map((shoe, index) => (
-                    <tr key={index}>
-                        <td className="basket-table-td">{shoe.name}</td>
-                        <td className="basket-table-td">{shoe.color}</td>
-                        <td className="basket-table-td">{shoe.size}</td>
-                        <td className="basket-table-td">{shoe.amount}</td>
-                        <td className="basket-table-td">{shoe.price}</td>
-                        <td className="basket-table-td">
-                            <button className="basket-table-btn-red" onClick={() => deleteShoeFromCart(shoe.id)}>
-                                Видалити
-                            </button>
-                        </td>
+            {shoesInCart.length > 0 ? (
+                <table className="basket-table">
+                    <thead>
+                    <tr>
+                        <th className="basket-table-th">Назва</th>
+                        <th className="basket-table-th">Колір</th>
+                        <th className="basket-table-th">Розмір</th>
+                        <th className="basket-table-th">Кількість</th>
+                        <th className="basket-table-th">Ціна</th>
+                        <th className="basket-table-th"></th>
                     </tr>
-                ))}
-                </tbody>
+                    </thead>
+                    <tbody>
+                    {shoesInCart.map((shoe, index) => (
+                        <tr key={index}>
+                            <td className="basket-table-td">{shoe.name}</td>
+                            <td className="basket-table-td">{shoe.color}</td>
+                            <td className="basket-table-td">{shoe.size}</td>
+                            <td className="basket-table-td">{shoe.amount}</td>
+                            <td className="basket-table-td">{shoe.price}</td>
+                            <td className="basket-table-td">
+                                <button
+                                    className="basket-table-btn-red"
+                                    onClick={() => deleteShoeFromCart(shoe.id)}
+                                >
+                                    Видалити
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
 
-
-            </table>
-            {shoesInCart.length > 0 ? (<Link to={`/makeorder`}>
-                <button className="basket-table-btn-green">Оформити замовлення</button>
-            </Link>) : (<h2 className="basket-header">Кошик пустий</h2>)}
+            ) : (
+                <h2 className="basket-header-empty">Кошик пустий</h2>
+            )}
+            {shoesInCart.length > 0 && (
+                <Link to={`/makeorder`}>
+                    <button className="basket-table-btn-green">Оформити замовлення</button>
+                </Link>
+            )}
         </div>
     );
+
 }
 
 export default Basket;
