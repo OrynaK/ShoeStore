@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 
 function Test() {
-    const [tests, setTests] = useState([]);
+    const [bestUserDTO, setBestUserDTO] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:8080/getUsers")
+        fetch("http://localhost:8080/test")
             .then((response) => response.json())
-            .then((data) => setTests(data))
+            .then((data) => setBestUserDTO(data))
             .catch((error) => {
                 console.error("Error:", error);
             });
@@ -19,18 +19,18 @@ function Test() {
                     <th className="users-list-table-th">ID</th>
                     <th className="users-list-table-th">Ім'я</th>
                     <th className="users-list-table-th">Прізвище</th>
-                    <th className="users-list-table-th">Пошта</th>
-                    <th className="users-list-table-th">Роль</th>
+                    <th className="users-list-table-th">Айді замовлення</th>
+                    <th className="users-list-table-th">Загальні витрати</th>
                 </tr>
                 </thead>
                 <tbody>
-                {tests.map((test) => (
-                    <tr key={test.id}>
-                        <td className="users-list-table-td">{test.id}</td>
-                        <td className="users-list-table-td">{test.name}</td>
-                        <td className="users-list-table-td">{test.surname}</td>
-                        <td className="users-list-table-td">{test.email}</td>
-                        <td className="users-list-table-td">{test.role}</td>
+                {bestUserDTO.map((bestUser) => (
+                    <tr key={bestUser.id}>
+                        <td className="users-list-table-td">{bestUser.id}</td>
+                        <td className="users-list-table-td">{bestUser.name}</td>
+                        <td className="users-list-table-td">{bestUser.surname}</td>
+                        <td className="users-list-table-td">{bestUser.order_id}</td>
+                        <td className="users-list-table-td">{bestUser.total_spent}</td>
                     </tr>
                 ))}
                 </tbody>

@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.shoestore.dao.DBException;
+import ua.nure.shoestore.dto.BestUserDTO;
 import ua.nure.shoestore.dto.ChangeStatusDTO;
 import ua.nure.shoestore.dto.MakeOrderDTO;
 import ua.nure.shoestore.dto.ShoeDTO;
@@ -61,6 +62,12 @@ public class OrderController {
         orderService.makeOrder(new Order(makeOrderDTO.getUserId(), address, shoesInOrder));
         cartService.clearCart(makeOrderDTO.getUserId());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/test")
+    //  змінити тип повертаємого об'єкта
+    public List<BestUserDTO> test(){
+        return orderService.test();
     }
 
 }

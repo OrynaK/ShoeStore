@@ -7,6 +7,7 @@ import ua.nure.shoestore.dao.EntityDAO.AddressDAO;
 import ua.nure.shoestore.dao.EntityDAO.OrderDAO;
 import ua.nure.shoestore.dao.EntityDAO.UserDAO;
 import ua.nure.shoestore.dao.EntityDAO.WorkerDAO;
+import ua.nure.shoestore.dto.BestUserDTO;
 import ua.nure.shoestore.entity.Order;
 import ua.nure.shoestore.entity.enums.OrderStatus;
 import ua.nure.shoestore.entity.enums.Role;
@@ -61,4 +62,8 @@ public class OrderService {
         return orders;
     }
 
+    //  змінити тип повертаємого об'єкта
+    public List<BestUserDTO> test(){
+        return orderDAO.test();
+    }
 }
