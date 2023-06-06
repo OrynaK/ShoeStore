@@ -237,24 +237,23 @@ DELIMITER ;
 -- -------------------------------
 DELIMITER //
 
-CREATE TRIGGER return_shoe_amount AFTER UPDATE ON `order`
+CREATE TRIGGER return_shoe_amount
+    AFTER UPDATE
+    ON `order`
     FOR EACH ROW
 BEGIN
     IF NEW.status = 'cancelled' THEN
         UPDATE shoe
-        SET amount = amount + (
-            SELECT amount FROM shoe_order WHERE order_id = NEW.id
-        )
-        WHERE id IN (
-            SELECT shoe_id FROM shoe_order WHERE order_id = NEW.id
-        );
+        SET amount = amount + (SELECT amount
+                               FROM shoe_order
+                               WHERE order_id = NEW.id)
+        WHERE id IN (SELECT shoe_id
+                     FROM shoe_order
+                     WHERE order_id = NEW.id);
     END IF;
 END//
 
 DELIMITER ;
-
-
-
 
 
 -- USERS------------------------------------------------------------------------
@@ -302,7 +301,6 @@ VALUES ('client', 'client', '1234', 'client@gmail.com', '+380950000001', 'client
        ('John', 'Snow', '1234', 'courier@gmail.com', '+380950000004', 'courier'),
        ('Liam', 'Anderson', '2345', 'liam@gmail.com', '+380950000005', 'courier'),
        ('Noah', 'Martinez', '6789', 'noah@gmail.com', '+380950000006', 'courier');
-
 ;
 
 -- IMAGES------------------------------------------------------------------------
@@ -328,14 +326,18 @@ VALUES ('MensWinterBoots.png', 'src/main/webapp/my-shoestore/public/images/MensW
        ('WomensCasulaSlip-onSandals.png', 'src/main/webapp/my-shoestore/public/images/WomensCasulaSlip-onSandals.png'),
        ('WomensLightWeigthSneakers.png', 'src/main/webapp/my-shoestore/public/images/WomensLightWeigthSneakers.png'),
        ('WomensSportyAthleticShoes.png', 'src/main/webapp/my-shoestore/public/images/WomensSportyAthleticShoes.png'),
-       ('WomensStylishCanvasSneakers.png','src/main/webapp/my-shoestore/public/images/WomensStylishCanvasSneakers.png'),
-       ('WomensRetroHigh-topSneakers.png','src/main/webapp/my-shoestore/public/images/WomensRetroHigh-topSneakers.png'),
+       ('WomensStylishCanvasSneakers.png',
+        'src/main/webapp/my-shoestore/public/images/WomensStylishCanvasSneakers.png'),
+       ('WomensRetroHigh-topSneakers.png',
+        'src/main/webapp/my-shoestore/public/images/WomensRetroHigh-topSneakers.png'),
        ('MensComfortableFlipFlops.png', 'src/main/webapp/my-shoestore/public/images/MensComfortableFlipFlops.png'),
-       ('MensLightweightSlideSandals.png','src/main/webapp/my-shoestore/public/images/MensLightweightSlideSandals.png'),
+       ('MensLightweightSlideSandals.png',
+        'src/main/webapp/my-shoestore/public/images/MensLightweightSlideSandals.png'),
        ('MensCasualBeachSandals.png', 'src/main/webapp/my-shoestore/public/images/MensCasualBeachSandals.png'),
        ('MensSportyWaterShoes.png', 'src/main/webapp/my-shoestore/public/images/MensSportyWaterShoes.png'),
        ('MensOutdoorHikingShoes.png', 'src/main/webapp/my-shoestore/public/images/MensOutdoorHikingShoes.png'),
-       ('MensBreathtakingRunningShoes.png','src/main/webapp/my-shoestore/public/images/MensBreathtakingRunningShoes.png'),
+       ('MensBreathtakingRunningShoes.png',
+        'src/main/webapp/my-shoestore/public/images/MensBreathtakingRunningShoes.png'),
        ('MensAthletictrainingShoes.png', 'src/main/webapp/my-shoestore/public/images/MensAthletictrainingShoes.png');
 
 
@@ -494,38 +496,41 @@ VALUES (41.5, 'black', 'winter', 'male', 79.99, 'Mens Winter Boots', 10, 1),
 
 -- ADDRESS-----------------------------------------------------------------------
 INSERT INTO address (country, city, street, house_number, entrance, apartment_number)
-VALUES
-    ('Україна', 'Львів', 'вул. Нова', '10', '1', '5'),
-    ('Україна', 'Київ', 'вул. Центральна', '15', '2', '10'),
-    ('Україна', 'Харків', 'вул. Проспектна', '25', '3', '7'),
-    ('Україна', 'Одеса', 'вул. Польова', '8', '4', '3'),
-    ('Україна', 'Дніпро', 'вул. Велика', '12', '1', '2'),
-    ('Україна', 'Запоріжжя', 'вул. Головна', '7', '2', '9'),
-    ('Україна', 'Вінниця', 'вул. Перша', '18', '3', '6'),
-    ('Україна', 'Хмельницький', 'вул. Соборна', '22', '4', '1'),
-    ('Україна', 'Чернівці', 'вул. Лісна', '9', '1', '8'),
-    ('Україна', 'Житомир', 'вул. Степова', '14', '2', '4'),
-    ('Україна', 'Львів', 'вул. Стара', '5', '1', '5'),
-    ('Україна', 'Київ', 'вул. Головна', '10', NULL, NULL),
-    ('Україна', 'Харків', 'вул. Сонячна', '20', '2', '7'),
-    ('Україна', 'Одеса', 'вул. Морська', '15', NULL, NULL),
-    ('Україна', 'Дніпро', 'вул. Центральна', '18', '1', '2'),
-    ('Україна', 'Запоріжжя', 'вул. Першотравнева', '7', NULL, NULL),
-    ('Україна', 'Вінниця', 'вул. Грушевського', '12', '3', '6'),
-    ('Україна', 'Хмельницький', 'вул. Миру', '22', NULL, NULL),
-    ('Україна', 'Чернівці', 'вул. Городоцька', '9', '1', '8'),
-    ('Україна', 'Житомир', 'вул. Київська', '14', NULL, NULL),
-    ('Україна', 'Львів', 'вул. Нова', '10', '2', '4'),
-    ('Україна', 'Київ', 'вул. Шевченка', '15', NULL, NULL),
-    ('Україна', 'Харків', 'вул. Сумська', '25', '3', '7'),
-    ('Україна', 'Одеса', 'вул. Польова', '8', NULL, NULL),
-    ('Україна', 'Дніпро', 'вул. Велика', '12', '1', '2'),
-    ('Україна', 'Запоріжжя', 'вул. Головна', '7', NULL, NULL),
-    ('Україна', 'Вінниця', 'вул. Перша', '18', '2', '6'),
-    ('Україна', 'Хмельницький', 'вул. Соборна', '22', NULL, NULL),
-    ('Україна', 'Чернівці', 'вул. Лісна', '9', '1', '8'),
-    ('Україна', 'Житомир', 'вул. Степова', '14', NULL, NULL),
-    ('Україна', 'Львів', 'вул. Вузька', '5', '2', '4');
+VALUES ('Україна', 'Львів', 'Нова', '10', '1', '5'),
+       ('Україна', 'Київ', 'Центральна', '15', '2', '10'),
+       ('Україна', 'Харків', 'Проспектна', '25', '3', '7'),
+       ('Україна', 'Одеса', 'Польова', '8', '4', '3'),
+       ('Україна', 'Дніпро', 'Велика', '12', '1', '2'),
+       ('Україна', 'Запоріжжя', 'Головна', '7', '2', '9'),
+       ('Україна', 'Вінниця', 'Перша', '18', '3', '6'),
+       ('Україна', 'Хмельницький', 'Соборна', '22', '4', '1'),
+       ('Україна', 'Чернівці', 'Лісна', '9', '1', '8'),
+       ('Україна', 'Житомир', 'Степова', '14', '2', '4'),
+       ('Україна', 'Львів', 'Стара', '5', '1', '5'),
+       ('Україна', 'Київ', 'Головна', '10', NULL, NULL),
+       ('Україна', 'Харків', 'Сонячна', '20', '2', '7'),
+       ('Україна', 'Одеса', 'Морська', '15', NULL, NULL),
+       ('Україна', 'Дніпро', 'Центральна', '18', '1', '2'),
+       ('Україна', 'Запоріжжя', 'Першотравнева', '7', NULL, NULL),
+       ('Україна', 'Вінниця', 'Грушевського', '12', '3', '6'),
+       ('Україна', 'Хмельницький', 'Миру', '22', NULL, NULL),
+       ('Україна', 'Чернівці', 'Городоцька', '9', '1', '8'),
+       ('Україна', 'Житомир', 'Київська', '14', NULL, NULL),
+       ('Україна', 'Львів', 'Нова', '10', '2', '4'),
+       ('Україна', 'Київ', 'Шевченка', '15', NULL, NULL),
+       ('Україна', 'Харків', 'Сумська', '25', '3', '7'),
+       ('Україна', 'Одеса', 'Польова', '8', NULL, NULL),
+       ('Україна', 'Дніпро', 'Велика', '12', '1', '2'),
+       ('Україна', 'Запоріжжя', 'Головна', '7', NULL, NULL),
+       ('Україна', 'Вінниця', 'Перша', '18', '2', '6'),
+       ('Україна', 'Хмельницький', 'Соборна', '22', NULL, NULL),
+       ('Україна', 'Чернівці', 'Лісна', '9', '1', '8'),
+       ('Україна', 'Житомир', 'Степова', '14', NULL, NULL),
+       ('Україна', 'Львів', 'Вузька', '5', '2', '4'),
+       ('Україна', 'Київ', 'Велика Васильківська', '10', NULL, NULL),
+       ('Україна', 'Харків', 'Місячна', '20', '2', '7'),
+       ('Україна', 'Одеса', 'Гуморна', '15', NULL, NULL);
+
 
 -- CART--------------------------------------------------------------------------
 INSERT INTO cart (client_id)
@@ -580,7 +585,10 @@ VALUES (1, 'processing'),
        (27, 'ready_for_sending'),
        (28, 'ready_for_sending'),
        (29, 'ready_for_sending'),
-       (30, 'ready_for_sending');
+       (30, 'ready_for_sending'),
+       (31, 'ready_for_sending'),
+       (32, 'ready_for_sending'),
+       (33, 'ready_for_sending');
 
 -- SHOE_ORDER------------------------------------------------------------------------
 INSERT INTO shoe_order (order_id, shoe_id, price, amount)
@@ -623,7 +631,10 @@ VALUES (1, 1, 79.99, 2),
        (28, 68, 99.99, 1),
        (29, 24, 109.99, 1),
        (30, 59, 99.99, 1),
-       (30, 12, 79.99, 1);
+       (30, 12, 79.99, 1),
+       (31, 24, 109.99, 1),
+       (32, 59, 99.99, 1),
+       (33, 12, 79.99, 1);
 
 -- USER_ORDER------------------------------------------------------------------------
 INSERT INTO user_order (order_id, user_id, description)
@@ -655,7 +666,7 @@ VALUES (1, 1, NULL),
 
        (14, 14, NULL),
        (14, 31, NULL),
-  -- compiled
+       -- compiled
        (15, 15, NULL),
        (15, 31, NULL),
        (15, 34, NULL),
@@ -683,7 +694,7 @@ VALUES (1, 1, NULL),
        (21, 21, NULL),
        (21, 31, NULL),
        (21, 34, NULL),
-  -- readyForSending
+       -- readyForSending
        (22, 22, NULL),
        (22, 31, NULL),
        (22, 34, NULL),
@@ -732,26 +743,41 @@ VALUES (1, 1, NULL),
        (30, 33, NULL),
        (30, 36, NULL),
        (30, 39, NULL),
-       (30, 34, NULL);
+       (30, 34, NULL),
 
-SELECT
-    u.id,
-    u.name,
-    u.surname,
-    uo.order_id,
-    SUM(so.price * so.amount) AS total_spent
-FROM
-    `user` AS u
-        JOIN
-    user_order AS uo ON u.id = uo.user_id
-        JOIN
-    shoe_order AS so ON uo.order_id = so.order_id
-WHERE
-        u.role = 'client'
-GROUP BY
-    u.id, u.name, u.surname, uo.order_id
-ORDER BY
-    u.id, uo.order_id, total_spent DESC;
+       (31, 29, NULL),
+       (31, 32, NULL),
+       (31, 35, NULL),
+       (31, 38, NULL),
+       (31, 40, NULL),
+
+       (32, 29, NULL),
+       (32, 32, NULL),
+       (32, 35, NULL),
+       (32, 38, NULL),
+       (32, 40, NULL),
+
+       (33, 29, NULL),
+       (33, 32, NULL),
+       (33, 35, NULL),
+       (33, 38, NULL),
+       (33, 40, NULL);
+
+
+
+SELECT u.id,
+       u.name,
+       u.surname,
+       uo.order_id,
+       SUM(so.price * so.amount) AS total_spent
+FROM `user` AS u
+         JOIN
+     user_order AS uo ON u.id = uo.user_id
+         JOIN
+     shoe_order AS so ON uo.order_id = so.order_id
+WHERE u.role = 'client'
+GROUP BY u.id, u.name, u.surname, uo.order_id
+ORDER BY u.id, uo.order_id, total_spent DESC;
 
 
 
