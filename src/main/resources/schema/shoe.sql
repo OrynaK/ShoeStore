@@ -289,10 +289,20 @@ VALUES ('client', 'client', '1234', 'client@gmail.com', '+380950000001', 'client
        ('Elijah', 'Gonzalez', 'password23', 'elijahgonzalez@example.com', '+380111122244', 'client'),
        ('Charlotte', 'Clark', 'password24', 'charlotteclark@example.com', '+380888877700', 'client'),
        ('Lucas', 'Young', 'password25', 'lucasyoung@example.com', '+380444433366', 'client'),
+
        ('Megan', 'Coleman', '1234', 'admin@gmail.com', '+380950000000', 'admin'),
+       ('Alice', 'Brown', '5678', 'alice@gmail.com', '+380950900001', 'admin'),
+       ('Emily', 'Smith', '9012', 'emily@gmail.com', '+38095000002', 'admin'),
        ('Jennifer', 'Jones', '1234', 'warehouse@gmail.com', '+380445556666', 'warehouse'),
+       ('Sophia', 'Johnson', '7890', 'sophia@gmail.com', '+380445556667', 'warehouse'),
+       ('Oliver', 'Davis', '2345', 'oliver@gmail.com', '+380445556668', 'warehouse'),
        ('David', 'Brown', '1234', 'packer@gmail.com', '+380112223333', 'packer'),
-       ('John', 'Snow', '1234', 'courier@gmail.com', '+380950000004', 'courier');
+       ('Ethan', 'Wilson', '0123', 'ethan@gmail.com', '+380112223334', 'packer'),
+       ('William', 'Taylor', '4567', 'william@gmail.com', '+380112223335', 'packer'),
+       ('John', 'Snow', '1234', 'courier@gmail.com', '+380950000004', 'courier'),
+       ('Liam', 'Anderson', '2345', 'liam@gmail.com', '+380950000005', 'courier'),
+       ('Noah', 'Martinez', '6789', 'noah@gmail.com', '+380950000006', 'courier');
+
 ;
 
 -- IMAGES------------------------------------------------------------------------
@@ -629,98 +639,119 @@ VALUES (1, 1, NULL),
        (8, 31, NULL),
 
        (9, 9, NULL),
-       (9, 31, NULL),
+       (9, 32, NULL),
 
        (10, 10, NULL),
-       (10, 31, NULL),
+       (10, 33, NULL),
 
        (11, 11, NULL),
        (11, 31, NULL),
 
        (12, 12, NULL),
-       (12, 31, NULL),
+       (12, 32, NULL),
 
        (13, 13, NULL),
-       (13, 31, NULL),
+       (13, 33, NULL),
 
        (14, 14, NULL),
        (14, 31, NULL),
   -- compiled
        (15, 15, NULL),
        (15, 31, NULL),
-       (15, 32, NULL),
+       (15, 34, NULL),
 
        (16, 16, NULL),
-       (16, 31, NULL),
        (16, 32, NULL),
+       (16, 35, NULL),
 
        (17, 17, NULL),
-       (17, 31, NULL),
-       (17, 32, NULL),
+       (17, 33, NULL),
+       (17, 36, NULL),
 
        (18, 18, NULL),
        (18, 31, NULL),
-       (18, 32, NULL),
+       (18, 34, NULL),
 
        (19, 19, NULL),
-       (19, 31, NULL),
        (19, 32, NULL),
+       (19, 35, NULL),
 
        (20, 20, NULL),
-       (20, 31, NULL),
-       (20, 32, NULL),
+       (20, 33, NULL),
+       (20, 36, NULL),
 
        (21, 21, NULL),
        (21, 31, NULL),
-       (21, 32, NULL),
+       (21, 34, NULL),
   -- readyForSending
        (22, 22, NULL),
        (22, 31, NULL),
-       (22, 32, NULL),
-       (22, 33, NULL),
+       (22, 34, NULL),
+       (22, 37, NULL),
 
        (23, 23, NULL),
-       (23, 31, NULL),
        (23, 32, NULL),
-       (23, 33, NULL),
+       (23, 35, NULL),
+       (23, 38, NULL),
 
        (24, 24, NULL),
-       (24, 31, NULL),
-       (24, 32, NULL),
        (24, 33, NULL),
+       (24, 36, NULL),
+       (24, 39, NULL),
 
        (25, 25, NULL),
        (25, 31, NULL),
-       (25, 32, NULL),
-       (25, 33, NULL),
+       (25, 34, NULL),
+       (25, 37, NULL),
 
        (26, 26, NULL),
-       (26, 31, NULL),
        (26, 32, NULL),
-       (26, 33, NULL),
-       (26, 34, NULL),
+       (26, 35, NULL),
+       (26, 38, NULL),
+       (26, 40, NULL),
 
        (27, 27, NULL),
-       (27, 31, NULL),
-       (27, 32, NULL),
        (27, 33, NULL),
-       (27, 34, NULL),
+       (27, 36, NULL),
+       (27, 39, NULL),
+       (27, 41, NULL),
 
        (28, 28, NULL),
        (28, 31, NULL),
-       (28, 32, NULL),
-       (28, 33, NULL),
        (28, 34, NULL),
+       (28, 37, NULL),
+       (28, 42, NULL),
 
        (29, 29, NULL),
-       (29, 31, NULL),
        (29, 32, NULL),
-       (29, 33, NULL),
-       (29, 34, NULL),
+       (29, 35, NULL),
+       (29, 38, NULL),
+       (29, 40, NULL),
 
        (30, 30, NULL),
-       (30, 31, NULL),
-       (30, 32, NULL),
        (30, 33, NULL),
+       (30, 36, NULL),
+       (30, 39, NULL),
        (30, 34, NULL);
+
+SELECT
+    u.id,
+    u.name,
+    u.surname,
+    uo.order_id,
+    SUM(so.price * so.amount) AS total_spent
+FROM
+    `user` AS u
+        JOIN
+    user_order AS uo ON u.id = uo.user_id
+        JOIN
+    shoe_order AS so ON uo.order_id = so.order_id
+WHERE
+        u.role = 'client'
+GROUP BY
+    u.id, u.name, u.surname, uo.order_id
+ORDER BY
+    u.id, uo.order_id, total_spent DESC;
+
+
 
