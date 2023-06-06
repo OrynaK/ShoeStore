@@ -38,7 +38,7 @@ function AccountOrders() {
                             </td>
                             <td className="my-orders-table-td">
                                 {order.address.country}, м.{order.address.city},
-                                         {order.address.street}, буд.{order.address.houseNumber},
+                                вул.{order.address.street}, буд.{order.address.houseNumber},
                                         п.{order.address.entrance}, кв. {order.address.apartmentNumber}
 
                             </td>
