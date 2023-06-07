@@ -9,6 +9,7 @@ function MakeOrder() {
     const [houseNumber, setHouseNumber] = useState('');
     const [entrance, setEntrance] = useState('');
     const [apartmentNumber, setApartmentNumber] = useState('');
+    const [cardNumber, setCardNumber] = useState('');
 
     const [shoesInCart, setShoesInCart] = useState([]);
     const [inputErrors, setInputErrors] = useState({});
@@ -31,11 +32,18 @@ function MakeOrder() {
     };
 
     useEffect(() => {
-        fetchShoesInCart().then(r => console.log('Shoes in cart fetched'));
+        fetchShoesInCart().then(() => console.log('Shoes in cart fetched'));
     }, [userId]);
 
     const handleSubmit = event => {
         event.preventDefault();
+
+        if(!cardNumber) {
+            setInputErrors(prevErrors => ({
+                ...prevErrors,
+                cardNumber: "Поле обов'язкове для заповнення"
+            }));
+        }
 
         const makeOrderDTO = {
             userId: userId,
@@ -63,11 +71,18 @@ function MakeOrder() {
                 navigate('/myorders');
             } else if (response.status === 400) {
                 response.json().then(data => {
-                    setInputErrors(data);
+                    setInputErrors(prevErrors => ({
+                        ...prevErrors,
+                        ...data,
+                        cardNumber: "Поле обов'язкове для заповнення"
+                    }));
                 });
             }
+        }).catch((error) => {
+            console.log("Error while making order: " + error);
         });
     };
+
     return (
         <div className="make-order">
             <h1 className="make-order-header">Оформити замовлення</h1>
@@ -105,12 +120,17 @@ function MakeOrder() {
                 <input className="make-order-form-input"
                        type="text"
                        name="card"
+                       value={cardNumber}
                        onKeyDown={(event) => {
                            if (!/\d/.test(event.key) && event.key !== "Backspace") {
                                event.preventDefault();
                            }
                        }}
+                       onChange={event => setCardNumber(event.target.value)}
                 />
+                <div>
+                    {inputErrors.cardNumber && <p className="input-error">{inputErrors.cardNumber}</p>}
+                </div>
                 <label className="make-order-form-label">
                     Країна</label>
                 <input className="make-order-form-input"
