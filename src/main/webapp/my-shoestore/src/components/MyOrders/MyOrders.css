@@ -10,6 +10,10 @@
     border-bottom: 1px solid #ddd;
 }
 
+.my-orders-table-td p{
+    margin: 5px;
+}
+
 .my-orders-table-th {
     background-color: #f2f2f2;
 }
