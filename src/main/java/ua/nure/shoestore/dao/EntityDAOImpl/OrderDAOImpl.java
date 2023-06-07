@@ -23,12 +23,12 @@ public class OrderDAOImpl implements OrderDAO {
     private static final String UPDATE_STATUS = "UPDATE `order` SET status=? WHERE id=?";
     private static final String INSERT_SHOES_ORDER = "INSERT INTO `shoe_order` (order_id, shoe_id, price, amount) VALUES (?, ?, ?, ?)";
     private static final String INSERT_ORDER_USER = "INSERT INTO `user_order` (order_id, user_id, description, datetime) VALUES (?, ?, DEFAULT, DEFAULT)";
-    private static final String GET_ORDER_BY_ROLE = "SELECT * from `order` WHERE status=?";
+    private static final String GET_ORDER_BY_ROLE = "SELECT * from `order` WHERE status=? ORDER BY id DESC";
     private static final String GET_ORDERS = "SELECT * from `order`";
     private static final String GET_ORDER_BY_ID = "SELECT * from `order` WHERE id=?";
     private static final String GET_SHOE_ORDER = "SELECT * FROM `shoe_order` WHERE order_id=?";
     private static final String GET_USER_ORDER = "SELECT * FROM `user_order` WHERE order_id=?";
-    private static final String GET_ORDER_FROM_USER_ORDER = "SELECT order_id FROM `user_order` WHERE user_id=?";
+    private static final String GET_ORDER_FROM_USER_ORDER = "SELECT order_id FROM `user_order` WHERE user_id=? ORDER BY order_id DESC";
     private static final String GET_ROLE = "SELECT role FROM `user` WHERE id=?";
 
     private final ConnectionManager connectionManager;
