@@ -19,6 +19,7 @@ function ClientCabinet() {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [error, setError] = useState('');
+    const [inputErrors, setInputErrors] = useState({});
 
     const handleFormSubmit = (event) => {
         console.log(newPassword);
@@ -39,7 +40,18 @@ function ClientCabinet() {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(formData)
         })
-            .then((response) => response.json())
+            // Тут сетаються помилки з беку, приклад є в LoginForm
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else if (response.status === 400) {
+                    return response.json().then(data => {
+                        setInputErrors(data);
+                    });
+                } else {
+                    throw new Error("Network response was not ok.");
+                }
+            })
             .then((data) => {
                 console.log(data)
                 localStorage.setItem("user", JSON.stringify(data));
@@ -79,6 +91,10 @@ function ClientCabinet() {
                         value={formData.name}
                         onChange={handleInputChange}
                     />
+                    {/* Так помилку відображати з беку, так само і в інших інпутах*/}
+                    <div>
+                        {inputErrors.name && <p className="input-error">{inputErrors.name}</p>}
+                    </div>
                     <input
                         className="cabinet-form-input"
                         type="text"
