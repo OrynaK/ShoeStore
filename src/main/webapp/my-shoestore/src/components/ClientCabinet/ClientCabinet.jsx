@@ -44,6 +44,11 @@ function ClientCabinet() {
             .then((response) => {
                 if (response.ok) {
                     return response.json();
+                    console.log(response)
+                    localStorage.setItem("user", JSON.stringify(response));
+                    setUser(response);
+                    setIsEditing(false);
+                    setError('');
                 } else if (response.status === 400) {
                     return response.json().then(data => {
                         setInputErrors(data);
@@ -51,13 +56,6 @@ function ClientCabinet() {
                 } else {
                     throw new Error("Network response was not ok.");
                 }
-            })
-            .then((data) => {
-                console.log(data)
-                localStorage.setItem("user", JSON.stringify(data));
-                setUser(data);
-                setIsEditing(false);
-                setError('');
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -91,10 +89,6 @@ function ClientCabinet() {
                         value={formData.name}
                         onChange={handleInputChange}
                     />
-                    {/* Так помилку відображати з беку, так само і в інших інпутах*/}
-                    <div>
-                        {inputErrors.name && <p className="input-error">{inputErrors.name}</p>}
-                    </div>
                     <input
                         className="cabinet-form-input"
                         type="text"
@@ -147,15 +141,30 @@ function ClientCabinet() {
                         <p className="cabinet-form-data">
                             Ім'я: {user && user.name}
                         </p>
+                        <div>
+                            {inputErrors.name && <p className="input-error">{inputErrors.name}</p>}
+                        </div>
                         <p className="cabinet-form-data">
                             Прізвище: {user && user.surname}
                         </p>
+                        <div>
+                            {inputErrors.surname && <p className="input-error">{inputErrors.surname}</p>}
+                        </div>
                         <p className="cabinet-form-data">
                             Номер телефону: {user && user.phoneNumber}
                         </p>
+                        <div>
+                            {inputErrors.phoneNumber && <p className="input-error">{inputErrors.phoneNumber}</p>}
+                        </div>
                         <p className="cabinet-form-data">
                             Email: {user && user.email}
                         </p>
+                        <div>
+                            {inputErrors.email && <p className="input-error">{inputErrors.email}</p>}
+                        </div>
+                        <div>
+                            {inputErrors.password && <p className="input-error">{inputErrors.password}</p>}
+                        </div>
                         <button
                             className="cabinet-form-btn"
                             onClick={() => setIsEditing(true)}
