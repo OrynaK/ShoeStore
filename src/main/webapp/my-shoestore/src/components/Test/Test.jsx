@@ -25,8 +25,8 @@ function Test() {
                 </thead>
                 <tbody>
                 {bestUserDTO.map((bestUser) => (
-                    <tr key={bestUser.id}>
-                        <td className="users-list-table-td">{bestUser.id}</td>
+                    <tr key={bestUser.user_id}>
+                        <td className="users-list-table-td">{bestUser.user_id}</td>
                         <td className="users-list-table-td">{bestUser.name}</td>
                         <td className="users-list-table-td">{bestUser.surname}</td>
                         <td className="users-list-table-td">{bestUser.order_id}</td>

@@ -50,11 +50,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/updateUserInfo")
-    public User updateInfo(@RequestBody UpdateDTO updateDTO) {
-        if (updateDTO != null) {
-            return userService.updateInfo(updateDTO);
-        }
-        return null;
+    public ResponseEntity<Object> updateInfo(@RequestBody @Validated UpdateDTO updateDTO, BindingResult bindingResult) {
+        ResponseEntity<Object> errors = ErrorUtil.getErrorsResponseEntity(bindingResult);
+        if (errors != null) return errors;
+        User user = userService.updateInfo(updateDTO);
+        return ResponseEntity.ok(Objects.requireNonNullElseGet(user, User::new));
     }
 
     @PostMapping(value = "/updateUserRole")
